@@ -27,15 +27,14 @@ Self-hosting a Bluesky PDS means running your own Personal Data Server that is c
 
 ### Launch your server
 
-Launch a server on any cloud provider, for example [Digital Ocean](https://digitalocean.com/) and [Vultr](https://vultr.com/) are two popular choices.
+Launch a server on any cloud provider, [Digital Ocean](https://digitalocean.com/) and [Vultr](https://vultr.com/) are two popular choices.
 
-
-**Requirements**
-* Public internet access
+**Server Requirements**
 * Public IPv4 address
-* Public access on ports 80/tcp and 443/tcp
+* Public DNS name
+* Public internet access permitted on port 80/tcp and 443/tcp
 
-**Recommendations**
+**Server Recommendations**
 |                  |                  |
 | ---------------- | ---------------- |
 | Operating System | Ubuntu 22.04 LTS |
@@ -46,24 +45,26 @@ Launch a server on any cloud provider, for example [Digital Ocean](https://digit
 
 ### Install your server
 
-Install your Ubuntu 22.04 server, and then ensure that you can ssh to it. It is recommended that you only allow port 22 (ssh) traffic from your own public IP address. You can check your current public IP address using [ifconfig.me](https://ifconfig.me/).
+Install your Ubuntu 22.04 server, and then ensure that you can ssh to it.
+
+**NOTE:** It is a good security practice to restrict inbound ssh access (port 22/tcp) to your own computer's public IP address. You can check your current public IP address using [ifconfig.me](https://ifconfig.me/).
 
 ### Open your firewall
 
 One of the most common sources of misconfiguration is not opening firewall ports correctly. Please be sure to double check this step.
 
-It may be helpful to use a remote [port scanning](https://dnschecker.org/port-scanner.php) service to verify that access is permitted.
+It may be helpful to use a remote [port scanning](https://dnschecker.org/port-scanner.php) service to verify that access is permitted. Once your server is fully configured, this service should display the ports as open.
 
-#### Open ports on your cloud and local firewalls
+#### Open ports on your cloud provider's firewall
 
 In your cloud provider's console, the following ports should be open to access from the public internet.
 
 * 80/tcp (Used only for TLS certification verification)
 * 443/tcp (Used for all application requests)
 
-#### Open ports using ufw
+#### Open ports on your Linux firewall
 
-If your VM is running a Linux firewall managed with `ufw`, you will also need to open these same ports on your VM itself.
+If your server is running a Linux firewall managed with `ufw`, you will also need to open these same ports on the server itself.
 
 ```bash
 $ sudo ufw allow 80/tcp
@@ -141,7 +142,7 @@ Download the `sqlite-compose.yaml` to run your PDS with a local SQLite database.
 curl https://raw.githubusercontent.com/bluesky-social/pds/main/sqlite-compose.yaml >compose.yaml
 ```
 
-Download the `postgres-compose.yaml` to run your PDS with a remote PostgreSQL database.
+Or, download the `postgres-compose.yaml` to run your PDS with a remote PostgreSQL database.
 
 ```bash
 curl https://raw.githubusercontent.com/bluesky-social/pds/main/postgres-compose.yaml >compose.yaml
@@ -191,5 +192,3 @@ You can use the Bluesky app to connect to your server to create an account.
 1. Download the Bluesky app
 1. Enter the URL of your PDS (e.g. `https://example.com/`)
 1. Create an account
-
-
