@@ -123,10 +123,10 @@
   resolved "https://registry.yarnpkg.com/@atproto/nsid/-/nsid-0.0.1.tgz#0cdc00cefe8f0b1385f352b9f57b3ad37fff09a4"
   integrity sha512-t5M6/CzWBVYoBbIvfKDpqPj/+ZmyoK9ydZSStcTXosJ27XXwOPhz0VDUGKK2SM9G5Y7TPes8S5KTAU0UdVYFCw==
 
-"@atproto/pds@0.2.0-beta.0":
-  version "0.2.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@atproto/pds/-/pds-0.2.0-beta.0.tgz#cc1be5b891fd049e222c312cbfb31d55c04f1a58"
-  integrity sha512-XORypRnEUrsfUqp1P+2yU3A9+aBjxYOTY1akv5T4FnGiElvjrliuaT0Wk3vt//wCBxb0b18ByUMwaDMoZ/6N6A==
+"@atproto/pds@0.2.0-beta.1":
+  version "0.2.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@atproto/pds/-/pds-0.2.0-beta.1.tgz#7346f5bbbf6d3da1b42adfacdd4c705731978de0"
+  integrity sha512-FXdvnQlhV2FK6KU/GX24k3OJB6Iru1Wpx7laJz3JfTR/qCx2qIOfyl04Oc9IuQX50trg+8uvAEeTjyOFxvSBYw==
   dependencies:
     "@atproto/api" "*"
     "@atproto/aws" "*"
