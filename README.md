@@ -169,7 +169,7 @@ You will need to customize various settings configured through the PDS environme
 | PDS_JWT_SECRET                            | jwt-secret                                    | ✅             | Use a secure high-entropy string |
 | PDS_ADMIN_PASSWORD                        | admin-pass                                    | ✅             | Use a secure high-entropy string |
 | PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX | 3ee68...                                      | ✅             | See above Generate Keys section - once set, do not change |
-| PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX | e049f...                                      | ✅             | See above Generate Keys section - once set, do not change |
+| PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX | e049f...                                      | ✅             | See above Generate Keys section - once set, do not change |
 | LOG_ENABLED                               | true                                          | ❔             | Outputs structured logs to stdout |
 | PDS_BLOBSTORE_DISK_LOCATION               | blobs                                         | ❌             | Only update if you update the mounted volume for your docker image as well |
 | PDS_DID_PLC_URL                           | plc.bsky-sandbox.dev                          | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
