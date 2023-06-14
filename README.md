@@ -133,7 +133,7 @@ sudo mkdir --parents /data/caddy/data
 ### Create the Caddyfile
 
 ```bash
-cat <<CADDYFILE >/data/caddy/etc/caddy/Caddyfile
+cat <<CADDYFILE | sudo tee /data/caddy/etc/caddy/Caddyfile
 {
   email you@example.com
 }
@@ -147,7 +147,7 @@ CADDYFILE
 ### Create the PDS env configuration file
 
 ```bash
-cat <<PDS_CONFIG >/data/pds.env
+cat <<PDS_CONFIG | sudo tee /data/pds.env
 PDS_HOSTNAME=example.com
 PDS_DB_SQLITE_LOCATION=/data/pds.sqlite
 PDS_JWT_SECRET=<VALUE>
@@ -187,7 +187,7 @@ curl https://raw.githubusercontent.com/bluesky-social/pds/main/sqlite-compose.ya
 Run `docker compose up` to start the three required containers.
 
 ```bash
-docker compose up --wait --detach
+sudo docker compose up --wait --detach
 ```
 
 You should see output similar to this:
