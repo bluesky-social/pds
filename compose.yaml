@@ -11,9 +11,6 @@ services:
       - type: bind
         source: /data/caddy
         target: /data
-      - type: bind
-        source: /data/caddy/etc/caddy
-        target: /etc/caddy
   pds:
     container_name: pds
     image: ghcr.io/bluesky-social/pds:latest
