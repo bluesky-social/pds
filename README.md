@@ -126,8 +126,8 @@ sudo docker run hello-world
 
 ```bash
 sudo mkdir /data
-sudo mkdir --parents /data/caddy/etc
 sudo mkdir --parents /data/caddy/data
+sudo mkdir --parents /data/caddy/etc/caddy
 ```
 
 ### Create the Caddyfile
