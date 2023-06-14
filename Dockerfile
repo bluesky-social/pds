@@ -2,9 +2,7 @@ FROM node:18-alpine as build
 
 # Move files into the image and install
 WORKDIR /app
-COPY ./service ./service
-
-WORKDIR /app/service
+COPY ./service ./
 RUN yarn install --production --frozen-lockfile > /dev/null
 
 # Uses assets from build stage to reduce build size
@@ -16,11 +14,11 @@ RUN apk add --update dumb-init
 # Avoid zombie processes, handle signal forwarding
 ENTRYPOINT ["dumb-init", "--"]
 
-WORKDIR /app/service
+WORKDIR /app
 COPY --from=build /app /app
-RUN mkdir /app/data && chown node /app/data
+RUN mkdir /data && chown node /data
 
-VOLUME /app/data
+VOLUME /data
 EXPOSE 3000
 ENV PDS_PORT=3000
 ENV NODE_ENV=production
