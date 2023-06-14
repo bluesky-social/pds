@@ -1,0 +1,11 @@
+{
+  "name": "pds",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Service entrypoint for atproto personal data server",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@atproto/pds": "0.2.0-beta.0"
+  }
+}
