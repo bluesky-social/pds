@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  caddy:
+    container_name: caddy
+    image: caddy:2
+    network_mode: host
+    depends_on:
+      - pds
+    restart: unless-stopped
+    volumes:
+      - /data/caddy/data:/data
+      - /data/caddy/etc/caddy:/etc/caddy
+  pds:
+    container_name: pds
+    image: ghcr.io/bluesky-social/pds:latest
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /data
+        target: /data
+    env_file:
+      - /data/pds.env
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower:latest
+    network_mode: host
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    restart: unless-stopped
+    environment:
+      TZ: "US/Pacific"
+      WATCHTOWER_CLEANUP: true
+      WATCHTOWER_SCHEDULE: "@midnight"
