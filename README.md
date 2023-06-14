@@ -12,7 +12,7 @@ Please visit the [Bluesky website](https://bsky.app/) for more information.
 
 ### What is AT Protocol?
 
-The Authenticated Transfer Protocol, aka ATP, is a protocol for large-scale distributed social applications.
+The Authenticated Transfer Protocol, aka atproto, is a protocol for large-scale distributed social applications.
 
 Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for additional information.
 
@@ -148,16 +148,40 @@ Or, download the `postgres-compose.yaml` to run your PDS with a remote PostgreSQ
 curl https://raw.githubusercontent.com/bluesky-social/pds/main/postgres-compose.yaml >compose.yaml
 ```
 
+
+#### Generate keys
+
+Your PDS will need two secp256k1 private keys provided as hex strings. You can securely generate these keys using `openssl` with the following command:
+```bash
+openssl ecparam -name secp256k1 -genkey -noout -outform DER | tail -c +8 | head -c 32 | xxd -p -c 32
+```
+
+This will output a 64-char hex string. Please generate two keys in preperation for the next step.
+
 #### Edit your compose.yaml file
 
-You will need to customize various settings configured through the PDS environment variables.
+You will need to customize various settings configured through the PDS environment variables. See the below table to find the variables you'll need to set.
 
-| Environment Variable  | Value                                         |
-| --------------------- | --------------------------------------------- |
-| PDS_DOMAIN            | example.com                                   |
-| PDS_DATABASE_URL      | postgresql://user:password@host:port/database |
-| PDS_ADMIN_EMAIL       | you@example.com                               |
-| ...                   | ...                                           |
+| Environment Variable                      | Value                                         | Should update? | Notes |
+| ----------------------------------------- | --------------------------------------------- | -------------- |------ |
+| PDS_HOSTNAME                              | example.com                                   | ✅             | Public domain you intend to deploy your service at |
+| PDS_DB_POSTGRES_URL                       | postgresql://user:password@host:port/database | ✅             | Or use `PDS_DB_SQLITE_LOCATION` depending on which database you intend to use |
+| PDS_JWT_SECRET                            | jwt-secret                                    | ✅             | Use a secure high-entropy string |
+| PDS_ADMIN_PASSWORD                        | admin-pass                                    | ✅             | Use a secure high-entropy string |
+| PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX | 3ee68...                                      | ✅             | See above Generate Keys section - once set, do not change |
+| PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX | e049f...                                      | ✅             | See above Generate Keys section - once set, do not change |
+| LOG_ENABLED                               | true                                          | ❔             | Outputs structured logs to stdout |
+| PDS_BLOBSTORE_DISK_LOCATION               | blobs                                         | ❌             | Only update if you update the mounted volume for your docker image as well |
+| PDS_DID_PLC_URL                           | plc.bsky-sandbox.dev                          | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| PDS_BSKY_APP_VIEW_ENDPOINT                | api.bsky-sandbox.dev                          | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| PDS_BSKY_APP_VIEW_DID                     | did:web:api.bsky-sandbox.dev                  | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| PDS_CRAWLERS                              | bgs.bsky-sandbox.dev                          | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| ...                                       | ...                                           |                |       |
+
+There are additional environment variables that can be tweaked depending on how you're running your service. For instance, storing blobs in AWS S3, keys in AWS KMS, or setting up an email service.
+
+Feel free to explore those [Here](https://github.com/bluesky-social/atproto/blob/simplify-pds/packages/pds/src/config/env.ts). However, we will not be providing support for more advanced configurations.
+
 
 #### Run docker compose
 
