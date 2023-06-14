@@ -178,7 +178,7 @@ This will output a 64-char hex string. Please generate two keys in preperation f
 Download the `compose.yaml` to run your PDS with the require "sidecar" containers.
 
 ```bash
-curl https://raw.githubusercontent.com/bluesky-social/pds/main/sqlite-compose.yaml >compose.yaml
+curl https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml >compose.yaml
 ```
 
 
