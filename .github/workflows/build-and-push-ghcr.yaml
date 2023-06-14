@@ -50,7 +50,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           file: ./Dockerfile
           tags: |
-            latest
+            ghcr.io/bluesky-social/pds:latest
             ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
