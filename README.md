@@ -164,19 +164,19 @@ You will need to customize various settings configured through the PDS environme
 
 | Environment Variable                      | Value                                         | Should update? | Notes |
 | ----------------------------------------- | --------------------------------------------- | -------------- |------ |
-| PDS_HOSTNAME                              | example.com                                   | ✅             | Public domain you intend to deploy your service at |
-| PDS_DB_POSTGRES_URL                       | postgresql://user:password@host:port/database | ✅             | Or use `PDS_DB_SQLITE_LOCATION` depending on which database you intend to use |
-| PDS_JWT_SECRET                            | jwt-secret                                    | ✅             | Use a secure high-entropy string |
-| PDS_ADMIN_PASSWORD                        | admin-pass                                    | ✅             | Use a secure high-entropy string |
-| PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX | 3ee68...                                      | ✅             | See above Generate Keys section - once set, do not change |
-| PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX | e049f...                                      | ✅             | See above Generate Keys section - once set, do not change |
-| LOG_ENABLED                               | true                                          | ❔             | Outputs structured logs to stdout |
-| PDS_BLOBSTORE_DISK_LOCATION               | blobs                                         | ❌             | Only update if you update the mounted volume for your docker image as well |
-| PDS_DID_PLC_URL                           | plc.bsky-sandbox.dev                          | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
-| PDS_BSKY_APP_VIEW_ENDPOINT                | api.bsky-sandbox.dev                          | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
-| PDS_BSKY_APP_VIEW_DID                     | did:web:api.bsky-sandbox.dev                  | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
-| PDS_CRAWLERS                              | bgs.bsky-sandbox.dev                          | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
-| ...                                       | ...                                           |                |       |
+| PDS_HOSTNAME                              | example.com                  | ✅             | Public domain you intend to deploy your service at |
+| PDS_DB_SQLITE_LOCATION                    | pds.sqlite                   | ✅             | Or use `PDS_DB_POSTGRES_URL` depending on which database you intend to use |
+| PDS_JWT_SECRET                            | jwt-secret                   | ✅             | Use a secure high-entropy string |
+| PDS_ADMIN_PASSWORD                        | admin-pass                   | ✅             | Use a secure high-entropy string |
+| PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX | 3ee68...                     | ✅             | See above Generate Keys section - once set, do not change |
+| PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX | e049f...                     | ✅             | See above Generate Keys section - once set, do not change |
+| LOG_ENABLED                               | true                         | ❔             | Outputs structured logs to stdout |
+| PDS_BLOBSTORE_DISK_LOCATION               | blobs                        | ❌             | Only update if you update the mounted volume for your docker image as well |
+| PDS_DID_PLC_URL                           | plc.bsky-sandbox.dev         | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| PDS_BSKY_APP_VIEW_ENDPOINT                | api.bsky-sandbox.dev         | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| PDS_BSKY_APP_VIEW_DID                     | did:web:api.bsky-sandbox.dev | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| PDS_CRAWLERS                              | bgs.bsky-sandbox.dev         | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| ...                                       | ...                          |                |       |
 
 There are additional environment variables that can be tweaked depending on how you're running your service. For instance, storing blobs in AWS S3, keys in AWS KMS, or setting up an email service.
 
