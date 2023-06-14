@@ -12,7 +12,7 @@ Please visit the [Bluesky website](https://bsky.app/) for more information.
 
 ### What is AT Protocol?
 
-The Authenticated Transfer Protocol, aka ATP, is a protocol for large-scale distributed social applications.
+The Authenticated Transfer Protocol, aka atproto, is a protocol for large-scale distributed social applications.
 
 Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for additional information.
 
@@ -154,10 +154,36 @@ You will need to customize various settings configured through the PDS environme
 
 | Environment Variable  | Value                                         |
 | --------------------- | --------------------------------------------- |
-| PDS_DOMAIN            | example.com                                   |
-| PDS_DATABASE_URL      | postgresql://user:password@host:port/database |
-| PDS_ADMIN_EMAIL       | you@example.com                               |
+| PDS_HOSTNAME          | example.com                                   |
+| PDS_DB_POSTGRES_URL   | postgresql://user:password@host:port/database |
+| PDS_JWT_SECRET        | jwt-secret                                    |
+| PDS_ADMIN_PASSWORD    | admin-pass                                    |
 | ...                   | ...                                           |
+
+You _should_ provide values to the following variables:
+- `PDS_HOSTNAME`
+- `PDS_DB_POSTGRES_URL` or `PDS_DB_SQLITE_LOCATION` depending on which database you intend to use
+- `PDS_JWT_SECRET`
+- `PDS_ADMIN_PASSWORD`
+- `LOG_ENBALED` - defaults to `true` and outputs structured logs to stdout
+
+You _should not_ update the following value unless you also update the mounted volumes for your docker image:
+- `PDS_BLOBSTORE_DISK_LOCATION`
+
+You will need to provide key material to the following variables. We've included a utility to generate keys for you with openssl
+Once these are set, you _should not_ adjust them - as you will break any repositories that you are currently hosting.
+- `PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX`
+- `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX`
+ 
+You _should not_ adjust the following variables if you intend to federate with the Bluesky federation sandbox:
+- `PDS_DID_PLC_URL="plc.bsky-sandbox.dev"`
+- `PDS_BSKY_APP_VIEW_ENDPOINT="api.bsky-sandbox.dev"`
+- `PDS_BSKY_APP_VIEW_DID="did:web:api.bsky-sandbox.dev"`
+- `PDS_CRAWLERS="bgs.bsky-sandbox.dev"`
+
+There are additional environment variables that can be tweaked depending on how you're running your service. For instance, storing blobs in AWS S3, keys in AWS KMS, or setting up an email service.
+
+Feel free to explore these [Here](https://github.com/bluesky-social/atproto/blob/simplify-pds/packages/pds/src/config/env.ts). However, we will not be providing support for more advanced configurations.
 
 #### Run docker compose
 
