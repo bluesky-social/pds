@@ -8,8 +8,12 @@ services:
       - pds
     restart: unless-stopped
     volumes:
-      - /data/caddy/data:/data
-      - /data/caddy/etc/caddy:/etc/caddy
+      - type: bind
+        source: /data/caddy
+        target: /data
+      - type: bind
+        source: /data/caddy/etc/caddy
+        target: /etc/caddy
   pds:
     container_name: pds
     image: ghcr.io/bluesky-social/pds:latest
