@@ -176,7 +176,7 @@ You will need to customize various settings configured through the PDS environme
 | PDS_BSKY_APP_VIEW_ENDPOINT                | api.bsky-sandbox.dev                          | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
 | PDS_BSKY_APP_VIEW_DID                     | did:web:api.bsky-sandbox.dev                  | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
 | PDS_CRAWLERS                              | bgs.bsky-sandbox.dev                          | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
-| ...                                       | ...                                           |                |
+| ...                                       | ...                                           |                |       |
 
 There are additional environment variables that can be tweaked depending on how you're running your service. For instance, storing blobs in AWS S3, keys in AWS KMS, or setting up an email service.
 
