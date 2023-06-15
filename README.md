@@ -2,6 +2,10 @@
 
 Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with self-hosting a Bluesky PDS.
 
+We're testing federation in a separate sandbox network. Checkout [SANDBOX.md](https://github.com/bluesky-social/pds/blob/main/SANDBOX.md) for an overview of the sandbox network.
+
+We do not currently support PDS federation on the production network. 
+
 ## FAQ
 
 ### What is Bluesky?
@@ -284,6 +288,8 @@ You can use the Bluesky app to connect to your server to create an account.
 1. Enter the URL of your PDS (e.g. `https://example.com/`)
 1. Create an account
 1. Create a post
+
+Checkout [SANDBOX.md](https://github.com/bluesky-social/pds/blob/main/SANDBOX.md) for an overview of participating in the sandbox network.
 
 ## PDS environment variables
 
