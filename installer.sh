@@ -206,7 +206,7 @@ INSTALLER_MESSAGE
       echo
     echo "  sudo bash ${0}"
     echo
-    echo "For assistance, contact support@pds.com"
+    echo "For assistance, check https://github.com/bluesky-social/pds"
     exit 1
   fi
 
@@ -320,7 +320,7 @@ PDS_CONFIG
   #
   # Download and install pds launcher.
   #
-  echo "* Downloading pds compose file"
+  echo "* Downloading PDS compose file"
   curl \
     --silent \
     --show-error \
