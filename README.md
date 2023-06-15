@@ -152,8 +152,9 @@ CADDYFILE
 ### Generating K256 private keys
 
 Your PDS will need two secp256k1 private keys provided as hex strings. You can securely generate these keys using `openssl` with the following command:
+
 ```bash
-openssl ecparam -name secp256k1 -genkey -noout -outform DER | tail -c +8 | head -c 32 | xxd -p -c 32
+openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32
 ```
 
 This will output a 64-char hex string. Please generate two keys in preperation for the next step.
