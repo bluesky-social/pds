@@ -76,8 +76,18 @@ From your DNS provider's control panel, set up a domain with records pointing to
 * Replace `12.34.56.78` with your server's IP address.
 * Some providers may use the `@` symbol to represent the root of your domain.
 * The wildcard record is required when allowing users to create new accounts on your PDS.
+* The TTL can be anything but 600 (10 minutes) is reasonable
 
+### Check that DNS is working as expected
 
+Use a service like [DNS Checker](https://dnschecker.org/) to verify that you can resolve domain names.
+
+Examples to check (record type `A`):
+* `example.com`
+* `random.example.com`
+* `test123.example.com`
+
+These should all return your server's public IP.
 
 ## Automatic install on Ubuntu 22.04 or Debian 11
 
