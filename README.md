@@ -80,7 +80,11 @@ From your DNS provider's control panel, set up a domain with records pointing to
 On your server via ssh, run the installer script:
 
 ```bash
-curl https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh | sudo bash
+wget https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh
+```
+
+```bash
+sudo bash installer.sh
 ```
 
 ## Installing manually on Ubuntu 22.04
