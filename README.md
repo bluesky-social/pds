@@ -144,25 +144,7 @@ user1.example.com, user2.example.com, example.com {
 CADDYFILE
 ```
 
-### Create the PDS env configuration file
-
-```bash
-cat <<PDS_CONFIG | sudo tee /data/pds.env
-PDS_HOSTNAME=example.com
-PDS_DB_SQLITE_LOCATION=/data/pds.sqlite
-PDS_JWT_SECRET=<VALUE>
-PDS_ADMIN_PASSWORD=<VALUE>
-PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX=<VALUE>
-PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX=<VALUE>
-PDS_BLOBSTORE_DISK_LOCATION=/data/blocks
-PDS_DID_PLC_URL=https://plc.bsky-sandbox.dev
-PDS_BSKY_APP_VIEW_ENDPOINT=https://api.bsky-sandbox.dev
-PDS_BSKY_APP_VIEW_DID=did:web:api.bsky-sandbox.dev
-PDS_CRAWLERS=https://bgs.bsky-sandbox.dev
-PDS_CONFIG
-```
-
-## Generating K256 private keys
+### Generating K256 private keys
 
 Your PDS will need two secp256k1 private keys provided as hex strings. You can securely generate these keys using `openssl` with the following command:
 ```bash
@@ -170,6 +152,28 @@ openssl ecparam -name secp256k1 -genkey -noout -outform DER | tail -c +8 | head 
 ```
 
 This will output a 64-char hex string. Please generate two keys in preperation for the next step.
+
+### Create the PDS env configuration file
+
+You should fill in the first 5 values, but leave the rest untouched unless you have good reason to change it. 
+
+See the PDS environment variables section at the end of this README for explanations of each value
+
+```bash
+cat <<PDS_CONFIG | sudo tee /data/pds.env
+PDS_HOSTNAME=<YOUR_HOSTNAME>
+PDS_JWT_SECRET=<VALUE>
+PDS_ADMIN_PASSWORD=<VALUE>
+PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX=<VALUE>
+PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX=<VALUE>
+PDS_DB_SQLITE_LOCATION=/data/pds.sqlite
+PDS_BLOBSTORE_DISK_LOCATION=/data/blocks
+PDS_DID_PLC_URL=https://plc.bsky-sandbox.dev
+PDS_BSKY_APP_VIEW_ENDPOINT=https://api.bsky-sandbox.dev
+PDS_BSKY_APP_VIEW_DID=did:web:api.bsky-sandbox.dev
+PDS_CRAWLERS=https://bgs.bsky-sandbox.dev
+PDS_CONFIG
+```
 
 ### Start the PDS containers
 
@@ -223,12 +227,12 @@ You will need to customize various settings configured through the PDS environme
 | Environment Variable                      | Value                                         | Should update? | Notes |
 | ----------------------------------------- | --------------------------------------------- | -------------- |------ |
 | PDS_HOSTNAME                              | example.com                  | ✅             | Public domain you intend to deploy your service at |
-| PDS_DB_SQLITE_LOCATION                    | pds.sqlite                   | ✅             | Or use `PDS_DB_POSTGRES_URL` depending on which database you intend to use |
 | PDS_JWT_SECRET                            | jwt-secret                   | ✅             | Use a secure high-entropy string that is 32 characters in length |
 | PDS_ADMIN_PASSWORD                        | admin-pass                   | ✅             | Use a secure high-entropy string that is 32 characters in length |
 | PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX | 3ee68...                     | ✅             | See above Generate Keys section - once set, do not change |
 | PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX | e049f...                     | ✅             | See above Generate Keys section - once set, do not change |
-| PDS_BLOBSTORE_DISK_LOCATION               | blobs                        | ❌             | Only update if you update the mounted volume for your docker image as well |
+| PDS_DB_SQLITE_LOCATION                    | /data/pds.sqlite             | ❌             | Or use `PDS_DB_POSTGRES_URL` depending on which database you intend to use |
+| PDS_BLOBSTORE_DISK_LOCATION               | /data/blocks                 | ❌             | Only update if you update the mounted volume for your docker image as well |
 | PDS_DID_PLC_URL                           | https://plc.bsky-sandbox.dev | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
 | PDS_BSKY_APP_VIEW_URL                     | https://api.bsky-sandbox.dev | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
 | PDS_BSKY_APP_VIEW_DID                     | did:web:api.bsky-sandbox.dev | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
