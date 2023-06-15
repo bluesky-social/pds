@@ -32,22 +32,23 @@ Launch a server on any cloud provider, [Digital Ocean](https://digitalocean.com/
 **Server Requirements**
 * Public IPv4 address
 * Public DNS name
-* Public internet access permitted on port 80/tcp and 443/tcp
+* Public inbound internet access permitted on port 80/tcp and 443/tcp
 
 **Server Recommendations**
+
 |                  |                  |
 | ---------------- | ---------------- |
 | Operating System | Ubuntu 22.04 LTS |
 | Memory (RAM)     | 2+ GB            |
 | CPU Cores        | 2+               |
 | Storage          | 40+ GB SSD       |
+| Architectures    | amd64, arm64     |
  
-
 ### Install your server
 
 Install your Ubuntu 22.04 server, and then ensure that you can ssh to it.
 
-**NOTE:** It is a good security practice to restrict inbound ssh access (port 22/tcp) to your own computer's public IP address. You can check your current public IP address using [ifconfig.me](https://ifconfig.me/).
+**Note:** It is a good security practice to restrict inbound ssh access (port 22/tcp) to your own computer's public IP address. You can check your current public IP address using [ifconfig.me](https://ifconfig.me/).
 
 ### Open your firewall
 
@@ -57,12 +58,12 @@ It may be helpful to use a remote [port scanning](https://dnschecker.org/port-sc
 
 #### Open ports on your cloud provider's firewall
 
-In your cloud provider's console, the following ports should be open to access from the public internet.
+In your cloud provider's console, the following ports should be open to inbound access from the public internet.
 
 * 80/tcp (Used only for TLS certification verification)
 * 443/tcp (Used for all application requests)
 
-No need to set up TLS or redirect requests from port 80 to 443, we've included Caddy in the distribution and it should handle that for you.
+**Note:** there is no need to set up TLS or redirect requests from port 80 to 443 because the Caddy web server, included in the Docker compose file, will handle this for you.
 
 #### Open ports on your Linux firewall
 
@@ -73,11 +74,26 @@ $ sudo ufw allow 80/tcp
 $ sudo ufw allow 443/tcp
 ```
 
+### Configure DNS for your domain
+
+From your DNS provider's control panel, set up a domain with records pointing to your server.
+
+| Name              | Type | Value         | TTL  |
+| ----------------- | ---- | ------------- | ---- |
+| `example.com`     | `A`  | `12.34.56.78` | 600  |
+| `*.example.com`   | `A`  | `12.34.56.78` | 600  |
+
+**Note:**
+* Replace `example.com` with your domain name.
+* Replace `12.34.56.78` with your server's IP address.
+* Some providers may use the `@` symbol to represent the root of your domain.
+* The wildcard record is required when allowing users to create new accounts on your PDS.
+
 ### Install Docker
 
-To install Docker CE (Community Edition) on Ubuntu 22.04, use the the following instructions. For other operating systems you may reference the [official Docker install guides](https://docs.docker.com/engine/install/).
+On your server, install Docker CE (Community Edition), using the the following instructions. For other operating systems you may reference the [official Docker install guides](https://docs.docker.com/engine/install/).
 
-**NOTE:** All of the following commands should be run on your server via ssh.
+**Note:** All of the following commands should be run on your server via ssh.
 
 #### Uninstall old versions
 
@@ -133,6 +149,8 @@ sudo mkdir --parents /data/caddy/etc/caddy
 ```
 
 ### Create the Caddyfile
+
+Be sure to replace `example.com` with your own domain.
 
 ```bash
 cat <<CADDYFILE | sudo tee /data/caddy/etc/caddy/Caddyfile
@@ -215,7 +233,7 @@ You can check if your server is online and healthy by requesting the healthcheck
 
 ```bash
 curl https://example.com/xrpc/_health
-{"version":"v1.2.3"}
+{"version":"0.2.2-beta.2"}
 ```
 
 ### Connecting to your server
