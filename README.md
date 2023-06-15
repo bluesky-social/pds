@@ -21,13 +21,15 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 * [Canonical TypeScript code](https://github.com/bluesky-social/atproto)
 * [Experimental Go code](https://github.com/bluesky-social/indigo)
 
-## Self-hosting a PDS
+## Self-hosting PDS
 
 Self-hosting a Bluesky PDS means running your own Personal Data Server that is capable of federating with the wider Bluesky social network.
 
-### Launch your server
+### Preparation for self-hosting PDS
 
 Launch a server on any cloud provider, [Digital Ocean](https://digitalocean.com/) and [Vultr](https://vultr.com/) are two popular choices.
+
+Ensure that you can ssh to your server and have root access.
 
 **Server Requirements**
 * Public IPv4 address
@@ -35,28 +37,19 @@ Launch a server on any cloud provider, [Digital Ocean](https://digitalocean.com/
 * Public inbound internet access permitted on port 80/tcp and 443/tcp
 
 **Server Recommendations**
-
 |                  |                  |
 | ---------------- | ---------------- |
-| Operating System | Ubuntu 22.04 LTS |
+| Operating System | Ubuntu 22.04     |
 | Memory (RAM)     | 2+ GB            |
 | CPU Cores        | 2+               |
 | Storage          | 40+ GB SSD       |
 | Architectures    | amd64, arm64     |
  
-### Install your server
-
-Install your Ubuntu 22.04 server, and then ensure that you can ssh to it.
-
 **Note:** It is a good security practice to restrict inbound ssh access (port 22/tcp) to your own computer's public IP address. You can check your current public IP address using [ifconfig.me](https://ifconfig.me/).
 
-### Open your firewall
+### Open your cloud firewall for HTTP and HTTPS
 
 One of the most common sources of misconfiguration is not opening firewall ports correctly. Please be sure to double check this step.
-
-It may be helpful to use a remote [port scanning](https://dnschecker.org/port-scanner.php) service to verify that access is permitted. Once your server is fully configured, this service should display the ports as open.
-
-#### Open ports on your cloud provider's firewall
 
 In your cloud provider's console, the following ports should be open to inbound access from the public internet.
 
@@ -64,15 +57,6 @@ In your cloud provider's console, the following ports should be open to inbound 
 * 443/tcp (Used for all application requests)
 
 **Note:** there is no need to set up TLS or redirect requests from port 80 to 443 because the Caddy web server, included in the Docker compose file, will handle this for you.
-
-#### Open ports on your Linux firewall
-
-If your server is running a Linux firewall managed with `ufw`, you will also need to open these same ports on the server itself.
-
-```bash
-$ sudo ufw allow 80/tcp
-$ sudo ufw allow 443/tcp
-```
 
 ### Configure DNS for your domain
 
@@ -88,6 +72,27 @@ From your DNS provider's control panel, set up a domain with records pointing to
 * Replace `12.34.56.78` with your server's IP address.
 * Some providers may use the `@` symbol to represent the root of your domain.
 * The wildcard record is required when allowing users to create new accounts on your PDS.
+
+
+
+## Automatic install on Ubuntu 22.04 or Debian 11
+
+On your server via ssh, run the installer script:
+
+```bash
+curl https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh | sudo bash
+```
+
+## Installing manually on Ubuntu 22.04
+
+### Open ports on your Linux firewall
+
+If your server is running a Linux firewall managed with `ufw`, you will also need to open these same ports on the server itself.
+
+```bash
+$ sudo ufw allow 80/tcp
+$ sudo ufw allow 443/tcp
+```
 
 ### Install Docker
 
@@ -211,25 +216,51 @@ Download the `compose.yaml` to run your PDS, which includes the following contai
 * `watchtower` Daemon responsible for auto-updating containers to keep the server secure and federating
 
 ```bash
-curl https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml >compose.yaml
+curl https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml | sudo tee /pds/compose.yaml
 ```
 
-
-#### Run docker compose
-
-Run `docker compose up` to start the three required containers.
+#### Create the systemd service
 
 ```bash
-sudo docker compose up --wait --detach
+  cat <<SYSTEMD_UNIT_FILE >/etc/systemd/system/pds.service
+[Unit]
+Description=Bluesky PDS Service
+Documentation=https://github.com/bluesky-social/pds
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/pds
+ExecStart=/usr/bin/docker compose --file /pds/compose.yaml up --detach
+ExecStop=/usr/bin/docker compose --file /pds/compose.yaml down
+
+[Install]
+WantedBy=default.target
+SYSTEMD_UNIT_FILE
 ```
 
-You should see output similar to this:
+#### Start the service
 
+```bash
+sudo systemctl daemon-reload
 ```
-[+] Running 3/3
- ✔ Container watchtower  Healthy  1.1s 
- ✔ Container pds         Healthy  1.1s 
- ✔ Container caddy       Healthy  1.0s
+
+```bash
+sudo systemctl start pds
+```
+
+**Ensure that containers are running**
+
+There should be a caddy, pds, and watchtower container running.
+
+```bash
+sudo systemctl status pds
+```
+
+```bash
+sudo docker ps
 ```
 
 ### Verify your PDS is online
@@ -248,6 +279,7 @@ You can use the Bluesky app to connect to your server to create an account.
 1. Download the Bluesky app
 1. Enter the URL of your PDS (e.g. `https://example.com/`)
 1. Create an account
+1. Create a post
 
 ## PDS environment variables
 
