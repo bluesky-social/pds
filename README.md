@@ -62,7 +62,7 @@ In your cloud provider's console, the following ports should be open to access f
 * 80/tcp (Used only for TLS certification verification)
 * 443/tcp (Used for all application requests)
 
-No need to get SSL set up, we've included Caddy in the distribution and it should handle SSL certs for you.
+No need to set up TLS or redirect requests from port 80 to 443, we've included Caddy in the distribution and it should handle that for you.
 
 #### Open ports on your Linux firewall
 
