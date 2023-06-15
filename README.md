@@ -140,7 +140,10 @@ cat <<CADDYFILE | sudo tee /data/caddy/etc/caddy/Caddyfile
   email you@example.com
 }
 
-user1.example.com, user2.example.com, example.com {
+*.example.com, example.com {
+  tls {
+    on_demand
+  }
   reverse_proxy http://localhost:3000
 }
 CADDYFILE
