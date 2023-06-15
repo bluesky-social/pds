@@ -62,6 +62,8 @@ In your cloud provider's console, the following ports should be open to access f
 * 80/tcp (Used only for TLS certification verification)
 * 443/tcp (Used for all application requests)
 
+No need to get SSL set up, we've included Caddy in the distribution and it should handle SSL certs for you.
+
 #### Open ports on your Linux firewall
 
 If your server is running a Linux firewall managed with `ufw`, you will also need to open these same ports on the server itself.
