@@ -143,9 +143,9 @@ sudo docker run hello-world
 ### Set up the PDS directory
 
 ```bash
-sudo mkdir /data
-sudo mkdir --parents /data/caddy/data
-sudo mkdir --parents /data/caddy/etc/caddy
+sudo mkdir /pds
+sudo mkdir --parents /pds/caddy/data
+sudo mkdir --parents /pds/caddy/etc/caddy
 ```
 
 ### Create the Caddyfile
@@ -153,7 +153,7 @@ sudo mkdir --parents /data/caddy/etc/caddy
 Be sure to replace `example.com` with your own domain.
 
 ```bash
-cat <<CADDYFILE | sudo tee /data/caddy/etc/caddy/Caddyfile
+cat <<CADDYFILE | sudo tee /pds/caddy/etc/caddy/Caddyfile
 {
   email you@example.com
 }
@@ -185,14 +185,14 @@ PDS_ADMIN_PASSWORD="$(openssl rand --hex 16)"
 PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX="$(openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32)"
 PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX="$(openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32)"
 
-cat <<PDS_CONFIG | sudo tee /data/pds.env
+cat <<PDS_CONFIG | sudo tee /pds/pds.env
 PDS_HOSTNAME=${PDS_HOSTNAME}
 PDS_JWT_SECRET=${PDS_JWT_SECRET}
 PDS_ADMIN_PASSWORD=${PDS_ADMIN_PASSWORD}
 PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX=${PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX}
 PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX=${PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX}
-PDS_DB_SQLITE_LOCATION=/data/pds.sqlite
-PDS_BLOBSTORE_DISK_LOCATION=/data/blocks
+PDS_DB_SQLITE_LOCATION=/pds/pds.sqlite
+PDS_BLOBSTORE_DISK_LOCATION=/pds/blocks
 PDS_DID_PLC_URL=https://plc.bsky-sandbox.dev
 PDS_BSKY_APP_VIEW_ENDPOINT=https://api.bsky-sandbox.dev
 PDS_BSKY_APP_VIEW_DID=did:web:api.bsky-sandbox.dev
@@ -260,8 +260,8 @@ You will need to customize various settings configured through the PDS environme
 | PDS_ADMIN_PASSWORD                        | admin-pass                   | ✅             | Use a secure high-entropy string that is 32 characters in length |
 | PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX | 3ee68...                     | ✅             | See above Generate Keys section - once set, do not change |
 | PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX | e049f...                     | ✅             | See above Generate Keys section - once set, do not change |
-| PDS_DB_SQLITE_LOCATION                    | /data/pds.sqlite             | ❌             | Or use `PDS_DB_POSTGRES_URL` depending on which database you intend to use |
-| PDS_BLOBSTORE_DISK_LOCATION               | /data/blocks                 | ❌             | Only update if you update the mounted volume for your docker image as well |
+| PDS_DB_SQLITE_LOCATION                    | /pds/pds.sqlite             | ❌             | Or use `PDS_DB_POSTGRES_URL` depending on which database you intend to use |
+| PDS_BLOBSTORE_DISK_LOCATION               | /pds/blocks                 | ❌             | Only update if you update the mounted volume for your docker image as well |
 | PDS_DID_PLC_URL                           | https://plc.bsky-sandbox.dev | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
 | PDS_BSKY_APP_VIEW_URL                     | https://api.bsky-sandbox.dev | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
 | PDS_BSKY_APP_VIEW_DID                     | did:web:api.bsky-sandbox.dev | ❌             | Do not adjust if you intend to federate with the Bluesky federation sandbox |
