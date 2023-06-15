@@ -167,29 +167,30 @@ cat <<CADDYFILE | sudo tee /data/caddy/etc/caddy/Caddyfile
 CADDYFILE
 ```
 
-### Generating K256 private keys
-
-Your PDS will need two secp256k1 private keys provided as hex strings. You can securely generate these keys using `openssl` with the following command:
-
-```bash
-openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32
-```
-
-This will output a 64-char hex string. Please generate two keys in preperation for the next step.
-
 ### Create the PDS env configuration file
 
 You should fill in the first 5 values, but leave the rest untouched unless you have good reason to change it. 
 
 See the PDS environment variables section at the end of this README for explanations of each value
 
+Your PDS will need two secp256k1 private keys provided as hex strings. You can securely generate these keys using `openssl` with the following command:
+
+**Note:**
+* Replace `example.com` with your domain name.
+
 ```bash
+PDS_HOSTNAME="example.com"
+PDS_JWT_SECRET="$(openssl rand --hex 16)"
+PDS_ADMIN_PASSWORD="$(openssl rand --hex 16)"
+PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX="$(openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32)"
+PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX="$(openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32)"
+
 cat <<PDS_CONFIG | sudo tee /data/pds.env
-PDS_HOSTNAME=<YOUR_HOSTNAME>
-PDS_JWT_SECRET=<VALUE>
-PDS_ADMIN_PASSWORD=<VALUE>
-PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX=<VALUE>
-PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX=<VALUE>
+PDS_HOSTNAME=${PDS_HOSTNAME}
+PDS_JWT_SECRET=${PDS_JWT_SECRET}
+PDS_ADMIN_PASSWORD=${PDS_ADMIN_PASSWORD}
+PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX=${PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX}
+PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX=${PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX}
 PDS_DB_SQLITE_LOCATION=/data/pds.sqlite
 PDS_BLOBSTORE_DISK_LOCATION=/data/blocks
 PDS_DID_PLC_URL=https://plc.bsky-sandbox.dev
@@ -203,7 +204,11 @@ PDS_CONFIG
 
 #### Download the Docker compose file
 
-Download the `compose.yaml` to run your PDS with the require "sidecar" containers.
+Download the `compose.yaml` to run your PDS, which includes the following containers:
+
+* `pds` Node PDS server running on http://localhost:3000
+* `caddy` HTTP reverse proxy handling TLS and proxying requests to the PDS server
+* `watchtower` Daemon responsible for auto-updating containers to keep the server secure and federating
 
 ```bash
 curl https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml >compose.yaml
