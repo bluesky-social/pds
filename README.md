@@ -95,7 +95,7 @@ sudo bash installer.sh
 
 ### Open ports on your Linux firewall
 
-If your server is running a Linux firewall managed with `ufw`, you will also need to open these same ports on the server itself.
+If your server is running a Linux firewall managed with `ufw`, you will need to open these ports:
 
 ```bash
 $ sudo ufw allow 80/tcp
@@ -289,7 +289,7 @@ You can use the Bluesky app to connect to your server to create an account.
 1. Create an account
 1. Create a post
 
-Checkout [SANDBOX.md](https://github.com/bluesky-social/pds/blob/main/SANDBOX.md) for an overview of participating in the sandbox network.
+Checkout [SANDBOX.md](./SANDBOX.md) for an overview of participating in the sandbox network.
 
 ## PDS environment variables
 
