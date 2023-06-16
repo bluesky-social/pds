@@ -91,11 +91,14 @@ function main {
     if [[ "${DISTRIB_CODENAME}" == "bullseye" ]]; then
       SUPPORTED_OS="true"
       echo "* Detected supported distribution Debian 11"
+    elif [[ "${DISTRIB_CODENAME}" == "bookworm" ]]; then
+      SUPPORTED_OS="true"
+      echo "* Detected supported distribution Debian 12"
     fi
   fi
 
   if [[ "${SUPPORTED_OS}" != "true" ]]; then
-    echo "Sorry, only Ubuntu 20.04, 22.04, and Debian 11 are supported by this installer. Exiting..."
+    echo "Sorry, only Ubuntu 20.04, 22.04, Debian 11 and Debian 12 are supported by this installer. Exiting..."
     exit 1
   fi
 
