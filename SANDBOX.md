@@ -16,7 +16,7 @@ Using the sandbox environment means you agree to adhere to our Guidelines. Pleas
 
 ## Post responsibly
 
-The sandbox environment is intended to test infrastructure, but user content may be created as part of this testing process. Content generation can be automated or manual, but it should adhere to the Bluesky Community Guidelines (link)
+The sandbox environment is intended to test infrastructure, but user content may be created as part of this testing process. Content generation can be automated or manual.
 
 Do not post content that requires active moderation or violates the [Bluesky Community Guidelines](https://blueskyweb.xyz/support/community-guidelines)
 
