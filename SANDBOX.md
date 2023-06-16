@@ -10,7 +10,7 @@ To maintain a positive and productive developer experience, we've established a 
 
 Given that this is a testing environment, we will be defederating from any instances that do not abide by these guidelines, or that cause unnecessary trouble, and will not be providing specific justifications for these decisions.
 
-# AT Protocol Sandbox Environment Guidelines
+# Guidelines that must be followed
 
 Using the sandbox environment means you agree to adhere to our Guidelines. Please read the following carefully:
 
@@ -40,12 +40,14 @@ This is a developer sandbox and is meant for technical users. Do not promote you
 
 * Do not mirror sandbox did:plcs to production
 
-## 🐉 Beware of dragons!
+
+## Status and Wipes
+
+### 🐉 Beware of dragons!
 
 This hasn’t been production tested yet. It seems to work pretty well, but who knows what’s lurking under the surface. Have patience with us as we prep for federation.
 
 On that note, please give us feedback either in [Issues](https://github.com/bluesky-social/atproto/issues) (actual bugs) or [Discussions](https://github.com/bluesky-social/atproto/discussions) (higher-level questions/discussions) on the [atproto repo](https://github.com/bluesky-social/atproto).
-
 
 ### Routine wipes
 
