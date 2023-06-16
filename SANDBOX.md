@@ -6,7 +6,7 @@ This is a completely separate network from our production services that allows u
 
 The federation sandbox environment is an area set up for exploration and testing of the technical components of the AT Protocol distributed social network. It is intended for developers and self-hosters to test out data availability in a federated environment.
 
-To maintain a positive and productive developer experience, we've established a Code of Conduct that outlines our expectations and guidelines. This sandbox environment is initially meant to test the technical components of federation.
+To maintain a positive and productive developer experience, we've established this Code of Conduct that outlines our expectations and guidelines. This sandbox environment is initially meant to test the technical components of federation.
 
 Given that this is a testing environment, we will be defederating from any instances that do not abide by these guidelines, or that cause unnecessary trouble, and will not be providing specific justifications for these decisions.
 
@@ -18,11 +18,11 @@ Using the sandbox environment means you agree to adhere to our Guidelines. Pleas
 
 The sandbox environment is intended to test infrastructure, but user content may be created as part of this testing process. Content generation can be automated or manual.
 
-Do not post content that requires active moderation or violates the [Bluesky Community Guidelines](https://blueskyweb.xyz/support/community-guidelines)
+Do not post content that requires active moderation or violates the [Bluesky Community Guidelines](https://blueskyweb.xyz/support/community-guidelines).
 
 ## Keep the emphasis on testing
 
-We’re striving to maintain a sandbox environment that fosters learning and technical growth. We will defederate with instances that recruit  users without making it clear that this is a test environment.
+We’re striving to maintain a sandbox environment that fosters learning and technical growth. We will defederate with instances that recruit users without making it clear that this is a test environment.
 
 ## Do limit account creation
 
@@ -45,7 +45,7 @@ This is a developer sandbox and is meant for technical users. Do not promote you
 
 ### 🐉 Beware of dragons!
 
-This hasn’t been production tested yet. It seems to work pretty well, but who knows what’s lurking under the surface. Have patience with us as we prep for federation.
+This hasn’t been production tested yet. It seems to work pretty well, but who knows what’s lurking under the surface — that's what this sandbox is for! Have patience with us as we prep for federation.
 
 On that note, please give us feedback either in [Issues](https://github.com/bluesky-social/atproto/issues) (actual bugs) or [Discussions](https://github.com/bluesky-social/atproto/discussions) (higher-level questions/discussions) on the [atproto repo](https://github.com/bluesky-social/atproto).
 
@@ -103,7 +103,7 @@ Feel free to experiment with running your own App View if you like!
 
 The PDS (Personal Data Server) is where users host their social data such as posts, profiles, likes, and follows. The goal of the sandbox is to federate many PDS together, so we hope you’ll run your own.
 
-We’re not actually running a Bluesky PDS in sandbox. All of the team’s sandbox accounts are self-hosted.
+We’re not actually running a Bluesky PDS in sandbox. You might see Bluesky team members' accounts in the sandbox environment, but those are self-hosted too.
 
 The PDS that you’ll be running is much of the same code that is running on the Bluesky production PDS. Notably, all of the in-pds-appview code has been torn out. You can see the actual PDS code that you’re running on the [atproto/simplify-pds](https://github.com/bluesky-social/atproto/pull/1198) branch.
 
@@ -137,4 +137,4 @@ You are within your rights to disable Watchtower auto-updates, but we strongly e
 
 📣 This is a sandbox version of a **public broadcast protocol** - please do not share sensitive information.
 
-🤝 Help each other out! Respond to issues & discussions, chat in Matrix/Discord, etc.
+🤝 Help each other out! Respond to issues & discussions, chat in [Matrix](https://matrix.to/#/%23bluesky-dev:matrix.org) or the community-run [Discord](https://discord.gg/3srmDsHSZJ), etc.
