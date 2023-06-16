@@ -2,10 +2,6 @@
 
 Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with self-hosting a Bluesky PDS.
 
-We're testing federation in a separate sandbox network. Checkout [SANDBOX.md](https://github.com/bluesky-social/pds/blob/main/SANDBOX.md) for an overview of the sandbox network.
-
-We do not currently support PDS federation on the production network. 
-
 ## FAQ
 
 ### What is Bluesky?
@@ -24,6 +20,14 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 
 * [Canonical TypeScript code](https://github.com/bluesky-social/atproto)
 * [Experimental Go code](https://github.com/bluesky-social/indigo)
+
+### What is the current status of federation?
+
+We do not currently support PDS federation on the production network but it is now possible to federate in the developer sandbox.
+
+### What should I know about running a PDS in the developer sandbox?
+
+Read the [SANDBOX.md](https://github.com/bluesky-social/pds/blob/main/SANDBOX.md) for an overview of the sandbox network.
 
 ## Self-hosting PDS
 
