@@ -1,25 +1,51 @@
-# Sandbox Guide
+# Bluesky Developer Sandbox Guide
 
-Welcome to the atproto federation sandbox!
+Welcome to the atproto federation developer sandbox!
 
 This is a completely separate network from our production services that allows us to test out the federation architecture and wire protocol.
 
-**🐉 Beware of dragons!**
+The federation sandbox environment is an area set up for exploration and testing of the technical components of the AT Protocol distributed social network. It is intended for developers and self-hosters to test out data availability in a federated environment.
+
+To maintain a positive and productive developer experience, we've established a Code of Conduct that outlines our expectations and guidelines. This sandbox environment is initially meant to test the technical components of federation.
+
+Given that this is a testing environment, we will be defederating from any instances that do not abide by these guidelines, or that cause unnecessary trouble, and will not be providing specific justifications for these decisions.
+
+# AT Protocol Sandbox Environment Guidelines
+
+Using the sandbox environment means you agree to adhere to our Guidelines. Please read the following carefully:
+
+## Post responsibly
+
+The sandbox environment is intended to test infrastructure, but user content may be created as part of this testing process. Content generation can be automated or manual, but it should adhere to the Bluesky Community Guidelines (link)
+
+Do not post content that requires active moderation or violates the [Bluesky Community Guidelines](https://blueskyweb.xyz/support/community-guidelines)
+
+## Keep the emphasis on testing
+
+We’re striving to maintain a sandbox environment that fosters learning and technical growth. We will defederate with instances that recruit  users without making it clear that this is a test environment.
+
+## Do limit account creation
+
+We don't want any one server using a majority of the resources in the  sandbox. To keep things balanced, to start, we’re only federating with Personal Data Servers (PDS) with up to 1000 accounts. However, we may change this if needed.
+
+## Don’t expect persistence or uptime
+
+We will routinely be wiping the data on our infrastructure. This is intended to reset the network state and to test sync protocols. Accounts and content should not be mirrored or migrated between the sandbox and real-world environments.
+
+## Don't advertise your service as being "Bluesky"
+
+This is a developer sandbox and is meant for technical users. Do not promote your service as being a way for non-technical users to use Bluesky.
+
+## Other
+
+* Do not mirror sandbox did:plcs to production
+
+## 🐉 Beware of dragons!
 
 This hasn’t been production tested yet. It seems to work pretty well, but who knows what’s lurking under the surface. Have patience with us as we prep for federation.
 
 On that note, please give us feedback either in [Issues](https://github.com/bluesky-social/atproto/issues) (actual bugs) or [Discussions](https://github.com/bluesky-social/atproto/discussions) (higher-level questions/discussions) on the [atproto repo](https://github.com/bluesky-social/atproto).
 
-### Sandbox Rules
-
-Please checkout the [Sandbox Rules](LINK_ME) before we get started. The gist is: this network is meant to test the technical underpinnings of federation. If you turn up technical problems for us, then you’re doing a great job. If you cause problems for us otherwise, we will defederate from you and will not give an explanation. 
-
-Do not:
-
-- post content that requires active moderation or violates the [Bluesky Community Guidelines](https://blueskyweb.xyz/support/community-guidelines)
-- advertise your service as being “Bluesky” or “production atproto network” - this is a sandbox and is meant for technical users
-- create a service with more than 1000 accounts on it
-- mirror sandbox did:plcs to production
 
 ### Routine wipes
 
@@ -29,17 +55,15 @@ We expect to perform wipes on a weekly or bi-weekly basis, though we reserve the
 
 When we wipe data, we will be wiping it on all services (BGS, App View, PLC). We will also mark any existing DIDs as “invalid” & will refuse to index those accounts in the next epoch of the network to discourage users from attempting to “rollover” their accounts across wipes.
 
-# The Sandbox Network
+# Learn more about atproto federation
 
-This is a parallel network to production Bluesky where we can test out the federation architecture and wire protocol.
+Check out the [high-level view of federation](https://blueskyweb.xyz/blog/5-5-2023-federation-architecture).
 
-You can check out a high-level view of federation [here](https://blueskyweb.xyz/blog/5-5-2023-federation-architecture).
-
-You can dive deeper into atproto [here](https://atproto.com/docs).
+Dive deeper with the [atproto docs](https://atproto.com/docs).
 
 ## Network Services
 
-We are running three services: PLC, BGS, Bluesky App View
+We are running three services: PLC, BGS, Bluesky "App View"
 
 ### PLC
 
@@ -75,7 +99,7 @@ Feel free to experiment with running your own App View if you like!
 
 # The PDS
 
-The PDS (personal data server) is where users host their social data such as posts, profiles, likes, and follows. The goal of the sandbox is to federate many PDS together, so we hope you’ll run your own.
+The PDS (Personal Data Server) is where users host their social data such as posts, profiles, likes, and follows. The goal of the sandbox is to federate many PDS together, so we hope you’ll run your own.
 
 We’re not actually running a Bluesky PDS in sandbox. All of the team’s sandbox accounts are self-hosted.
 
@@ -83,20 +107,9 @@ The PDS that you’ll be running is much of the same code that is running on the
 
 ### Getting started
 
-For complete instructions on getting your PDS set up, check out the [README](https://github.com/bluesky-social/pds/blob/main/README.md).
+For complete instructions on getting your PDS set up, check out the [README](./README.md).
 
-To access your account, you’ll log in with the client of your choice in the exact same way that you log into production Bluesky, for instance the [Bluesky web client](https://bsky.app/). When you do so, please provide the url of *your PDS* as the service that you wish to log in to.
-
-Invites on your PDS are required by default - to generate your first invite code, please run:
-
-```bash
-# PDS_HOSTNAME & PDS_ADMIN_PASSWORD both come from your pds.env file
-
-curl -X POST https://<PDS_HOSTNAME>/xrpc/com.atproto.server.createInviteCode \
-  -u "admin:<PDS_ADMIN_PASSWORD>" \
-  -H "Content-Type: application/json" \
-  -d '{"useCount": 1}'
-```
+To access your account, you’ll log in with the client of your choice in the exact same way that you log into production Bluesky, for instance the [Bluesky web client](https://app.bsky-sandbox.dev/). When you do so, please provide the url of *your PDS* as the service that you wish to log in to.
 
 ### Auto-updates
 
