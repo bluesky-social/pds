@@ -36,9 +36,7 @@ We will routinely be wiping the data on our infrastructure. This is intended to 
 
 This is a developer sandbox and is meant for technical users. Do not promote your service as being a way for non-technical users to use Bluesky.
 
-## Other
-
-* Do not mirror sandbox did:plcs to production
+## Do not mirror sandbox did:plcs to production
 
 
 ## Status and Wipes
@@ -56,6 +54,38 @@ As part of the sandbox, we will be doing routine wipes of all network data.
 We expect to perform wipes on a weekly or bi-weekly basis, though we reserve the right to do a wipe at any point.
 
 When we wipe data, we will be wiping it on all services (BGS, App View, PLC). We will also mark any existing DIDs as “invalid” & will refuse to index those accounts in the next epoch of the network to discourage users from attempting to “rollover” their accounts across wipes.
+
+# Getting started
+
+For complete instructions on getting your PDS set up, check out the [README](./README.md).
+
+To access your account, you’ll log in with the client of your choice in the exact same way that you log into production Bluesky, for instance the [Bluesky web client](https://app.bsky-sandbox.dev/). When you do so, please provide the url of *your PDS* as the service that you wish to log in to.
+
+## Auto-updates
+
+We’ve included Watchtower in the PDS distribution. Every day at midnight PST, this will check our GitHub container registry to see if there is a new version of the PDS container & update it on your service.
+
+This will allow us to rapidly iterate on protocol changes, as we’ll be able to push them out to the network on a daily basis.
+
+When we do routine network wipes, we will be pushing out a database migration to participating PDS that wipes content and accounts.
+
+You are within your rights to disable Watchtower auto-updates, but we strongly encourage their use and will not be providing support if you decide not to run the most up-to-date PDS distribution.
+
+## Odds & Ends & Warnings & Reminders
+
+🧪 Experiment & have fun! 
+
+🤖 Run [feed generators](https://github.com/bluesky-social/feed-generator). They should work the exact same way as production - be sure to adjust your env to listen to Sandbox BGS!
+
+🌈 Feel free to run your own AppView or BGS - although it’s a bit more involved & we’ll be providing limited support for this.
+
+👤 Your PDS will provide your handle by default. Custom domain handles should work exactly the same in sandbox as they do on production Bluesky. Although you will not be able to re-use your handle from production Bluesky as you can only have one DID set per handle.
+
+⚠️ If you follow the self-hosted PDS setup instructions, you’ll have private key material in your env file - be careful about sharing that!
+
+📣 This is a sandbox version of a **public broadcast protocol** - please do not share sensitive information.
+
+🤝 Help each other out! Respond to issues & discussions, chat in [Matrix](https://matrix.to/#/%23bluesky-dev:matrix.org) or the community-run [Discord](https://discord.gg/3srmDsHSZJ), etc.
 
 # Learn more about atproto federation
 
@@ -106,35 +136,3 @@ The PDS (Personal Data Server) is where users host their social data such as pos
 We’re not actually running a Bluesky PDS in sandbox. You might see Bluesky team members' accounts in the sandbox environment, but those are self-hosted too.
 
 The PDS that you’ll be running is much of the same code that is running on the Bluesky production PDS. Notably, all of the in-pds-appview code has been torn out. You can see the actual PDS code that you’re running on the [atproto/simplify-pds](https://github.com/bluesky-social/atproto/pull/1198) branch.
-
-### Getting started
-
-For complete instructions on getting your PDS set up, check out the [README](./README.md).
-
-To access your account, you’ll log in with the client of your choice in the exact same way that you log into production Bluesky, for instance the [Bluesky web client](https://app.bsky-sandbox.dev/). When you do so, please provide the url of *your PDS* as the service that you wish to log in to.
-
-### Auto-updates
-
-We’ve included Watchtower in the PDS distribution. Every day at midnight PST, this will check our GitHub container registry to see if there is a new version of the PDS container & update it on your service.
-
-This will allow us to rapidly iterate on protocol changes, as we’ll be able to push them out to the network on a daily basis.
-
-When we do routine network wipes, we will be pushing out a database migration to participating PDS that wipes content and accounts.
-
-You are within your rights to disable Watchtower auto-updates, but we strongly encourage their use and will not be providing support if you decide not to run the most up-to-date PDS distribution.
-
-## Odds & Ends & Warnings & Reminders
-
-🧪 Experiment & have fun! 
-
-🤖 Run [feed generators](https://github.com/bluesky-social/feed-generator). They should work the exact same way as production - be sure to adjust your env to listen to Sandbox BGS!
-
-🌈 Feel free to run your own AppView or BGS - although it’s a bit more involved & we’ll be providing limited support for this.
-
-👤 Your PDS will provide your handle by default. Custom domain handles should work exactly the same in sandbox as they do on production Bluesky. Although you will not be able to re-use your handle from production Bluesky as you can only have one DID set per handle.
-
-⚠️ If you follow the self-hosted PDS setup instructions, you’ll have private key material in your env file - be careful about sharing that!
-
-📣 This is a sandbox version of a **public broadcast protocol** - please do not share sensitive information.
-
-🤝 Help each other out! Respond to issues & discussions, chat in [Matrix](https://matrix.to/#/%23bluesky-dev:matrix.org) or the community-run [Discord](https://discord.gg/3srmDsHSZJ), etc.
