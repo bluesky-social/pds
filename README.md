@@ -285,10 +285,17 @@ SYSTEMD_UNIT_FILE
 
 ##### Start the service
 
+**Reload the systemd daemon to create the new service:**
 ```bash
 sudo systemctl daemon-reload
 ```
 
+**Enable the systemd service:**
+```bash
+sudo systemctl enable pds
+```
+
+**Start the pds systemd service:**
 ```bash
 sudo systemctl start pds
 ```
