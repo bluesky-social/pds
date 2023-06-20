@@ -79,7 +79,9 @@ You are within your rights to disable Watchtower auto-updates, but we strongly e
 
 🌈 Feel free to run your own AppView or BGS - although it’s a bit more involved & we’ll be providing limited support for this.
 
-⏱️ Updates are generally processed pretty quickly. But because we use on-demand TLS with Caddy, your profile may not load at first - please be patient & it should load within 5-10s after account creation. We're working on a fix to make this smoother.
+✏️ Because the atproto network is a distributed system, your PDS can no longer definitively read-after-write. Updates are generally processed pretty quickly, however this discrepancy may show in certain circumstances, such as updating a profile or replying to a thread. We're working on utilities to make this easier to handle.
+
+⏱️ As a specific case of the above, because we use on-demand TLS with Caddy, your profile may not load at first - please be patient & it should load within 5-10s after account creation. Again, we'll be working to smooth over this.
 
 👤 Your PDS will provide your handle by default. Custom domain handles should work exactly the same in sandbox as they do on production Bluesky. Although you will not be able to re-use your handle from production Bluesky as you can only have one DID set per handle.
 
