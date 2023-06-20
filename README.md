@@ -2,6 +2,25 @@
 
 Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with self-hosting a Bluesky PDS.
 
+## Table of Contents
+
+* [PDS](#pds)
+  * [FAQ](#faq)
+    * [What is Bluesky?](#what-is-bluesky)
+    * [What is AT Protocol?](#what-is-at-protocol)
+    * [Where is the code?](#where-is-the-code)
+    * [What is the current status of federation?](#what-is-the-current-status-of-federation)
+    * [What should I know about running a PDS in the developer sandbox?](#what-should-i-know-about-running-a-pds-in-the-developer-sandbox)
+  * [Self\-hosting PDS](#self-hosting-pds)
+    * [Preparation for self\-hosting PDS](#preparation-for-self-hosting-pds)
+    * [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
+    * [Configure DNS for your domain](#configure-dns-for-your-domain)
+    * [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
+    * [Automatic install on Ubuntu 20\.04/22\.04 or Debian 11/12](#automatic-install-on-ubuntu-20042204-or-debian-1112)
+    * [Installing manually on Ubuntu 22\.04](#installing-manually-on-ubuntu-2204)
+  * [PDS environment variables](#pds-environment-variables)
+
+
 ## FAQ
 
 ### What is Bluesky?
@@ -93,7 +112,7 @@ Examples to check (record type `A`):
 
 These should all return your server's public IP.
 
-## Automatic install on Ubuntu 20.04/22.04 or Debian 11/12
+### Automatic install on Ubuntu 20.04/22.04 or Debian 11/12
 
 On your server via ssh, run the installer script:
 
@@ -105,9 +124,9 @@ wget https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh
 sudo bash installer.sh
 ```
 
-## Installing manually on Ubuntu 22.04
+### Installing manually on Ubuntu 22.04
 
-### Open ports on your Linux firewall
+#### Open ports on your Linux firewall
 
 If your server is running a Linux firewall managed with `ufw`, you will need to open these ports:
 
@@ -116,19 +135,19 @@ $ sudo ufw allow 80/tcp
 $ sudo ufw allow 443/tcp
 ```
 
-### Install Docker
+#### Install Docker
 
 On your server, install Docker CE (Community Edition), using the the following instructions. For other operating systems you may reference the [official Docker install guides](https://docs.docker.com/engine/install/).
 
 **Note:** All of the following commands should be run on your server via ssh.
 
-#### Uninstall old versions
+##### Uninstall old versions
 
 ```bash
 sudo apt-get remove docker docker-engine docker.io containerd runc
 ```
 
-#### Set up the repository
+##### Set up the repository
 
 ```bash
 sudo apt-get update
@@ -151,7 +170,7 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
-#### Install Docker Engine
+##### Install Docker Engine
 
 ```bash
 sudo apt-get update
@@ -161,13 +180,13 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-#### Verify Docker Engine installation
+##### Verify Docker Engine installation
 
 ```bash
 sudo docker run hello-world
 ```
 
-### Set up the PDS directory
+#### Set up the PDS directory
 
 ```bash
 sudo mkdir /pds
@@ -175,7 +194,7 @@ sudo mkdir --parents /pds/caddy/data
 sudo mkdir --parents /pds/caddy/etc/caddy
 ```
 
-### Create the Caddyfile
+#### Create the Caddyfile
 
 Be sure to replace `example.com` with your own domain.
 
@@ -194,7 +213,7 @@ cat <<CADDYFILE | sudo tee /pds/caddy/etc/caddy/Caddyfile
 CADDYFILE
 ```
 
-### Create the PDS env configuration file
+#### Create the PDS env configuration file
 
 You should fill in the first 5 values, but leave the rest untouched unless you have good reason to change it. 
 
@@ -227,9 +246,9 @@ PDS_CRAWLERS=https://bgs.bsky-sandbox.dev
 PDS_CONFIG
 ```
 
-### Start the PDS containers
+#### Start the PDS containers
 
-#### Download the Docker compose file
+##### Download the Docker compose file
 
 Download the `compose.yaml` to run your PDS, which includes the following containers:
 
@@ -241,7 +260,7 @@ Download the `compose.yaml` to run your PDS, which includes the following contai
 curl https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml | sudo tee /pds/compose.yaml
 ```
 
-#### Create the systemd service
+##### Create the systemd service
 
 ```bash
   cat <<SYSTEMD_UNIT_FILE >/etc/systemd/system/pds.service
@@ -263,7 +282,7 @@ WantedBy=default.target
 SYSTEMD_UNIT_FILE
 ```
 
-#### Start the service
+##### Start the service
 
 ```bash
 sudo systemctl daemon-reload
@@ -285,7 +304,7 @@ sudo systemctl status pds
 sudo docker ps
 ```
 
-### Verify your PDS is online
+#### Verify your PDS is online
 
 You can check if your server is online and healthy by requesting the healthcheck endpoint.
 
@@ -294,7 +313,7 @@ curl https://example.com/xrpc/_health
 {"version":"0.2.2-beta.2"}
 ```
 
-### Connecting to your server
+#### Connecting to your server
 
 You can use the Bluesky app to connect to your server to create an account.
 
