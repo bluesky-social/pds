@@ -17,6 +17,8 @@ Welcome to the repository for the official Bluesky PDS (Personal Data Server). T
   * [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
   * [Automatic install on Ubuntu 20\.04/22\.04 or Debian 11/12](#automatic-install-on-ubuntu-20042204-or-debian-1112)
   * [Installing manually on Ubuntu 22\.04](#installing-manually-on-ubuntu-2204)
+  * [Connecting to your server](#connecting-to-your-server)
+  * [Manually updating your PDS](#manually-updating-your-pds)
 * [PDS environment variables](#pds-environment-variables)
 
 
@@ -325,7 +327,7 @@ curl -X POST https://<PDS_HOSTNAME>/xrpc/com.atproto.server.createInviteCode \
   -d '{"useCount": 1}'
 ```
 
-## Connecting to your server
+### Connecting to your server
 
 You can use the Bluesky app to connect to your server to create an account.
 
@@ -338,7 +340,7 @@ _Note: because we use on-the-fly TLS certs, it may take 10-30s for your handle t
 
 Checkout [SANDBOX.md](./SANDBOX.md) for an overview of participating in the sandbox network.
 
-## Manually updating your PDS
+### Manually updating your PDS
 
 If you use use Docker `compose.yaml` file in this repo, your PDS will automatically update nightly. To manually update to the latest version use the following commands.
 
