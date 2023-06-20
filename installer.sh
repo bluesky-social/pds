@@ -27,6 +27,7 @@ REQUIRED_SYSTEM_PACKAGES="
   openssl
   xxd
 "
+
 # Docker packages.
 REQUIRED_DOCKER_PACKAGES="
   docker-ce
@@ -306,10 +307,12 @@ CADDYFILE
   #
   # Create the PDS env config
   #
+  # Created here so that we can use it later in multiple places.
+  PDS_ADMIN_PASSWORD=$(eval "${GENERATE_SECURE_SECRET_CMD}")
   cat <<PDS_CONFIG >"${PDS_DATADIR}/pds.env"
 PDS_HOSTNAME=${PDS_HOSTNAME}
 PDS_JWT_SECRET=$(eval "${GENERATE_SECURE_SECRET_CMD}")
-PDS_ADMIN_PASSWORD=$(eval "${GENERATE_SECURE_SECRET_CMD}")
+PDS_ADMIN_PASSWORD=${PDS_ADMIN_PASSWORD}
 PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX=$(eval "${GENERATE_K256_PRIVATE_KEY_CMD}")
 PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX=$(eval "${GENERATE_K256_PRIVATE_KEY_CMD}")
 PDS_DB_SQLITE_LOCATION=${PDS_DATADIR}/pds.sqlite
@@ -396,6 +399,16 @@ ${PDS_HOSTNAME}              A          ${PUBLIC_IP}
 *.${PDS_HOSTNAME}            A          ${PUBLIC_IP}   
 
 Detected public IP of this server: ${PUBLIC_IP}
+
+# To create an invite code, run the following command:
+
+curl --silent \\
+  --show-error \\
+  --request POST \\
+  --user "admin:${PDS_ADMIN_PASSWORD}" \\
+  --header "Content-Type: application/json" \\
+  --data '{"useCount": 1}' \\
+  https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createInviteCode 
 
 ========================================================================
 INSTALLER_MESSAGE
