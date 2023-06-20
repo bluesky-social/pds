@@ -27,7 +27,6 @@ REQUIRED_SYSTEM_PACKAGES="
   openssl
   xxd
 "
-
 # Docker packages.
 REQUIRED_DOCKER_PACKAGES="
   docker-ce
