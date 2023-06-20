@@ -334,6 +334,8 @@ You can use the Bluesky app to connect to your server to create an account.
 1. Create an account using the generated invite code
 1. Create a post
 
+_Note: because we use on-the-fly TLS certs, it may take 10-30s for your account to be initially picked up by our indexer. If you aren't seeing your first post/profile, wait 30s and try to make another post._
+
 Checkout [SANDBOX.md](./SANDBOX.md) for an overview of participating in the sandbox network.
 
 ## PDS environment variables
