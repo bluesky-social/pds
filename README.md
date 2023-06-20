@@ -312,13 +312,26 @@ curl https://example.com/xrpc/_health
 {"version":"0.2.2-beta.2"}
 ```
 
-#### Connecting to your server
+#### Generate an invite code
+
+By default, your PDS will require an invite code to create an account. 
+
+You can generate a new invite code with the following command:
+
+```bash
+curl -X POST https://<PDS_HOSTNAME>/xrpc/com.atproto.server.createInviteCode \
+  -u "admin:<PDS_ADMIN_PASSWORD>" \
+  -H "Content-Type: application/json" \
+  -d '{"useCount": 1}'
+```
+
+## Connecting to your server
 
 You can use the Bluesky app to connect to your server to create an account.
 
 1. Download the Bluesky app
 1. Enter the URL of your PDS (e.g. `https://example.com/`)
-1. Create an account
+1. Create an account using the generated invite code
 1. Create a post
 
 Checkout [SANDBOX.md](./SANDBOX.md) for an overview of participating in the sandbox network.
