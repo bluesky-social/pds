@@ -4,21 +4,20 @@ Welcome to the repository for the official Bluesky PDS (Personal Data Server). T
 
 ## Table of Contents
 
-* [PDS](#pds)
-  * [FAQ](#faq)
-    * [What is Bluesky?](#what-is-bluesky)
-    * [What is AT Protocol?](#what-is-at-protocol)
-    * [Where is the code?](#where-is-the-code)
-    * [What is the current status of federation?](#what-is-the-current-status-of-federation)
-    * [What should I know about running a PDS in the developer sandbox?](#what-should-i-know-about-running-a-pds-in-the-developer-sandbox)
-  * [Self\-hosting PDS](#self-hosting-pds)
-    * [Preparation for self\-hosting PDS](#preparation-for-self-hosting-pds)
-    * [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
-    * [Configure DNS for your domain](#configure-dns-for-your-domain)
-    * [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
-    * [Automatic install on Ubuntu 20\.04/22\.04 or Debian 11/12](#automatic-install-on-ubuntu-20042204-or-debian-1112)
-    * [Installing manually on Ubuntu 22\.04](#installing-manually-on-ubuntu-2204)
-  * [PDS environment variables](#pds-environment-variables)
+* [FAQ](#faq)
+  * [What is Bluesky?](#what-is-bluesky)
+  * [What is AT Protocol?](#what-is-at-protocol)
+  * [Where is the code?](#where-is-the-code)
+  * [What is the current status of federation?](#what-is-the-current-status-of-federation)
+  * [What should I know about running a PDS in the developer sandbox?](#what-should-i-know-about-running-a-pds-in-the-developer-sandbox)
+* [Self\-hosting PDS](#self-hosting-pds)
+  * [Preparation for self\-hosting PDS](#preparation-for-self-hosting-pds)
+  * [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
+  * [Configure DNS for your domain](#configure-dns-for-your-domain)
+  * [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
+  * [Automatic install on Ubuntu 20\.04/22\.04 or Debian 11/12](#automatic-install-on-ubuntu-20042204-or-debian-1112)
+  * [Installing manually on Ubuntu 22\.04](#installing-manually-on-ubuntu-2204)
+* [PDS environment variables](#pds-environment-variables)
 
 
 ## FAQ
