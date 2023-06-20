@@ -79,6 +79,8 @@ You are within your rights to disable Watchtower auto-updates, but we strongly e
 
 🌈 Feel free to run your own AppView or BGS - although it’s a bit more involved & we’ll be providing limited support for this.
 
+⏱️ Updates are generally processed pretty quickly. But because we use on-demand TLS with Caddy, your profile may not load at first - please be patient & it should load within 5-10s after account creation. We're working on a fix to make this smoother
+
 👤 Your PDS will provide your handle by default. Custom domain handles should work exactly the same in sandbox as they do on production Bluesky. Although you will not be able to re-use your handle from production Bluesky as you can only have one DID set per handle.
 
 ⚠️ If you follow the self-hosted PDS setup instructions, you’ll have private key material in your env file - be careful about sharing that!
