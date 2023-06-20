@@ -102,6 +102,29 @@ function main {
     exit 1
   fi
 
+  # Check if PDS is already installed.
+  if [[ -e "${PDS_DATADIR}/pds.sqlite" ]]; then
+    echo
+    echo "ERROR: pds is already configured in ${PDS_DATADIR}"
+    echo
+    echo "To do a clean re-install:"
+    echo "------------------------------------"
+    echo "1. Stop the service"
+    echo
+    echo "  sudo systemctl stop pds"
+    echo
+    echo "2. Delete the data directory"
+    echo
+    echo "  sudo rm -rf ${PDS_DATADIR}"
+    echo
+    echo "3. Re-run this installation script"
+      echo
+    echo "  sudo bash ${0}"
+    echo
+    echo "For assistance, check https://github.com/bluesky-social/pds"
+    exit 1
+  fi
+
 
   #
   # Attempt to determine server's public IP.
@@ -190,28 +213,6 @@ INSTALLER_MESSAGE
     usage "No admin email specified"
   fi
 
-
-  if [[ -e "${PDS_DATADIR}/pds.sqlite" ]]; then
-    echo
-    echo "ERROR: pds is already configured in ${PDS_DATADIR}"
-    echo
-    echo "To do a clean re-install:"
-    echo "------------------------------------"
-    echo "1. Stop the service"
-    echo
-    echo "  sudo systemctl stop pds"
-    echo
-    echo "2. Delete the data directory"
-    echo
-    echo "  sudo rm -rf ${PDS_DATADIR}"
-    echo
-    echo "3. Re-run this installation script"
-      echo
-    echo "  sudo bash ${0}"
-    echo
-    echo "For assistance, check https://github.com/bluesky-social/pds"
-    exit 1
-  fi
 
   #
   # Install system packages.
