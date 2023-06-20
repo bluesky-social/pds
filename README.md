@@ -338,6 +338,20 @@ _Note: because we use on-the-fly TLS certs, it may take 10-30s for your handle t
 
 Checkout [SANDBOX.md](./SANDBOX.md) for an overview of participating in the sandbox network.
 
+## Manually updating your PDS
+
+If you use use Docker `compose.yaml` file in this repo, your PDS will automatically update nightly. To manually update to the latest version use the following commands.
+
+**Pull the latest PDS container image:**
+```bash
+sudo docker pull ghcr.io/bluesky-social/pds:latest
+```
+
+**Restart PDS with the new container image:**
+```bash
+sudo systemctl restart pds
+```
+
 ## PDS environment variables
 
 You will need to customize various settings configured through the PDS environment variables. See the below table to find the variables you'll need to set.
