@@ -30,13 +30,12 @@ Welcome to the repository for the official Bluesky PDS (Personal Data Server). T
       * [Download the Docker compose file](#download-the-docker-compose-file)
       * [Create the systemd service](#create-the-systemd-service)
       * [Start the service](#start-the-service)
-    * [Verify your PDS is online](#verify-your-pds-is-online)
-    * [Obtain your PDS admin password](#obtain-your-pds-admin-password)
-    * [Generate an invite code for your PDS](#generate-an-invite-code-for-your-pds)
+  * [Verify your PDS is online](#verify-your-pds-is-online)
+  * [Obtain your PDS admin password](#obtain-your-pds-admin-password)
+  * [Generate an invite code for your PDS](#generate-an-invite-code-for-your-pds)
   * [Connecting to your server](#connecting-to-your-server)
   * [Manually updating your PDS](#manually-updating-your-pds)
 * [PDS environment variables](#pds-environment-variables)
-
 
 
 ## FAQ
@@ -329,7 +328,7 @@ sudo systemctl status pds
 sudo docker ps
 ```
 
-#### Verify your PDS is online
+### Verify your PDS is online
 
 You can check if your server is online and healthy by requesting the healthcheck endpoint.
 
@@ -338,7 +337,7 @@ curl https://example.com/xrpc/_health
 {"version":"0.2.2-beta.2"}
 ```
 
-#### Obtain your PDS admin password
+### Obtain your PDS admin password
 
 Your PDS admin password should be in your `pds.env` file if you used the installer script.
 
@@ -349,7 +348,7 @@ $ source /pds/pds.env
 $ echo $PDS_ADMIN_PASSWORD
 a7b5970b6a5077bb41fc68a26d30adda
 ```
-#### Generate an invite code for your PDS
+### Generate an invite code for your PDS
 
 By default, your PDS will require an invite code to create an account. 
 
