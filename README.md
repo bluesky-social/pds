@@ -17,9 +17,26 @@ Welcome to the repository for the official Bluesky PDS (Personal Data Server). T
   * [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
   * [Automatic install on Ubuntu 20\.04/22\.04 or Debian 11/12](#automatic-install-on-ubuntu-20042204-or-debian-1112)
   * [Installing manually on Ubuntu 22\.04](#installing-manually-on-ubuntu-2204)
+    * [Open ports on your Linux firewall](#open-ports-on-your-linux-firewall)
+    * [Install Docker](#install-docker)
+      * [Uninstall old versions](#uninstall-old-versions)
+      * [Set up the repository](#set-up-the-repository)
+      * [Install Docker Engine](#install-docker-engine)
+      * [Verify Docker Engine installation](#verify-docker-engine-installation)
+    * [Set up the PDS directory](#set-up-the-pds-directory)
+    * [Create the Caddyfile](#create-the-caddyfile)
+    * [Create the PDS env configuration file](#create-the-pds-env-configuration-file)
+    * [Start the PDS containers](#start-the-pds-containers)
+      * [Download the Docker compose file](#download-the-docker-compose-file)
+      * [Create the systemd service](#create-the-systemd-service)
+      * [Start the service](#start-the-service)
+    * [Verify your PDS is online](#verify-your-pds-is-online)
+    * [Obtain your PDS admin password](#obtain-your-pds-admin-password)
+    * [Generate an invite code for your PDS](#generate-an-invite-code-for-your-pds)
   * [Connecting to your server](#connecting-to-your-server)
   * [Manually updating your PDS](#manually-updating-your-pds)
 * [PDS environment variables](#pds-environment-variables)
+
 
 
 ## FAQ
