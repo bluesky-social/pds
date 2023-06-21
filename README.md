@@ -373,7 +373,10 @@ curl --silent \
 
 You can use the Bluesky app to connect to your server to create an account.
 
-1. Download the Bluesky app
+1. Get the Bluesky app
+    * [Bluesky for Web (sandbox)](https://app.bsky-sandbox.dev/)
+    * [Bluesky for iPhone](https://apps.apple.com/us/app/bluesky-social/id6444370199)
+    * [Bluesky for Android](https://play.google.com/store/apps/details?id=xyz.blueskyweb.app)
 1. Enter the URL of your PDS (e.g. `https://example.com/`)
 1. Create an account using the generated invite code
 1. Create a post
