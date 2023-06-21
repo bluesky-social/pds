@@ -321,18 +321,37 @@ curl https://example.com/xrpc/_health
 {"version":"0.2.2-beta.2"}
 ```
 
-#### Generate an invite code
+#### Obtain your PDS admin password
+
+Your PDS admin password should be in your `pds.env` file if you used the installer script.
+
+**For example:**
+
+```bash
+$ source /pds/pds.env
+$ echo $PDS_ADMIN_PASSWORD
+a7b5970b6a5077bb41fc68a26d30adda
+```
+#### Generate an invite code for your PDS
 
 By default, your PDS will require an invite code to create an account. 
 
 You can generate a new invite code with the following command:
 
 ```bash
-curl -X POST https://<PDS_HOSTNAME>/xrpc/com.atproto.server.createInviteCode \
-  -u "admin:<PDS_ADMIN_PASSWORD>" \
-  -H "Content-Type: application/json" \
-  -d '{"useCount": 1}'
+PDS_HOSTNAME="example.com"
+PDS_ADMIN_PASSWORD="<YOUR PDS ADMIN PASSWORD>"
+
+curl --silent \
+  --show-error \
+  --request POST \
+  --user "admin:${PDS_ADMIN_PASSWORD}" \
+  --header "Content-Type: application/json" \
+  --data '{"useCount": 1}' \
+  https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createInviteCode
 ```
+
+**Note:** the `useCount` field specifies how many times an invite code can be used
 
 ### Connecting to your server
 
