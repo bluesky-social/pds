@@ -257,7 +257,7 @@ PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX=${PDS_PLC_ROTATION_KEY_K256_PRIVATE_KE
 PDS_DB_SQLITE_LOCATION=/pds/pds.sqlite
 PDS_BLOBSTORE_DISK_LOCATION=/pds/blocks
 PDS_DID_PLC_URL=https://plc.bsky-sandbox.dev
-PDS_BSKY_APP_VIEW_ENDPOINT=https://api.bsky-sandbox.dev
+PDS_BSKY_APP_VIEW_URL=https://api.bsky-sandbox.dev
 PDS_BSKY_APP_VIEW_DID=did:web:api.bsky-sandbox.dev
 PDS_CRAWLERS=https://bgs.bsky-sandbox.dev
 PDS_CONFIG
