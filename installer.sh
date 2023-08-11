@@ -293,14 +293,17 @@ DOCKERD_CONFIG
   echo "* Creating Caddy config file"
   cat <<CADDYFILE >"${PDS_DATADIR}/caddy/etc/caddy/Caddyfile"
 {
-  email ${PDS_ADMIN_EMAIL}
+	email ${PDS_ADMIN_EMAIL}
+	on_demand_tls {
+		ask http://localhost:3000
+	}
 }
 
 *.${PDS_HOSTNAME}, ${PDS_HOSTNAME} {
-  tls {
-    on_demand
-  }
-  reverse_proxy http://localhost:3000
+	tls {
+		on_demand
+	}
+	reverse_proxy http://localhost:3000
 }
 CADDYFILE
 
