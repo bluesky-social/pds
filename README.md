@@ -55,7 +55,7 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 
 ### How can developers get invite codes?
 
-Check out the [Bluesky Developer Waitlist](https://docs.google.com/forms/d/e/1FAIpQLSfCuguykw3HaPxIZMJQKRu8_-vsRew90NALVTDOjCSPDmsGNg/viewform) which prioritizes access for developers wanting to build software on atproto.
+There is no invite required to join the sandbox network. Simply set up your own PDS and generate your own invite codes to create accounts. If you desire an account on the production network (on the official Bluesky PDS) please check out the [Bluesky Developer Waitlist](https://docs.google.com/forms/d/e/1FAIpQLSfCuguykw3HaPxIZMJQKRu8_-vsRew90NALVTDOjCSPDmsGNg/viewform) which prioritizes access for developers wanting to build software on atproto.
 
 ### Where is the code?
 
