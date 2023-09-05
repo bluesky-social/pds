@@ -7,6 +7,7 @@ Welcome to the repository for the official Bluesky PDS (Personal Data Server). T
 * [FAQ](#faq)
   * [What is Bluesky?](#what-is-bluesky)
   * [What is AT Protocol?](#what-is-at-protocol)
+  * [How can developers get invite codes?](#how-can-developers-get-invite-codes)
   * [Where is the code?](#where-is-the-code)
   * [What is the current status of federation?](#what-is-the-current-status-of-federation)
   * [What should I know about running a PDS in the developer sandbox?](#what-should-i-know-about-running-a-pds-in-the-developer-sandbox)
