@@ -52,6 +52,10 @@ The Authenticated Transfer Protocol, aka atproto, is a protocol for large-scale 
 
 Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for additional information.
 
+### How can developers get invite codes?
+
+Check out the [Bluesky Developer Waitlist](https://docs.google.com/forms/d/e/1FAIpQLSfCuguykw3HaPxIZMJQKRu8_-vsRew90NALVTDOjCSPDmsGNg/viewform) which prioritizes access for developers wanting to build software on atproto.
+
 ### Where is the code?
 
 * [Canonical TypeScript code](https://github.com/bluesky-social/atproto)
