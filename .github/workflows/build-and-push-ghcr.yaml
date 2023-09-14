@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - repo-v3
 env:
   REGISTRY: ghcr.io
   USERNAME: ${{ github.actor }}
@@ -52,7 +51,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           file: ./Dockerfile
           tags: |
-            ghcr.io/bluesky-social/pds:beta
+            ghcr.io/bluesky-social/pds:latest
             ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
