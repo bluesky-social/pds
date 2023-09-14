@@ -35,6 +35,5 @@ services:
         target: /var/run/docker.sock
     restart: unless-stopped
     environment:
-      TZ: "US/Pacific"
       WATCHTOWER_CLEANUP: true
       WATCHTOWER_SCHEDULE: "@midnight"
