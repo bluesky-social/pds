@@ -224,6 +224,9 @@ Be sure to replace `example.com` with your own domain.
 cat <<CADDYFILE | sudo tee /pds/caddy/etc/caddy/Caddyfile
 {
   email you@example.com
+  on_demand_tls {
+    ask http://localhost:3000
+  }
 }
 
 *.example.com, example.com {
