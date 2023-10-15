@@ -288,7 +288,7 @@ curl https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml | su
 ##### Create the systemd service
 
 ```bash
-  cat <<SYSTEMD_UNIT_FILE >/etc/systemd/system/pds.service
+cat <<SYSTEMD_UNIT_FILE | sudo tee /etc/systemd/system/pds.service
 [Unit]
 Description=Bluesky PDS Service
 Documentation=https://github.com/bluesky-social/pds
