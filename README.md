@@ -288,7 +288,7 @@ curl https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml | su
 ##### Create the systemd service
 
 ```bash
-  cat <<SYSTEMD_UNIT_FILE >/etc/systemd/system/pds.service
+cat <<SYSTEMD_UNIT_FILE | sudo tee /etc/systemd/system/pds.service
 [Unit]
 Description=Bluesky PDS Service
 Documentation=https://github.com/bluesky-social/pds
@@ -427,4 +427,4 @@ You will need to customize various settings configured through the PDS environme
 
 There are additional environment variables that can be tweaked depending on how you're running your service. For instance, storing blobs in AWS S3, keys in AWS KMS, or setting up an email service.
 
-Feel free to explore those [Here](https://github.com/bluesky-social/atproto/blob/simplify-pds/packages/pds/src/config/env.ts). However, we will not be providing support for more advanced configurations.
+Feel free to explore those [Here](https://github.com/bluesky-social/atproto/blob/main/packages/pds/src/config/env.ts). However, we will not be providing support for more advanced configurations.
