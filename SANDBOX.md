@@ -18,7 +18,7 @@ Using the sandbox environment means you agree to adhere to our Guidelines. Pleas
 
 The sandbox environment is intended to test infrastructure, but user content may be created as part of this testing process. Content generation can be automated or manual.
 
-Do not post content that requires active moderation or violates the [Bluesky Community Guidelines](https://blueskyweb.xyz/support/community-guidelines).
+Do not post content that requires active moderation or violates the [Bluesky Community Guidelines](https://bsky.social/about/support/community-guidelines).
 
 ## Keep the emphasis on testing
 
@@ -93,7 +93,7 @@ You are within your rights to disable Watchtower auto-updates, but we strongly e
 
 # Learn more about atproto federation
 
-Check out the [high-level view of federation](https://blueskyweb.xyz/blog/5-5-2023-federation-architecture).
+Check out the [high-level view of federation](https://bsky.social/about/blog/5-5-2023-federation-architecture).
 
 Dive deeper with the [atproto docs](https://atproto.com/docs).
 
