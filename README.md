@@ -4,39 +4,41 @@ Welcome to the repository for the official Bluesky PDS (Personal Data Server). T
 
 ## Table of Contents
 
-* [FAQ](#faq)
-  * [What is Bluesky?](#what-is-bluesky)
-  * [What is AT Protocol?](#what-is-at-protocol)
-  * [How can developers get invite codes?](#how-can-developers-get-invite-codes)
-  * [Where is the code?](#where-is-the-code)
-  * [What is the current status of federation?](#what-is-the-current-status-of-federation)
-  * [What should I know about running a PDS in the developer sandbox?](#what-should-i-know-about-running-a-pds-in-the-developer-sandbox)
-* [Self\-hosting PDS](#self-hosting-pds)
-  * [Preparation for self\-hosting PDS](#preparation-for-self-hosting-pds)
-  * [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
-  * [Configure DNS for your domain](#configure-dns-for-your-domain)
-  * [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
-  * [Automatic install on Ubuntu 20\.04/22\.04 or Debian 11/12](#automatic-install-on-ubuntu-20042204-or-debian-1112)
-  * [Installing manually on Ubuntu 22\.04](#installing-manually-on-ubuntu-2204)
-    * [Open ports on your Linux firewall](#open-ports-on-your-linux-firewall)
-    * [Install Docker](#install-docker)
-      * [Uninstall old versions](#uninstall-old-versions)
-      * [Set up the repository](#set-up-the-repository)
-      * [Install Docker Engine](#install-docker-engine)
-      * [Verify Docker Engine installation](#verify-docker-engine-installation)
-    * [Set up the PDS directory](#set-up-the-pds-directory)
-    * [Create the Caddyfile](#create-the-caddyfile)
-    * [Create the PDS env configuration file](#create-the-pds-env-configuration-file)
-    * [Start the PDS containers](#start-the-pds-containers)
-      * [Download the Docker compose file](#download-the-docker-compose-file)
-      * [Create the systemd service](#create-the-systemd-service)
-      * [Start the service](#start-the-service)
-  * [Verify your PDS is online](#verify-your-pds-is-online)
-  * [Obtain your PDS admin password](#obtain-your-pds-admin-password)
-  * [Generate an invite code for your PDS](#generate-an-invite-code-for-your-pds)
-  * [Connecting to your server](#connecting-to-your-server)
-  * [Manually updating your PDS](#manually-updating-your-pds)
-* [PDS environment variables](#pds-environment-variables)
+- [PDS](#pds)
+  - [Table of Contents](#table-of-contents)
+  - [FAQ](#faq)
+    - [What is Bluesky?](#what-is-bluesky)
+    - [What is AT Protocol?](#what-is-at-protocol)
+    - [How can developers get invite codes?](#how-can-developers-get-invite-codes)
+    - [Where is the code?](#where-is-the-code)
+    - [What is the current status of federation?](#what-is-the-current-status-of-federation)
+    - [What should I know about running a PDS in the developer sandbox?](#what-should-i-know-about-running-a-pds-in-the-developer-sandbox)
+  - [Self-hosting PDS](#self-hosting-pds)
+    - [Preparation for self-hosting PDS](#preparation-for-self-hosting-pds)
+    - [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
+    - [Configure DNS for your domain](#configure-dns-for-your-domain)
+    - [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
+    - [Automatic install on Ubuntu 20.04/22.04 or Debian 11/12](#automatic-install-on-ubuntu-20042204-or-debian-1112)
+    - [Installing manually on Ubuntu 22.04](#installing-manually-on-ubuntu-2204)
+      - [Open ports on your Linux firewall](#open-ports-on-your-linux-firewall)
+      - [Install Docker](#install-docker)
+        - [Uninstall old versions](#uninstall-old-versions)
+        - [Set up the repository](#set-up-the-repository)
+        - [Install Docker Engine](#install-docker-engine)
+        - [Verify Docker Engine installation](#verify-docker-engine-installation)
+      - [Set up the PDS directory](#set-up-the-pds-directory)
+      - [Create the Caddyfile](#create-the-caddyfile)
+      - [Create the PDS env configuration file](#create-the-pds-env-configuration-file)
+      - [Start the PDS containers](#start-the-pds-containers)
+        - [Download the Docker compose file](#download-the-docker-compose-file)
+        - [Create the systemd service](#create-the-systemd-service)
+        - [Start the service](#start-the-service)
+    - [Verify your PDS is online](#verify-your-pds-is-online)
+    - [Obtain your PDS admin password](#obtain-your-pds-admin-password)
+    - [Generate an invite code for your PDS](#generate-an-invite-code-for-your-pds)
+    - [Connecting to your server](#connecting-to-your-server)
+    - [Manually updating your PDS](#manually-updating-your-pds)
+  - [PDS environment variables](#pds-environment-variables)
 
 
 ## FAQ
@@ -250,21 +252,21 @@ Your PDS will need two secp256k1 private keys provided as hex strings. You can s
 PDS_HOSTNAME="example.com"
 PDS_JWT_SECRET="$(openssl rand --hex 16)"
 PDS_ADMIN_PASSWORD="$(openssl rand --hex 16)"
-PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX="$(openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32)"
 PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX="$(openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32)"
 
 cat <<PDS_CONFIG | sudo tee /pds/pds.env
 PDS_HOSTNAME=${PDS_HOSTNAME}
 PDS_JWT_SECRET=${PDS_JWT_SECRET}
 PDS_ADMIN_PASSWORD=${PDS_ADMIN_PASSWORD}
-PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX=${PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX}
 PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX=${PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX}
-PDS_DB_SQLITE_LOCATION=/pds/pds.sqlite
-PDS_BLOBSTORE_DISK_LOCATION=/pds/blocks
-PDS_DID_PLC_URL=https://plc.bsky-sandbox.dev
-PDS_BSKY_APP_VIEW_URL=https://api.bsky-sandbox.dev
-PDS_BSKY_APP_VIEW_DID=did:web:api.bsky-sandbox.dev
-PDS_CRAWLERS=https://bgs.bsky-sandbox.dev
+PDS_DATA_DIRECTORY=/pds
+PDS_BLOBSTORE_DISK_LOCATION=/pds/blobs
+PDS_DID_PLC_URL=https://plc.directory
+PDS_BSKY_APP_VIEW_URL=https://api.bsky.app
+PDS_BSKY_APP_VIEW_DID=did:web:api.bsky.app
+PDS_CRAWLERS=https://bsky.network
+PDS_MOD_SERVICE_URL=https://mod.staging.bsky.dev
+PDS_MOD_SERVICE_DID=did:plc:kfiaag3o66qk75mfgwebyyns
 PDS_CONFIG
 ```
 
