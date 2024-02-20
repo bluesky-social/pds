@@ -5,9 +5,7 @@ set -o pipefail
 
 PDS_ENV_FILE="/pds/pds.env"
 
-if [[ -f "${PDS_ENV_FILE}" ]]; then
-  source "${PDS_ENV_FILE}"
-fi
+source "${PDS_ENV_FILE}"
 
 curl \
   --silent \
