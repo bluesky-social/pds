@@ -9,7 +9,8 @@ if [[ -f "${PDS_ENV_FILE}" ]]; then
   source "${PDS_ENV_FILE}"
 fi
 
-curl --silent \
+curl \
+  --silent \
   --show-error \
   --request POST \
   --user "admin:${PDS_ADMIN_PASSWORD}" \
