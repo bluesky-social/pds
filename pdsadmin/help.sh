@@ -32,6 +32,10 @@ request-crawl <RELAY HOST>
     Request a crawl from a relay host.
     e.g. pdsadmin request-crawl bsky.network
 
+create-invite-code
+  Create a new invite code.
+    e.g. pdsadmin create-invite-code
+
 help
     Display this help information.
 
