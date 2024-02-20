@@ -15,7 +15,10 @@ const main = async () => {
   const secrets = envToSecrets(env);
   const pds = await PDS.create(cfg, secrets);
   await pds.start();
-  pds.app.get("/check-handle", checkHandleRoute);
+  httpLogger.info("pds has started");
+  pds.app.get("/check-handle", (req, res) => {
+    checkHandleRoute(pds, req, res);
+  });
   // Graceful shutdown (see also https://aws.amazon.com/blogs/containers/graceful-shutdowns-with-ecs/)
   process.on("SIGTERM", async () => {
     httpLogger.info("pds is stopping");
@@ -25,9 +28,9 @@ const main = async () => {
 };
 
 async function checkHandleRoute(
+  /** @type {PDS} */ pds,
   /** @type {import('express').Request} */ req,
-  /** @type {import('express').Response} */ res,
-  /** @type {import('express').NextFunction} */ next
+  /** @type {import('express').Response} */ res
 ) {
   try {
     const { domain } = req.query;
@@ -37,8 +40,8 @@ async function checkHandleRoute(
         message: "bad or missing domain query param",
       });
     }
-    const isHostedHandle = pds.ctx.cfg.availableUserDomains.find((avail) =>
-      domain.endsWith(avail)
+    const isHostedHandle = pds.ctx.cfg.identity.serviceHandleDomains.find(
+      (avail) => domain.endsWith(avail)
     );
     if (!isHostedHandle) {
       return res.status(400).json({
@@ -54,7 +57,8 @@ async function checkHandleRoute(
       });
     }
     return res.json({ did: account.did, handle: account.handle });
-  } catch {
+  } catch (err) {
+    httpLogger.error({ err }, "check handle failed");
     return res.status(500).json({
       error: "InternalServerError",
       message: "Internal Server Error",
