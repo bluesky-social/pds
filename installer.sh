@@ -18,21 +18,25 @@ GENERATE_K256_PRIVATE_KEY_CMD="openssl ecparam --name secp256k1 --genkey --noout
 # The Docker compose file.
 COMPOSE_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml"
 
+# The pdsadmin script.
+PDSADMIN_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/pdsadmin.sh"
+
 # System dependencies.
 REQUIRED_SYSTEM_PACKAGES="
   ca-certificates
   curl
   gnupg
+  jq
   lsb-release
   openssl
   xxd
 "
 # Docker packages.
 REQUIRED_DOCKER_PACKAGES="
+  containerd.io
   docker-ce
   docker-ce-cli
   docker-compose-plugin
-  containerd.io
 "
 
 PUBLIC_IP=""
@@ -45,10 +49,10 @@ METADATA_URLS+=("http://169.254.169.254/hetzner/v1/metadata/public-ipv4") # Hetz
 PDS_DATADIR="${1:-/pds}"
 PDS_HOSTNAME="${2:-}"
 PDS_ADMIN_EMAIL="${3:-}"
-PDS_DID_PLC_URL="https://plc.bsky-sandbox.dev"
-PDS_BSKY_APP_VIEW_ENDPOINT="https://api.bsky-sandbox.dev"
-PDS_BSKY_APP_VIEW_DID="did:web:api.bsky-sandbox.dev"
-PDS_CRAWLERS="https://bgs.bsky-sandbox.dev"
+PDS_DID_PLC_URL="https://plc.directory"
+PDS_BSKY_APP_VIEW_ENDPOINT="https://api.bsky.app"
+PDS_BSKY_APP_VIEW_DID="did:web:api.bsky.app"
+PDS_CRAWLERS="https://bsky.network"
 
 function usage {
   local error="${1}"
@@ -102,6 +106,12 @@ function main {
     exit 1
   fi
 
+  # Enforce that the data directory is /pds since we're assuming it for now.
+  # Later we can make this actually configurable.
+  if [[ "${PDS_DATADIR}" != "/pds" ]]; then
+    usage "The data directory must be /pds. Exiting..."
+  fi
+
   # Check if PDS is already installed.
   if [[ -e "${PDS_DATADIR}/pds.sqlite" ]]; then
     echo
@@ -124,7 +134,6 @@ function main {
     echo "For assistance, check https://github.com/bluesky-social/pds"
     exit 1
   fi
-
 
   #
   # Attempt to determine server's public IP.
@@ -295,7 +304,7 @@ DOCKERD_CONFIG
 {
 	email ${PDS_ADMIN_EMAIL}
 	on_demand_tls {
-		ask http://localhost:3000
+		ask http://localhost:3000/check-handle
 	}
 }
 
@@ -378,6 +387,18 @@ SYSTEMD_UNIT_FILE
     fi
   fi
 
+  #
+  # Download and install pdadmin.
+  #
+  echo "* Downloading pdsadmin"
+  curl \
+    --silent \
+    --show-error \
+    --fail \
+    --output "/usr/local/bin/pdsadmin" \
+    "${PDSADMIN_URL}"
+  chmod +x /usr/local/bin/pdsadmin
+
   cat <<INSTALLER_MESSAGE
 ========================================================================
 PDS installation successful! 
@@ -403,15 +424,9 @@ ${PDS_HOSTNAME}              A          ${PUBLIC_IP}
 
 Detected public IP of this server: ${PUBLIC_IP}
 
-# To create an invite code, run the following command:
+# To create an account, run the following command:
 
-curl --silent \\
-  --show-error \\
-  --request POST \\
-  --user "admin:${PDS_ADMIN_PASSWORD}" \\
-  --header "Content-Type: application/json" \\
-  --data '{"useCount": 1}' \\
-  https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createInviteCode 
+  pdsadmin account create
 
 ========================================================================
 INSTALLER_MESSAGE
