@@ -8,6 +8,7 @@ PDS_ENV_FILE="/pds/pds.env"
 source "${PDS_ENV_FILE}"
 
 curl \
+  --fail \
   --silent \
   --show-error \
   --request POST \
