@@ -28,7 +28,7 @@ account
     Remove a takedown an account specified by DID.
     e.g. pdsadmin account takedown did:plc:xyz123abc456
 
-request-crawl <RELAY HOST>
+request-crawl [<RELAY HOST>]
     Request a crawl from a relay host.
     e.g. pdsadmin request-crawl bsky.network
 

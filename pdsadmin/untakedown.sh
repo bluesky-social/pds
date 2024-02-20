@@ -33,7 +33,6 @@ PAYLOAD=$(cat << EOF
 EOF
 )
 
-echo $PAYLOAD
 curl \
   --fail \
   --silent \
