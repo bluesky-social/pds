@@ -3,8 +3,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-PDS_ENV_FILE="pds.env"
-# PDS_ENV_FILE="/pds/pds.env"
+PDS_ENV_FILE="/pds/pds.env"
 source "${PDS_ENV_FILE}"
 
 curl_cmd() {
@@ -23,13 +22,13 @@ SUBCOMMAND="${1:-}"
 
 if [[ "${SUBCOMMAND}" == "list" ]]; then
   DIDS=$(curl_cmd \
-    "http://localhost:3000/xrpc/com.atproto.sync.listRepos?limit=100" | jq -r '.repos[].did'
+    "https://${PDS_HOSTNAME}/xrpc/com.atproto.sync.listRepos?limit=100" | jq -r '.repos[].did'
   )
   OUTPUT='[{"handle":"Handle","email":"Email","did":"DID"}'
   for did in $DIDS; do
     ITEM=$(curl_cmd \
       --user "admin:${PDS_ADMIN_PASSWORD}" \
-      "http://localhost:3000/xrpc/com.atproto.admin.getAccountInfo?did=$did"
+      "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.getAccountInfo?did=$did"
     )
     OUTPUT="${OUTPUT},${ITEM}"
   done
@@ -124,10 +123,10 @@ elif [[ "${SUBCOMMAND}" == "takedown" ]]; then
 EOF
 )
 
-    curl_cmd_post \
-    --user "admin:${PDS_ADMIN_PASSWORD}" \
-    --data "${PAYLOAD}" \
-    https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateSubjectStatus >/dev/null
+  curl_cmd_post \
+  --user "admin:${PDS_ADMIN_PASSWORD}" \
+  --data "${PAYLOAD}" \
+  https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateSubjectStatus >/dev/null
 
   echo "${DID} taken down"
 elif [[ "${SUBCOMMAND}" == "untakedown" ]]; then
@@ -158,10 +157,10 @@ elif [[ "${SUBCOMMAND}" == "untakedown" ]]; then
 EOF
 )
 
-    curl_cmd_post \
-    --user "admin:${PDS_ADMIN_PASSWORD}" \
-    --data "${PAYLOAD}" \
-    https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateSubjectStatus >/dev/null
+  curl_cmd_post \
+  --user "admin:${PDS_ADMIN_PASSWORD}" \
+  --data "${PAYLOAD}" \
+  https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateSubjectStatus >/dev/null
 
   echo "${DID} untaken down"
 else
