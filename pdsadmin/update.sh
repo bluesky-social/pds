@@ -14,15 +14,15 @@ COMPOSE_TEMP_FILE="${COMPOSE_FILE}.tmp"
 
 echo "* Downloading PDS compose file"
 curl \
---silent \
---show-error \
---fail \
---output "${COMPOSE_TEMP_FILE}" \
-"${COMPOSE_URL}"
+  --silent \
+  --show-error \
+  --fail \
+  --output "${COMPOSE_TEMP_FILE}" \
+  "${COMPOSE_URL}"
 
-if cmp -s "${COMPOSE_FILE}" "${COMPOSE_TEMP_FILE}"; then
+if cmp --quiet "${COMPOSE_FILE}" "${COMPOSE_TEMP_FILE}"; then
   echo "PDS is already up to date"
-  rm "${COMPOSE_TEMP_FILE}"
+  rm --force "${COMPOSE_TEMP_FILE}"
   exit 0
 fi
 
