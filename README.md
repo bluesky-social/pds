@@ -199,3 +199,33 @@ It is recommended that you keep your PDS up to date with new versions, otherwise
 ```bash
 sudo pdsadmin update
 ```
+<<<<<<< HEAD
+=======
+
+**Restart PDS with the new container image:**
+```bash
+sudo systemctl restart pds
+```
+
+## PDS environment variables
+
+You will need to customize various settings configured through the PDS environment variables. See the below table to find the variables you'll need to set.
+
+| Environment Variable                      | Value                        | Should update? | Notes                                                                       |
+| ----------------------------------------- | ---------------------------- | -------------- | --------------------------------------------------------------------------- |
+| PDS_HOSTNAME                              | example.com                  | ✅              | Public domain you intend to deploy your service at                          |
+| PDS_JWT_SECRET                            | jwt-secret                   | ✅              | Use a secure high-entropy string that is 32 characters in length            |
+| PDS_ADMIN_PASSWORD                        | admin-pass                   | ✅              | Use a secure high-entropy string that is 32 characters in length            |
+| PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX | 3ee68...                     | ✅              | See above Generate Keys section - once set, do not change                   |
+| PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX | e049f...                     | ✅              | See above Generate Keys section - once set, do not change                   |
+| PDS_DB_SQLITE_LOCATION                    | /pds/pds.sqlite              | ❌              | Or use `PDS_DB_POSTGRES_URL` depending on which database you intend to use  |
+| PDS_BLOBSTORE_DISK_LOCATION               | /pds/blocks                  | ❌              | Only update if you update the mounted volume for your docker image as well  |
+| PDS_DID_PLC_URL                           | https://plc.bsky-sandbox.dev | ❌              | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| PDS_BSKY_APP_VIEW_URL                     | https://api.bsky-sandbox.dev | ❌              | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| PDS_BSKY_APP_VIEW_DID                     | did:web:api.bsky-sandbox.dev | ❌              | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+| PDS_CRAWLERS                              | https://bgs.bsky-sandbox.dev | ❌              | Do not adjust if you intend to federate with the Bluesky federation sandbox |
+
+There are additional environment variables that can be tweaked depending on how you're running your service. For instance, storing blobs in AWS S3, keys in AWS KMS, or setting up an email service.
+
+Feel free to explore those [Here](https://github.com/bluesky-social/atproto/blob/main/packages/pds/src/config/env.ts). However, we will not be providing support for more advanced configurations.
+>>>>>>> 230720873dba8b6b8ed4d3d1ebf004fd48a4d974
