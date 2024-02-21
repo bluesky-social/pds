@@ -10,18 +10,18 @@ DID="${1:-}"
 TAKEDOWN_REF="$(date +%s)"
 
 if [[ "${DID}" == "" ]]; then
-  echo "Missing DID parameter." >/dev/stderr
+  echo "ERROR: missing DID parameter." >/dev/stderr
   echo "Usage: $0 <DID>" >/dev/stderr
   exit 1
 fi
 
 if [[ "${DID}" != did:* ]]; then
-  echo "DID parameter must start with \"did:\"." >/dev/stderr
+  echo "ERROR: DID parameter must start with \"did:\"." >/dev/stderr
   echo "Usage: $0 <DID>" >/dev/stderr
   exit 1
 fi
 
-PAYLOAD=$(cat << EOF
+PAYLOAD=$(cat <<EOF
 {
   "subject": {
     "\$type": "com.atproto.admin.defs#repoRef",
