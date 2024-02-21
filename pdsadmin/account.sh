@@ -22,7 +22,19 @@ curl_cmd_post_nofail() {
 SUBCOMMAND="${1:-}"
 
 if [[ "${SUBCOMMAND}" == "list" ]]; then
-  echo "TODO"
+  DIDS=$(curl_cmd \
+    "http://localhost:3000/xrpc/com.atproto.sync.listRepos?limit=100" | jq -r '.repos[].did'
+  )
+  OUTPUT='[{"handle":"Handle","email":"Email","did":"DID"}'
+  for did in $DIDS; do
+    ITEM=$(curl_cmd \
+      --user "admin:${PDS_ADMIN_PASSWORD}" \
+      "http://localhost:3000/xrpc/com.atproto.admin.getAccountInfo?did=$did"
+    )
+    OUTPUT="${OUTPUT},${ITEM}"
+  done
+  OUTPUT="${OUTPUT}]"
+  echo $OUTPUT | jq --raw-output '.[] | [.handle, .email, .did] | @tsv' | column -t
 elif [[ "${SUBCOMMAND}" == "create" ]]; then
   EMAIL="${2:-}"
   HANDLE="${3:-}"
@@ -37,7 +49,8 @@ elif [[ "${SUBCOMMAND}" == "create" ]]; then
   INVITE_CODE=$(curl_cmd_post \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
     --data '{"useCount": 1}' \
-    https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createInviteCode | jq --raw-output '.code')
+    https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createInviteCode | jq --raw-output '.code'
+  )
   RESULT=$(curl_cmd_post_nofail \
     --data "{\"email\":\"${EMAIL}\", \"handle\":\"${HANDLE}\", \"password\":\"${PASSWORD}\", \"inviteCode\":\"${INVITE_CODE}\"}" \
     https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createAccount
