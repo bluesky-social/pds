@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@atproto/pds':
-    specifier: 0.4.0-beta
-    version: 0.4.0-beta
+    specifier: 0.4.0-beta.1
+    version: 0.4.0-beta.1
 
 packages:
 
@@ -111,8 +111,8 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@atproto/pds@0.4.0-beta:
-    resolution: {integrity: sha512-NvWab91N25gRaFKKvI8qOacLFZf710uAZ4rE+3ARGGnh6r2n6HekCv6Tazl0dTMN4b40V0QdAmRbx5fVg9NbKg==}
+  /@atproto/pds@0.4.0-beta.1:
+    resolution: {integrity: sha512-yJ1zKUSrBVmhkbmaykLvBzc5pKdZOz3nvEqDcYldEU1TUfIdZ+O6Y/d4tKjvuPVFUTvocw+BU/aIbU0qiRtcdQ==}
     hasBin: true
     dependencies:
       '@atproto/api': 0.9.8
