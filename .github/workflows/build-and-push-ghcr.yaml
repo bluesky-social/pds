@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - update-versions
 env:
   REGISTRY: ghcr.io
   USERNAME: ${{ github.actor }}
