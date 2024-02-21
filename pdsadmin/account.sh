@@ -7,12 +7,53 @@ PDS_ENV_FILE="pds.env"
 # PDS_ENV_FILE="/pds/pds.env"
 source "${PDS_ENV_FILE}"
 
+curl_cmd() {
+  curl --fail --silent --show-error "$@"
+}
+
+curl_cmd_post() {
+  curl --fail --silent --show-error --request POST --header "Content-Type: application/json" "$@"
+}
+
+curl_cmd_post_nofail() {
+  curl --silent --show-error --request POST --header "Content-Type: application/json" "$@"
+}
+
 SUBCOMMAND="${1:-}"
 
 if [[ "${SUBCOMMAND}" == "list" ]]; then
   echo "TODO"
 elif [[ "${SUBCOMMAND}" == "create" ]]; then
-  echo "TODO"
+  EMAIL="${2:-}"
+  HANDLE="${3:-}"
+
+  if [[ "${EMAIL}" == "" || "${HANDLE}" == "" ]]; then
+    echo "ERROR: missing EMAIL and/or HANDLE parameters." >/dev/stderr
+    echo "Usage: $0 ${SUBCOMMAND} <EMAIL> <HANDLE>" >/dev/stderr
+    exit 1
+  fi
+
+  PASSWORD=$(openssl rand -base64 30 | tr -d "=+/" | cut -c1-24)
+  INVITE_CODE=$(curl_cmd_post \
+    --user "admin:${PDS_ADMIN_PASSWORD}" \
+    --data '{"useCount": 1}' \
+    https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createInviteCode | jq --raw-output '.code')
+  RESULT=$(curl_cmd_post_nofail \
+    --data "{\"email\":\"${EMAIL}\", \"handle\":\"${HANDLE}\", \"password\":\"${PASSWORD}\", \"inviteCode\":\"${INVITE_CODE}\"}" \
+    https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createAccount
+  )
+
+  DID=$(echo $RESULT | jq --raw-output '.did')
+  if [[ "${DID}" != did:* ]]; then
+    ERR=$(echo $RESULT | jq --raw-output '.message')
+    echo "ERROR: ${ERR}" >/dev/stderr
+    echo "Usage: $0 ${SUBCOMMAND} <EMAIL> <HANDLE>" >/dev/stderr
+    exit 1
+  fi
+
+  echo "Account created for ${HANDLE}.\nYour password is below, which we'll only show you once.\n"
+  echo "DID:      ${DID}"
+  echo "Password: ${PASSWORD}"
 elif [[ "${SUBCOMMAND}" == "delete" ]]; then
   DID="${2:-}"
 
@@ -30,18 +71,12 @@ elif [[ "${SUBCOMMAND}" == "delete" ]]; then
 
   echo "This action is permanent."
   read -r -p "Are you sure you'd like to delete ${DID}? [y/N] " response
-  if [[ ! "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
-  then
-      exit 0
+  if [[ ! "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    exit 0
   fi
 
-  curl \
-    --fail \
-    --silent \
-    --show-error \
-    --request POST \
+    curl_cmd_post \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
-    --header "Content-Type: application/json" \
     --data "{\"did\": \"${DID}\"}" \
     https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.deleteAccount >/dev/null
 
@@ -76,13 +111,8 @@ elif [[ "${SUBCOMMAND}" == "takedown" ]]; then
 EOF
 )
 
-  curl \
-    --fail \
-    --silent \
-    --show-error \
-    --request POST \
+    curl_cmd_post \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
-    --header "Content-Type: application/json" \
     --data "${PAYLOAD}" \
     https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateSubjectStatus >/dev/null
 
@@ -115,13 +145,8 @@ elif [[ "${SUBCOMMAND}" == "untakedown" ]]; then
 EOF
 )
 
-  curl \
-    --fail \
-    --silent \
-    --show-error \
-    --request POST \
+    curl_cmd_post \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
-    --header "Content-Type: application/json" \
     --data "${PAYLOAD}" \
     https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateSubjectStatus >/dev/null
 

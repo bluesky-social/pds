@@ -15,9 +15,9 @@ account
   list
     List accounts
     e.g. pdsadmin account list
-  create <EMAIL> <HANDLE> <DOB>
+  create <EMAIL> <HANDLE>
     Create a new account
-    e.g. pdsadmin account create alice@example.com alice.example.com 08/04/2004
+    e.g. pdsadmin account create alice@example.com alice.example.com
   delete <DID>
     Delete an account specified by DID.
     e.g. pdsadmin account takedown did:plc:xyz123abc456
