@@ -36,13 +36,14 @@ jobs:
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,enable=true,priority=90,pattern={{major}}.{{minor}}
-            type=sha,enable=true,priority=100,suffix=,format=long
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,format=long
 
       - name: Build and push Docker image
         id: build-and-push
@@ -52,9 +53,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/amd64,linux/arm64
           file: ./Dockerfile
-          tags: |
-            ghcr.io/bluesky-social/pds:latest
-            ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
