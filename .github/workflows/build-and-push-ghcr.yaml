@@ -4,6 +4,8 @@ on:
     branches:
       - main
       - update-versions
+    tags:
+      - v*
 env:
   REGISTRY: ghcr.io
   USERNAME: ${{ github.actor }}
