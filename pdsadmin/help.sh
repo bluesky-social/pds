@@ -7,9 +7,9 @@ set -o pipefail
 cat <<HELP
 pdsadmin help
 --
-update <VERSION>
-  Update to the specific PDS version.
-    e.g. pdsadmin update 0.1.1
+update
+  Update to the latest PDS version.
+    e.g. pdsadmin update
 
 account
   list
