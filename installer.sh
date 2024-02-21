@@ -222,7 +222,6 @@ INSTALLER_MESSAGE
     usage "No admin email specified"
   fi
 
-
   #
   # Install system packages.
   #
@@ -407,6 +406,7 @@ PDS installation successful!
 Check service status      : sudo systemctl status pds
 Watch service logs        : sudo docker logs -f pds
 Backup service data       : ${PDS_DATADIR}
+PDS Admin command         : pdsadmin
 
 Required Firewall Ports
 ------------------------------------------------------------------------
@@ -424,12 +424,18 @@ ${PDS_HOSTNAME}              A          ${PUBLIC_IP}
 
 Detected public IP of this server: ${PUBLIC_IP}
 
-# To create an account, run the following command:
-
-  pdsadmin account create
+To see pdsadmin commands, run "pdsadmin help"
 
 ========================================================================
 INSTALLER_MESSAGE
+
+  CREATE_ACCOUNT_PROMPT=""
+  read -p "Create a PDS user account? (y/N): " CREATE_ACCOUNT_PROMPT
+
+  if [[ "${CREATE_ACCOUNT_PROMPT}" =~ ^[Yy] ]]; then
+    pdsadmin account create
+  fi
+
 }
 
 # Run main function.
