@@ -22,7 +22,7 @@ SUBCOMMAND="${1:-}"
 
 if [[ "${SUBCOMMAND}" == "list" ]]; then
   DIDS=$(curl_cmd \
-    "https://${PDS_HOSTNAME}/xrpc/com.atproto.sync.listRepos?limit=100" | jq -r '.repos[].did'
+    "https://${PDS_HOSTNAME}/xrpc/com.atproto.sync.listRepos?limit=100" | jq --raw-output '.repos[].did'
   )
   OUTPUT='[{"handle":"Handle","email":"Email","did":"DID"}'
   for did in $DIDS; do
@@ -87,10 +87,10 @@ elif [[ "${SUBCOMMAND}" == "delete" ]]; then
     exit 0
   fi
 
-    curl_cmd_post \
-    --user "admin:${PDS_ADMIN_PASSWORD}" \
-    --data "{\"did\": \"${DID}\"}" \
-    https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.deleteAccount >/dev/null
+  curl_cmd_post \
+  --user "admin:${PDS_ADMIN_PASSWORD}" \
+  --data "{\"did\": \"${DID}\"}" \
+  https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.deleteAccount >/dev/null
 
   echo "${DID} deleted"
 elif [[ "${SUBCOMMAND}" == "takedown" ]]; then
