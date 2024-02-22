@@ -73,6 +73,8 @@ It does also not handle some of the more advanced steps such as verifying a full
 
 ```ts
 import AtpAgent from '@atproto/api'
+import { Secp256k1Keypair } from '@atproto/crypto'
+import * as ui8 from 'uint8arrays'
 
 const OLD_PDS_URL = 'https://bsky.social'
 const NEW_PDS_URL = 'https://example.com'
@@ -158,18 +160,34 @@ const migrateAccount = async () => {
   // Migrate Identity
   // ------------------
 
+  const recoveryKey = await Secp256k1Keypair.create({ exportable: true })
+  const privateKeyBytes = await recoveryKey.export()
+  const privateKey = ui8.toString(privateKeyBytes, 'hex')
+
   await oldAgent.com.atproto.identity.requestPlcOperationSignature()
 
   const getDidCredentials =
     await newAgent.com.atproto.identity.getRecommendedDidCredentials()
+  const rotationKeys = getDidCredentials.data.rotationKeys ?? []
+  if (!rotationKeys) {
+    throw new Error('No rotation key provided')
+  }
+  const credentials = {
+    ...getDidCredentials.data,
+    rotationKeys: [recoveryKey.did(), ...rotationKeys],
+  }
 
   // @NOTE, this token will need to come from the email from the previous step
   const TOKEN = ''
 
   const plcOp = await oldAgent.com.atproto.identity.signPlcOperation({
     token: TOKEN,
-    ...getDidCredentials.data,
+    ...credentials,
   })
+
+  console.log(
+    `❗ Your private recovery key is: ${privateKey}. Please store this in a secure location! ❗`,
+  )
 
   await newAgent.com.atproto.identity.submitPlcOperation({
     operation: plcOp.data.operation,
@@ -181,4 +199,5 @@ const migrateAccount = async () => {
   await newAgent.com.atproto.server.activateAccount()
   await oldAgent.com.atproto.server.deactivateAccount({})
 }
+
 ```
