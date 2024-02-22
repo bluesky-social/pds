@@ -175,13 +175,13 @@ function main {
 
   From your DNS provider's control panel, create the required
   DNS record with the value of your server's public IP address.
-  
+
   + Any DNS name that can be resolved on the public internet will work.
   + Replace example.com below with any valid domain name you control.
   + A TTL of 600 seconds (10 minutes) is recommended.
-  
+
   Example DNS record:
-  
+
     NAME                TYPE   VALUE
     ----                ----   -----
     example.com         A      ${PUBLIC_IP:-Server public IP}
@@ -235,7 +235,7 @@ INSTALLER_MESSAGE
       sleep 2
     done
   fi
-  
+
   apt-get update
   apt-get install --yes ${REQUIRED_SYSTEM_PACKAGES}
 
@@ -400,7 +400,7 @@ SYSTEMD_UNIT_FILE
 
   cat <<INSTALLER_MESSAGE
 ========================================================================
-PDS installation successful! 
+PDS installation successful!
 ------------------------------------------------------------------------
 
 Check service status      : sudo systemctl status pds
@@ -417,10 +417,10 @@ HTTP Control Panel     Inbound    443    TCP       Any
 
 Required DNS entries
 ------------------------------------------------------------------------
-Name                         Type       Value          
+Name                         Type       Value
 -------                      ---------  ---------------
-${PDS_HOSTNAME}              A          ${PUBLIC_IP}   
-*.${PDS_HOSTNAME}            A          ${PUBLIC_IP}   
+${PDS_HOSTNAME}              A          ${PUBLIC_IP}
+*.${PDS_HOSTNAME}            A          ${PUBLIC_IP}
 
 Detected public IP of this server: ${PUBLIC_IP}
 
