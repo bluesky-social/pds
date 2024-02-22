@@ -28,12 +28,12 @@ SUBCOMMAND="${1:-}"
 # account list
 #
 if [[ "${SUBCOMMAND}" == "list" ]]; then
-  DIDS="$(curl_cmd \
+  DIDS="$(curl_cmd_get \
     "https://${PDS_HOSTNAME}/xrpc/com.atproto.sync.listRepos?limit=100" | jq --raw-output '.repos[].did'
   )"
   OUTPUT='[{"handle":"Handle","email":"Email","did":"DID"}'
   for did in ${DIDS}; do
-    ITEM="$(curl_cmd \
+    ITEM="$(curl_cmd_get \
       --user "admin:${PDS_ADMIN_PASSWORD}" \
       "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.getAccountInfo?did=${did}"
     )"
