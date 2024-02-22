@@ -16,7 +16,7 @@ const main = async () => {
   const pds = await PDS.create(cfg, secrets);
   await pds.start();
   httpLogger.info("pds has started");
-  pds.app.get("/check-handle", (req, res) => {
+  pds.app.get("/tls-check", (req, res) => {
     checkHandleRoute(pds, req, res);
   });
   // Graceful shutdown (see also https://aws.amazon.com/blogs/containers/graceful-shutdowns-with-ecs/)
@@ -40,6 +40,9 @@ async function checkHandleRoute(
         message: "bad or missing domain query param",
       });
     }
+    if (domain === pds.ctx.cfg.service.hostname) {
+      return res.json({ success: true });
+    }
     const isHostedHandle = pds.ctx.cfg.identity.serviceHandleDomains.find(
       (avail) => domain.endsWith(avail)
     );
@@ -56,7 +59,7 @@ async function checkHandleRoute(
         message: "handle not found for this domain",
       });
     }
-    return res.json({ did: account.did, handle: account.handle });
+    return res.json({ success: true });
   } catch (err) {
     httpLogger.error({ err }, "check handle failed");
     return res.status(500).json({

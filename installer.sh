@@ -306,7 +306,7 @@ DOCKERD_CONFIG
 {
 	email ${PDS_ADMIN_EMAIL}
 	on_demand_tls {
-		ask http://localhost:3000/check-handle
+		ask http://localhost:3000/tls-check
 	}
 }
 
