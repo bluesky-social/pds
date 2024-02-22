@@ -1,7 +1,7 @@
 # Account Migration 
 
 ### ⚠️ Warning ⚠️ ️
-Account migration can be a destructive operation. Part of the operation involves signing away the old PDS's ability to make updates to your DID. If something goes wrong, you could be permanently locked out of your account, and Bluesky will not be able to help you recover it. 
+Account migration is a potentially destructive operation. Part of the operation involves signing away your old PDS's ability to make updates to your DID. If something goes wrong, you could be permanently locked out of your account, and Bluesky will not be able to help you recover it. 
 
 Therefore, we do not recommend migrating your primary account yet. And we specifically recommend _against_ migrating your main account if you do not understand how PLC operations work.
 
@@ -44,7 +44,7 @@ At any point during this process, you can check the status of your new account b
 
 After your data has been migrated to your new PDS, you'll need to update your DID to point to the correct credentials - handle, pds endpoint, signing key, and (if using a did:plc) the new PDS's rotation key.
 
-You can fetch your new PDS's recommendations for these by calling `com.atproto.identity.getRecommendedDidCredentials`.
+You can fetch your new PDS's recommendations for these by calling `com.atproto.identity.getRecommendedDidCredentials`. If you're interested in adding a personally held key to your rotation keys, this is a good time to do so.
 
 If using a did:plc (as most accounts are), you can then request a signed PLC operation from your old PDS by passing the credentials through to `com.atproto.identity.signPlcOperation`. However, since this is a sensitive and possibly destructive operation, you'll need to fulfill an email challenge. To do so, simply call `com.atproto.identity.requestPlcOperationSignature` and send the provided token along with your request for a signed operation.
 
