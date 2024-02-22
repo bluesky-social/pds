@@ -67,7 +67,7 @@ After migrating, you should be good to start using the app as normal! You'll nee
 
 ## Example Code
 
-The below code gives an example of how this account migration flow may function. Please note that it is for documentation purposes only and can not be run exactly as is as there is an out-of-band step where you need to get a confirmation token from your email.
+The below Typescript code gives an example of how this account migration flow may function. Please note that it is for documentation purposes only and can not be run exactly as is as there is an out-of-band step where you need to get a confirmation token from your email.
 
 It does also not handle some of the more advanced steps such as verifying a full import, looking for missing blobs, adding your own recovery key, or validating the PLC operation itself.
 
