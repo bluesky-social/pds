@@ -44,7 +44,7 @@ At any point during this process, you can check the status of your new account b
 
 After your data has been migrated to your new PDS, you'll need to update your DID to point to the correct credentials - handle, pds endpoint, signing key, and (if using a did:plc) the new PDS's rotation key.
 
-You can fetch your new PDS's recommendations for these by calling `com.atproto.identity.getRecommendedDidCredentials`. If you're interested in adding a personally held key to your rotation keys, this is a good time to do so.
+You can fetch your new PDS's recommendations for these by calling `com.atproto.identity.getRecommendedDidCredentials`. If using a did:plc, we recommend taking this chance to generate a new rotation key and adding it to the list of recommended rotation keys that comes from your new PDS.
 
 If using a did:plc (as most accounts are), you can then request a signed PLC operation from your old PDS by passing the credentials through to `com.atproto.identity.signPlcOperation`. However, since this is a sensitive and possibly destructive operation, you'll need to fulfill an email challenge. To do so, simply call `com.atproto.identity.requestPlcOperationSignature` and send the provided token along with your request for a signed operation.
 
