@@ -81,6 +81,17 @@ elif [[ "${SUBCOMMAND}" == "create" ]]; then
     exit 1
   fi
 
+  # Wait for the TLS certificate to be issued.
+  HANDLE_WELLKNOWN_URL="https://${handle}/.well-known/atproto-did"
+  echo "* Obtaining TLS certificate"
+  while true; do
+    echo "Requesting ${HANDLE_WELLKNOWN_URL}"
+    if curl_get "${HANDLE_WELLKNOWN_URL}" >/dev/null 2>&1; then
+      break
+    fi
+    sleep 0.5
+  done
+
   echo
   echo "Account created successfully!"
   echo "-----------------------------"
