@@ -51,7 +51,7 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 
 As of Feb, 2024, the AT Protocol data service (PDS) is now open to federation for self-hosters! 
 
-✅ Federated domain handles (e.g. `@fda.gov`)
+✅ Federated domain handles (e.g. `@nytimes.com`)
 
 ✅ Federated feed generators (custom algorithms)
 
@@ -59,9 +59,11 @@ As of Feb, 2024, the AT Protocol data service (PDS) is now open to federation fo
 
 ✅ Federated app views (API service)
 
-✅ Federated data service (PDS hosting)
+✅ Federated data for self-hosters (PDS hosting)
 
 🟩 Federated moderation (labeling) (coming soon)
+
+🟩 Federated data for large service providers (coming soon)
 
 ### What should I know about running a PDS in the developer sandbox?
 
