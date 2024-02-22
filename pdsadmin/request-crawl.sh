@@ -19,6 +19,9 @@ fi
 
 for host in ${RELAY_HOSTS//,/ }; do
   echo "Requesting crawl from ${host}"
+  if [[ $host != https:* && $host != http:* ]]; then
+    host="https://${host}"
+  fi
   curl \
     --fail \
     --silent \
@@ -26,7 +29,7 @@ for host in ${RELAY_HOSTS//,/ }; do
     --request POST \
     --header "Content-Type: application/json" \
     --data "{\"hostname\": \"${PDS_HOSTNAME}\"}" \
-    "https://${host}/xrpc/com.atproto.sync.requestCrawl" >/dev/null
+    "${host}/xrpc/com.atproto.sync.requestCrawl" >/dev/null
 done
 
 echo "done"
