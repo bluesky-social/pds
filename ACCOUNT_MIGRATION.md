@@ -7,8 +7,6 @@ Therefore, we do not recommend migrating your primary account yet. And we specif
 
 As well, the Bluesky PDS is not currently accepting incoming migrations (it will in the future). Therefore this is currently a one-way street. If you migrate off of `bsky.social`, _you will not be able to return_. However, you will be able to migrate between other PDSs.
 
-...
-
 ![Diagram of account migration flow](https://raw.githubusercontent.com/bluesky-social/pds/main/assets/account-migration.png)
 
 Account Migration occurs in 4 main steps:
