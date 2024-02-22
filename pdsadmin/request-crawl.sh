@@ -24,7 +24,6 @@ for host in ${RELAY_HOSTS//,/ }; do
     --silent \
     --show-error \
     --request POST \
-    --user "admin:${PDS_ADMIN_PASSWORD}" \
     --header "Content-Type: application/json" \
     --data "{\"hostname\": \"${PDS_HOSTNAME}\"}" \
     "https://${host}/xrpc/com.atproto.sync.requestCrawl" >/dev/null
