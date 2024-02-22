@@ -4,40 +4,29 @@ Welcome to the repository for the official Bluesky PDS (Personal Data Server). T
 
 ## Table of Contents
 
-* [FAQ](#faq)
+<!-- markdown-toc -i README.md -->
+
+<!-- toc -->
+
+- [FAQ](#faq)
   * [What is Bluesky?](#what-is-bluesky)
   * [What is AT Protocol?](#what-is-at-protocol)
-  * [How can developers get invite codes?](#how-can-developers-get-invite-codes)
   * [Where is the code?](#where-is-the-code)
   * [What is the current status of federation?](#what-is-the-current-status-of-federation)
   * [What should I know about running a PDS in the developer sandbox?](#what-should-i-know-about-running-a-pds-in-the-developer-sandbox)
-* [Self\-hosting PDS](#self-hosting-pds)
-  * [Preparation for self\-hosting PDS](#preparation-for-self-hosting-pds)
+- [Self-hosting PDS](#self-hosting-pds)
+  * [Preparation for self-hosting PDS](#preparation-for-self-hosting-pds)
   * [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
   * [Configure DNS for your domain](#configure-dns-for-your-domain)
   * [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
-  * [Automatic install on Ubuntu 20\.04/22\.04 or Debian 11/12](#automatic-install-on-ubuntu-20042204-or-debian-1112)
-  * [Installing manually on Ubuntu 22\.04](#installing-manually-on-ubuntu-2204)
-    * [Open ports on your Linux firewall](#open-ports-on-your-linux-firewall)
-    * [Install Docker](#install-docker)
-      * [Uninstall old versions](#uninstall-old-versions)
-      * [Set up the repository](#set-up-the-repository)
-      * [Install Docker Engine](#install-docker-engine)
-      * [Verify Docker Engine installation](#verify-docker-engine-installation)
-    * [Set up the PDS directory](#set-up-the-pds-directory)
-    * [Create the Caddyfile](#create-the-caddyfile)
-    * [Create the PDS env configuration file](#create-the-pds-env-configuration-file)
-    * [Start the PDS containers](#start-the-pds-containers)
-      * [Download the Docker compose file](#download-the-docker-compose-file)
-      * [Create the systemd service](#create-the-systemd-service)
-      * [Start the service](#start-the-service)
-  * [Verify your PDS is online](#verify-your-pds-is-online)
-  * [Obtain your PDS admin password](#obtain-your-pds-admin-password)
-  * [Generate an invite code for your PDS](#generate-an-invite-code-for-your-pds)
-  * [Connecting to your server](#connecting-to-your-server)
-  * [Manually updating your PDS](#manually-updating-your-pds)
-* [PDS environment variables](#pds-environment-variables)
+  * [Installer on Ubuntu 20.04/22.04 and Debian 11/12](#installer-on-ubuntu-20042204-and-debian-1112)
+  * [Verifying that your PDS is online and accessible](#verifying-that-your-pds-is-online-and-accessible)
+  * [Creating an account using pdsadmin](#creating-an-account-using-pdsadmin)
+  * [Creating an account using an invite code](#creating-an-account-using-an-invite-code)
+  * [Using the Bluesky app with your PDS](#using-the-bluesky-app-with-your-pds)
+  * [Updating your PDS](#updating-your-pds)
 
+<!-- tocstop -->
 
 ## FAQ
 
@@ -45,7 +34,7 @@ Welcome to the repository for the official Bluesky PDS (Personal Data Server). T
 
 Bluesky is a social media application built on AT Protocol.
 
-Please visit the [Bluesky website](https://bsky.app/) for more information.
+Please visit the [Bluesky website](https://bsky.social/) for more information.
 
 ### What is AT Protocol?
 
@@ -53,20 +42,34 @@ The Authenticated Transfer Protocol, aka atproto, is a protocol for large-scale 
 
 Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for additional information.
 
-### How can developers get invite codes?
-
-There is no invite required to join the sandbox network. Simply set up your own PDS and generate your own invite codes to create accounts. If you desire an account on the production network (on the official Bluesky PDS) please check out the [Bluesky Developer Waitlist](https://docs.google.com/forms/d/e/1FAIpQLSfCuguykw3HaPxIZMJQKRu8_-vsRew90NALVTDOjCSPDmsGNg/viewform) which prioritizes access for developers wanting to build software on atproto.
-
 ### Where is the code?
 
-* [Canonical TypeScript code](https://github.com/bluesky-social/atproto)
-* [Experimental Go code](https://github.com/bluesky-social/indigo)
+* [TypeScript code](https://github.com/bluesky-social/atproto)
+* [Go code](https://github.com/bluesky-social/indigo)
 
 ### What is the current status of federation?
 
-We do not currently support PDS federation on the production network but it is now possible to federate in the developer sandbox.
+As of Feb, 2024, the AT Protocol data service (PDS) is now open to federation for self-hosters! 
+
+✅ Federated domain handles (e.g. `@nytimes.com`)
+
+✅ Federated feed generators (custom algorithms)
+
+✅ Federated relays (event firehose)
+
+✅ Federated app views (API service)
+
+✅ Federated data for self-hosters (PDS hosting)
+
+🟩 Federated moderation (labeling) (coming soon)
+
+🟩 Federated data for large service providers (coming soon)
 
 ### What should I know about running a PDS in the developer sandbox?
+
+Developers may now run self-hosted PDS hosts on the production network!
+
+Though it is still recommended to run experiments in the developer sandbox network.
 
 Read the [SANDBOX.md](https://github.com/bluesky-social/pds/blob/main/SANDBOX.md) for an overview of the sandbox network.
 
@@ -134,294 +137,72 @@ Examples to check (record type `A`):
 
 These should all return your server's public IP.
 
-### Automatic install on Ubuntu 20.04/22.04 or Debian 11/12
+### Installer on Ubuntu 20.04/22.04 and Debian 11/12
 
-On your server via ssh, run the installer script:
+On your server via ssh, download the installer script using wget:
 
 ```bash
 wget https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh
 ```
 
+or download it using curl:
+
+```bash
+curl https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh >installer.sh
+```
+
+And then run the installer using bash:
+
 ```bash
 sudo bash installer.sh
 ```
 
-### Installing manually on Ubuntu 22.04
-
-#### Open ports on your Linux firewall
-
-If your server is running a Linux firewall managed with `ufw`, you will need to open these ports:
-
-```bash
-$ sudo ufw allow 80/tcp
-$ sudo ufw allow 443/tcp
-```
-
-#### Install Docker
-
-On your server, install Docker CE (Community Edition), using the the following instructions. For other operating systems you may reference the [official Docker install guides](https://docs.docker.com/engine/install/).
-
-**Note:** All of the following commands should be run on your server via ssh.
-
-##### Uninstall old versions
-
-```bash
-sudo apt-get remove docker docker-engine docker.io containerd runc
-```
-
-##### Set up the repository
-
-```bash
-sudo apt-get update
-sudo apt-get install \
-    ca-certificates \
-    curl \
-    gnupg
-```
-
-```bash
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-```
-
-```bash
-echo \
-  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
-
-##### Install Docker Engine
-
-```bash
-sudo apt-get update
-```
-
-```bash
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-```
-
-##### Verify Docker Engine installation
-
-```bash
-sudo docker run hello-world
-```
-
-#### Set up the PDS directory
-
-```bash
-sudo mkdir /pds
-sudo mkdir --parents /pds/caddy/data
-sudo mkdir --parents /pds/caddy/etc/caddy
-```
-
-#### Create the Caddyfile
-
-Be sure to replace `example.com` with your own domain.
-
-```bash
-cat <<CADDYFILE | sudo tee /pds/caddy/etc/caddy/Caddyfile
-{
-  email you@example.com
-}
-
-*.example.com, example.com {
-  tls {
-    on_demand
-  }
-  reverse_proxy http://localhost:3000
-}
-CADDYFILE
-```
-
-#### Create the PDS env configuration file
-
-You should fill in the first 5 values, but leave the rest untouched unless you have good reason to change it. 
-
-See the PDS environment variables section at the end of this README for explanations of each value
-
-Your PDS will need two secp256k1 private keys provided as hex strings. You can securely generate these keys using `openssl` with the following command:
-
-**Note:**
-* Replace `example.com` with your domain name.
-
-```bash
-PDS_HOSTNAME="example.com"
-PDS_JWT_SECRET="$(openssl rand --hex 16)"
-PDS_ADMIN_PASSWORD="$(openssl rand --hex 16)"
-PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX="$(openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32)"
-PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX="$(openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32)"
-
-cat <<PDS_CONFIG | sudo tee /pds/pds.env
-PDS_HOSTNAME=${PDS_HOSTNAME}
-PDS_JWT_SECRET=${PDS_JWT_SECRET}
-PDS_ADMIN_PASSWORD=${PDS_ADMIN_PASSWORD}
-PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX=${PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX}
-PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX=${PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX}
-PDS_DB_SQLITE_LOCATION=/pds/pds.sqlite
-PDS_BLOBSTORE_DISK_LOCATION=/pds/blocks
-PDS_DID_PLC_URL=https://plc.bsky-sandbox.dev
-PDS_BSKY_APP_VIEW_URL=https://api.bsky-sandbox.dev
-PDS_BSKY_APP_VIEW_DID=did:web:api.bsky-sandbox.dev
-PDS_CRAWLERS=https://bgs.bsky-sandbox.dev
-PDS_CONFIG
-```
-
-#### Start the PDS containers
-
-##### Download the Docker compose file
-
-Download the `compose.yaml` to run your PDS, which includes the following containers:
-
-* `pds` Node PDS server running on http://localhost:3000
-* `caddy` HTTP reverse proxy handling TLS and proxying requests to the PDS server
-* `watchtower` Daemon responsible for auto-updating containers to keep the server secure and federating
-
-```bash
-curl https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml | sudo tee /pds/compose.yaml
-```
-
-##### Create the systemd service
-
-```bash
-  cat <<SYSTEMD_UNIT_FILE >/etc/systemd/system/pds.service
-[Unit]
-Description=Bluesky PDS Service
-Documentation=https://github.com/bluesky-social/pds
-Requires=docker.service
-After=docker.service
-
-[Service]
-Type=oneshot
-RemainAfterExit=yes
-WorkingDirectory=/pds
-ExecStart=/usr/bin/docker compose --file /pds/compose.yaml up --detach
-ExecStop=/usr/bin/docker compose --file /pds/compose.yaml down
-
-[Install]
-WantedBy=default.target
-SYSTEMD_UNIT_FILE
-```
-
-##### Start the service
-
-**Reload the systemd daemon to create the new service:**
-```bash
-sudo systemctl daemon-reload
-```
-
-**Enable the systemd service:**
-```bash
-sudo systemctl enable pds
-```
-
-**Start the pds systemd service:**
-```bash
-sudo systemctl start pds
-```
-
-**Ensure that containers are running**
-
-There should be a caddy, pds, and watchtower container running.
-
-```bash
-sudo systemctl status pds
-```
-
-```bash
-sudo docker ps
-```
-
-### Verify your PDS is online
+### Verifying that your PDS is online and accessible
 
 You can check if your server is online and healthy by requesting the healthcheck endpoint.
 
-```bash
-curl https://example.com/xrpc/_health
+You can visit `https://example.com/xrpc/_health` in your browser. You should see a JSON response with a version.
+
+For example:
+
+```
 {"version":"0.2.2-beta.2"}
 ```
 
-### Obtain your PDS admin password
+### Creating an account using pdsadmin
 
-Your PDS admin password should be in your `pds.env` file if you used the installer script.
-
-**For example:**
+Using ssh on your server, use `pdsadmin` to create an account if you haven't already.
 
 ```bash
-$ source /pds/pds.env
-$ echo $PDS_ADMIN_PASSWORD
-a7b5970b6a5077bb41fc68a26d30adda
+sudo pdsadmin account create
 ```
-### Generate an invite code for your PDS
 
-By default, your PDS will require an invite code to create an account. 
+### Creating an account using an invite code
 
-You can generate a new invite code with the following command:
+Using ssh on your server, use `pdsadmin` to create an invite code.
 
 ```bash
-PDS_HOSTNAME="example.com"
-PDS_ADMIN_PASSWORD="<YOUR PDS ADMIN PASSWORD>"
-
-curl --silent \
-  --show-error \
-  --request POST \
-  --user "admin:${PDS_ADMIN_PASSWORD}" \
-  --header "Content-Type: application/json" \
-  --data '{"useCount": 1}' \
-  https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createInviteCode
+sudo pdsadmin create-invite-code
 ```
 
-**Note:** the `useCount` field specifies how many times an invite code can be used
+When creating an account using the app, enter this invite code.
 
-### Connecting to your server
+### Using the Bluesky app with your PDS
 
-You can use the Bluesky app to connect to your server to create an account.
+You can use the Bluesky app to connect to your PDS.
 
 1. Get the Bluesky app
-    * [Bluesky for Web (sandbox)](https://app.bsky-sandbox.dev/)
+    * [Bluesky for Web](https://bsky.app/)
     * [Bluesky for iPhone](https://apps.apple.com/us/app/bluesky-social/id6444370199)
     * [Bluesky for Android](https://play.google.com/store/apps/details?id=xyz.blueskyweb.app)
 1. Enter the URL of your PDS (e.g. `https://example.com/`)
-1. Create an account using the generated invite code
-1. Create a post
 
-_Note: because we use on-the-fly TLS certs, it may take 10-30s for your handle to be accessible. If you aren't seeing your first post/profile, wait 30s and try to make another post._
+_Note: because the subdomain TLS certificate is created on-demand, it may take 10-30s for your handle to be accessible. If you aren't seeing your first post/profile, wait 30s and try to make another post._
 
-Checkout [SANDBOX.md](./SANDBOX.md) for an overview of participating in the sandbox network.
+### Updating your PDS
 
-### Manually updating your PDS
+It is recommended that you keep your PDS up to date with new versions, otherwise things may break. You can use the `pdsadmin` tool to update your PDS.
 
-If you use use Docker `compose.yaml` file in this repo, your PDS will automatically update nightly. To manually update to the latest version use the following commands.
-
-**Pull the latest PDS container image:**
 ```bash
-sudo docker pull ghcr.io/bluesky-social/pds:latest
+sudo pdsadmin update
 ```
-
-**Restart PDS with the new container image:**
-```bash
-sudo systemctl restart pds
-```
-
-## PDS environment variables
-
-You will need to customize various settings configured through the PDS environment variables. See the below table to find the variables you'll need to set.
-
-| Environment Variable                      | Value                        | Should update? | Notes                                                                       |
-| ----------------------------------------- | ---------------------------- | -------------- | --------------------------------------------------------------------------- |
-| PDS_HOSTNAME                              | example.com                  | ✅              | Public domain you intend to deploy your service at                          |
-| PDS_JWT_SECRET                            | jwt-secret                   | ✅              | Use a secure high-entropy string that is 32 characters in length            |
-| PDS_ADMIN_PASSWORD                        | admin-pass                   | ✅              | Use a secure high-entropy string that is 32 characters in length            |
-| PDS_REPO_SIGNING_KEY_K256_PRIVATE_KEY_HEX | 3ee68...                     | ✅              | See above Generate Keys section - once set, do not change                   |
-| PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX | e049f...                     | ✅              | See above Generate Keys section - once set, do not change                   |
-| PDS_DB_SQLITE_LOCATION                    | /pds/pds.sqlite              | ❌              | Or use `PDS_DB_POSTGRES_URL` depending on which database you intend to use  |
-| PDS_BLOBSTORE_DISK_LOCATION               | /pds/blocks                  | ❌              | Only update if you update the mounted volume for your docker image as well  |
-| PDS_DID_PLC_URL                           | https://plc.bsky-sandbox.dev | ❌              | Do not adjust if you intend to federate with the Bluesky federation sandbox |
-| PDS_BSKY_APP_VIEW_URL                     | https://api.bsky-sandbox.dev | ❌              | Do not adjust if you intend to federate with the Bluesky federation sandbox |
-| PDS_BSKY_APP_VIEW_DID                     | did:web:api.bsky-sandbox.dev | ❌              | Do not adjust if you intend to federate with the Bluesky federation sandbox |
-| PDS_CRAWLERS                              | https://bgs.bsky-sandbox.dev | ❌              | Do not adjust if you intend to federate with the Bluesky federation sandbox |
-
-There are additional environment variables that can be tweaked depending on how you're running your service. For instance, storing blobs in AWS S3, keys in AWS KMS, or setting up an email service.
-
-Feel free to explore those [Here](https://github.com/bluesky-social/atproto/blob/simplify-pds/packages/pds/src/config/env.ts). However, we will not be providing support for more advanced configurations.

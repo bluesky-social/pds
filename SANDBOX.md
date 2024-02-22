@@ -10,6 +10,32 @@ To maintain a positive and productive developer experience, we've established th
 
 Given that this is a testing environment, we will be defederating from any instances that do not abide by these guidelines, or that cause unnecessary trouble, and will not be providing specific justifications for these decisions.
 
+<!-- markdown-toc -i SANDBOX.md -->
+
+<!-- toc -->
+
+- [Guidelines that must be followed](#guidelines-that-must-be-followed)
+  * [Post responsibly](#post-responsibly)
+  * [Keep the emphasis on testing](#keep-the-emphasis-on-testing)
+  * [Do limit account creation](#do-limit-account-creation)
+  * [Don’t expect persistence or uptime](#dont-expect-persistence-or-uptime)
+  * [Don't advertise your service as being "Bluesky"](#dont-advertise-your-service-as-being-bluesky)
+  * [Do not mirror sandbox did:plcs to production](#do-not-mirror-sandbox-didplcs-to-production)
+  * [Status and Wipes](#status-and-wipes)
+    + [🐉 Beware of dragons!](#%F0%9F%90%89-beware-of-dragons)
+    + [Routine wipes](#routine-wipes)
+- [Getting started](#getting-started)
+  * [Auto-updates](#auto-updates)
+  * [Odds & Ends & Warnings & Reminders](#odds--ends--warnings--reminders)
+- [Learn more about atproto federation](#learn-more-about-atproto-federation)
+  * [Network Services](#network-services)
+    + [PLC](#plc)
+    + [BGS](#bgs)
+    + [Bluesky App View](#bluesky-app-view)
+- [The PDS](#the-pds)
+
+<!-- tocstop -->
+
 # Guidelines that must be followed
 
 Using the sandbox environment means you agree to adhere to our Guidelines. Please read the following carefully:
@@ -18,7 +44,7 @@ Using the sandbox environment means you agree to adhere to our Guidelines. Pleas
 
 The sandbox environment is intended to test infrastructure, but user content may be created as part of this testing process. Content generation can be automated or manual.
 
-Do not post content that requires active moderation or violates the [Bluesky Community Guidelines](https://blueskyweb.xyz/support/community-guidelines).
+Do not post content that requires active moderation or violates the [Bluesky Community Guidelines](https://bsky.social/about/support/community-guidelines).
 
 ## Keep the emphasis on testing
 
@@ -93,7 +119,7 @@ You are within your rights to disable Watchtower auto-updates, but we strongly e
 
 # Learn more about atproto federation
 
-Check out the [high-level view of federation](https://blueskyweb.xyz/blog/5-5-2023-federation-architecture).
+Check out the [high-level view of federation](https://bsky.social/about/blog/5-5-2023-federation-architecture).
 
 Dive deeper with the [atproto docs](https://atproto.com/docs).
 
