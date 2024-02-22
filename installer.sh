@@ -29,6 +29,7 @@ REQUIRED_SYSTEM_PACKAGES="
   jq
   lsb-release
   openssl
+  sqlite3
   xxd
 "
 # Docker packages.
