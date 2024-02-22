@@ -82,7 +82,7 @@ elif [[ "${SUBCOMMAND}" == "create" ]]; then
   fi
 
   # Wait for the TLS certificate to be issued.
-  HANDLE_WELLKNOWN_URL="https://${handle}/.well-known/atproto-did"
+  HANDLE_WELLKNOWN_URL="https://${HANDLE}/.well-known/atproto-did"
   echo "* Obtaining TLS certificate"
   while true; do
     echo "Requesting ${HANDLE_WELLKNOWN_URL}"
