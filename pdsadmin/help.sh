@@ -27,6 +27,9 @@ account
   untakedown <DID>
     Remove a takedown an account specified by DID.
     e.g. pdsadmin account takedown did:plc:xyz123abc456
+  password-reset <DID>
+    Reset a password for an account specified by DID.
+    e.g. pdsadmin account reset-password did:plc:xyz123abc456
 
 request-crawl [<RELAY HOST>]
     Request a crawl from a relay host.

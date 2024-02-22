@@ -199,6 +199,35 @@ EOF
     "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateSubjectStatus" >/dev/null
 
   echo "${DID} untaken down"
+#
+# account reset-password
+#
+elif [[ "${SUBCOMMAND}" == "reset-password" ]]; then
+  DID="${2:-}"
+  PASSWORD="$(openssl rand -base64 30 | tr -d "=+/" | cut -c1-24)"
+
+  if [[ "${DID}" == "" ]]; then
+    echo "ERROR: missing DID parameter." >/dev/stderr
+    echo "Usage: $0 ${SUBCOMMAND} <DID>" >/dev/stderr
+    exit 1
+  fi
+
+  if [[ "${DID}" != did:* ]]; then
+    echo "ERROR: DID parameter must start with \"did:\"." >/dev/stderr
+    echo "Usage: $0 ${SUBCOMMAND} <DID>" >/dev/stderr
+    exit 1
+  fi
+
+  curl_cmd_post \
+    --user "admin:${PDS_ADMIN_PASSWORD}" \
+    --data "{ \"did\": \"${DID}\", \"password\": \"${PASSWORD}\" }" \
+    "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateAccountPassword" >/dev/null
+
+  echo
+  echo "Password reset for ${DID}"
+  echo "New password: ${PASSWORD}"
+  echo
+
 else
   echo "Unknown subcommand: ${SUBCOMMAND}" >/dev/stderr
   exit 1
