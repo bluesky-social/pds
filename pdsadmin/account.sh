@@ -198,6 +198,6 @@ EOF
 
   echo "${DID} untaken down"
 else
-  echo "Unknown subcommand "$0 ${SUBCOMMAND}"." >/dev/stderr
+  echo "Unknown subcommand: ${SUBCOMMAND}" >/dev/stderr
   exit 1
 fi
