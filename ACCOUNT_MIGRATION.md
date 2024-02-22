@@ -34,11 +34,11 @@ Now that you have an account on the new PDS, you can start migrating data into i
 
 First, you can grab your entire repository in the from of a [CAR file](https://ipld.io/specs/transport/car/carv1/) by calling `com.atproto.sync.getRepo`. You can then upload those exact bytes to your new PDS through `com.atproto.repo.importRepo`. The new PDS will parse the CAR file, index all blocks and records, and sign a new commit for the repository.
 
-Next, you'll need to upload all relevant blobs. These can be discovered by calling `com.atproto.sync.listBlobs` on your old PDS. For each blob, you'll need to download the contents through `com.atproto.sync.getBlob` and upload them to your new PDS through `com.atproto.repo.uploadBlob`.
+Next, you'll need to upload all relevant blobs. These can be discovered by calling `com.atproto.sync.listBlobs` on your old PDS. For each blob, you'll need to download the contents through `com.atproto.sync.getBlob` and upload them to your new PDS through `com.atproto.repo.uploadBlob`. 
 
 Finally, you'll need to migrate private state. Currently the only private state held on your PDS is your preferences. You can migrate this by calling `app.bsky.actor.getPreferences` on your old PDS, and submitting the results to `app.bsky.actor.putPreferences` on your new PDS.
 
-At any point during this process, you can check the status of your new account by calling `com.atproto.server.checkAccountStatus` which will inform you of your repo state, how many records are indexed, how many private state values are stored, how many blobs it is expecting (based on parsing records), and how many blobs have been uploaded. 
+At any point during this process, you can check the status of your new account by calling `com.atproto.server.checkAccountStatus` which will inform you of your repo state, how many records are indexed, how many private state values are stored, how many blobs it is expecting (based on parsing records), and how many blobs have been uploaded. If you find you are missing blobs and are not sure which, you may use `com.atproto.repo.listMissingBlobs` on your new PDS to find them.
 
 ### Updating identity
 
@@ -65,3 +65,122 @@ As a clean up step, you can deactivate or delete your account on your old PDS by
 ### After migration
 
 After migrating, you should be good to start using the app as normal! You'll need to log out and log back in through your new PDS so that the client is talking to the correct service. It's possible that some services (such as feed generators) will have a stale DID cache and may not be able to accurately verify your auth tokens immediately. However, we've found that most services handle this gracefully, and those that don't should sort themselves out pretty quickly.
+
+
+## Example Code
+
+The below code gives an example of how this account migration flow may function. Please note that it is for documentation purposes only and can not be run exactly as is as there is an out-of-band step where you need to get a confirmation token from your email.
+
+It does also not handle some of the more advanced steps such as verifying a full import, looking for missing blobs, adding your own recovery key, or validating the PLC operation itself.
+
+```ts
+import AtpAgent from '@atproto/api'
+
+const OLD_PDS_URL = 'https://bsky.social'
+const NEW_PDS_URL = 'https://example.com'
+const CURRENT_HANDLE = 'to-migrate.bsky.social'
+const CURRENT_PASSWORD = 'password'
+const NEW_HANDLE = 'migrated.example.com'
+const NEW_ACCOUNT_EMAIL = 'migrated@example.com'
+const NEW_ACCOUNT_PASSWORD = 'password'
+const NEW_PDS_INVITE_CODE = 'example-com-12345-abcde'
+
+const migrateAccount = async () => {
+  const oldAgent = new AtpAgent({ service: OLD_PDS_URL })
+  const newAgent = new AtpAgent({ service: NEW_PDS_URL })
+
+  await oldAgent.login({
+    identifier: CURRENT_HANDLE,
+    password: CURRENT_PASSWORD,
+  })
+
+  const accountDid = oldAgent.session?.did
+  if (!accountDid) {
+    throw new Error('Could not get DID for old account')
+  }
+
+  // Create account
+  // ------------------
+
+  const describeRes = await newAgent.api.com.atproto.server.describeServer()
+  const newServerDid = describeRes.data.did
+
+  const serviceJwtRes = await oldAgent.com.atproto.server.getServiceAuth({
+    aud: newServerDid,
+  })
+  const serviceJwt = serviceJwtRes.data.token
+
+  await newAgent.api.com.atproto.server.createAccount(
+    {
+      handle: NEW_HANDLE,
+      email: NEW_ACCOUNT_EMAIL,
+      password: NEW_ACCOUNT_PASSWORD,
+      did: accountDid,
+      inviteCode: NEW_PDS_INVITE_CODE,
+    },
+    {
+      headers: { authorization: `Bearer ${serviceJwt}` },
+      encoding: 'application/json',
+    },
+  )
+  await newAgent.login({
+    identifier: NEW_HANDLE,
+    password: NEW_ACCOUNT_PASSWORD,
+  })
+
+  // Migrate Data
+  // ------------------
+
+  const repoRes = await oldAgent.com.atproto.sync.getRepo({ did: accountDid })
+  await newAgent.com.atproto.repo.importRepo(repoRes.data, {
+    encoding: 'application/vnd.ipld.car',
+  })
+
+  let blobCursor: string | undefined = undefined
+  do {
+    const listedBlobs = await oldAgent.com.atproto.sync.listBlobs({
+      did: accountDid,
+      cursor: blobCursor,
+    })
+    for (const cid of listedBlobs.data.cids) {
+      const blobRes = await oldAgent.com.atproto.sync.getBlob({
+        did: accountDid,
+        cid,
+      })
+      await newAgent.com.atproto.repo.uploadBlob(blobRes.data, {
+        encoding: blobRes.headers['content-type'],
+      })
+    }
+    blobCursor = listedBlobs.data.cursor
+  } while (blobCursor)
+
+  const prefs = await oldAgent.api.app.bsky.actor.getPreferences()
+  await newAgent.api.app.bsky.actor.putPreferences(prefs.data)
+
+  // Migrate Identity
+  // ------------------
+
+  await oldAgent.com.atproto.identity.requestPlcOperationSignature()
+
+  const getDidCredentials =
+    await newAgent.com.atproto.identity.getRecommendedDidCredentials()
+
+  // @NOTE, this token will need to come from the email from the previous step
+  const TOKEN = ''
+
+  const plcOp = await oldAgent.com.atproto.identity.signPlcOperation({
+    token: TOKEN,
+    ...getDidCredentials.data,
+  })
+
+  await newAgent.com.atproto.identity.submitPlcOperation({
+    operation: plcOp.data.operation,
+  })
+
+  // Finalize Migration
+  // ------------------
+
+  await newAgent.com.atproto.server.activateAccount()
+  await oldAgent.com.atproto.server.deactivateAccount({})
+}
+```
