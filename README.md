@@ -2,6 +2,8 @@
 
 Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with self-hosting a Bluesky PDS.
 
+Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/UWS6FFdhMe) to get started!
+
 ## Table of Contents
 
 <!-- markdown-toc -i README.md -->
@@ -77,7 +79,7 @@ Read the [SANDBOX.md](https://github.com/bluesky-social/pds/blob/main/SANDBOX.md
 
 Self-hosting a Bluesky PDS means running your own Personal Data Server that is capable of federating with the wider Bluesky social network.
 
-To join the network you'll need to join the [AT Protocol PDS Admins Discord](https://discord.gg/UWS6FFdhMe) and register the hostname of your PDS. We recommend doing so before bringing your PDS online. In the future, this registration check will not be required.
+❗ To join the network you'll need to join the [AT Protocol PDS Admins Discord](https://discord.gg/UWS6FFdhMe) and register the hostname of your PDS. We recommend doing so before bringing your PDS online. In the future, this registration check will not be required.
 
 ### Preparation for self-hosting PDS
 
