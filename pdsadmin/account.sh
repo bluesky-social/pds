@@ -81,6 +81,7 @@ elif [[ "${SUBCOMMAND}" == "create" ]]; then
     exit 1
   fi
 
+  echo
   echo "Account created successfully!"
   echo "-----------------------------"
   echo "Handle   : ${HANDLE}"
@@ -88,6 +89,7 @@ elif [[ "${SUBCOMMAND}" == "create" ]]; then
   echo "Password : ${PASSWORD}"
   echo "-----------------------------"
   echo "Save this password, it will not be displayed again."
+  echo
 
 #
 # account delete
