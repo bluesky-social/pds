@@ -9,7 +9,7 @@ As well, the Bluesky PDS is not currently accepting incoming migrations (it will
 
 ...
 
-![Diagram of account migration flow](https://github.com/bluesky-social/pds/blob/main/asserts/account-migration.png)
+![Diagram of account migration flow](https://raw.githubusercontent.com/bluesky-social/pds/main/assets/account-migration.png)
 
 Account Migration occurs in 4 main steps:
 - Creating an account on the new PDS
