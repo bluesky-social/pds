@@ -20,13 +20,13 @@ account
     e.g. pdsadmin account create alice@example.com alice.example.com
   delete <DID>
     Delete an account specified by DID.
-    e.g. pdsadmin account takedown did:plc:xyz123abc456
+    e.g. pdsadmin account delete did:plc:xyz123abc456
   takedown <DID>
     Takedown an account specified by DID.
     e.g. pdsadmin account takedown did:plc:xyz123abc456
   untakedown <DID>
     Remove a takedown an account specified by DID.
-    e.g. pdsadmin account takedown did:plc:xyz123abc456
+    e.g. pdsadmin account untakedown did:plc:xyz123abc456
   password-reset <DID>
     Reset a password for an account specified by DID.
     e.g. pdsadmin account reset-password did:plc:xyz123abc456
