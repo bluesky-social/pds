@@ -97,11 +97,12 @@ Ensure that you can ssh to your server and have root access.
 |                  |              |
 | ---------------- | ------------ |
 | Operating System | Ubuntu 22.04 |
-| Memory (RAM)     | 2+ GB        |
-| CPU Cores        | 2+           |
-| Storage          | 40+ GB SSD   |
+| Memory (RAM)     | 1 GB         |
+| CPU Cores        | 1            |
+| Storage          | 20 GB SSD    |
 | Architectures    | amd64, arm64 |
- 
+| Number of users  | 1-20         |
+
 **Note:** It is a good security practice to restrict inbound ssh access (port 22/tcp) to your own computer's public IP address. You can check your current public IP address using [ifconfig.me](https://ifconfig.me/).
 
 ### Open your cloud firewall for HTTP and HTTPS
