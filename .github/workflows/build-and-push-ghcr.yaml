@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - pdsv2
+      - next
     tags:
       - v*
 env:
