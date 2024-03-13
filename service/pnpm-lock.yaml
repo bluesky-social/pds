@@ -6,17 +6,17 @@ settings:
 
 dependencies:
   '@atproto/pds':
-    specifier: 0.4.6-next.0
-    version: 0.4.6-next.0
+    specifier: 0.4.6-next.1
+    version: 0.4.6-next.1
 
 packages:
 
-  /@atproto/api@0.10.5:
-    resolution: {integrity: sha512-GYdST5sPKU2JnPmm8x3KqjOSlDiYXrp4GkW7bpQTVLPabnUNq5NLN6HJEoJABjjOAsaLF12rBoV+JpRb1UjNsQ==}
+  /@atproto/api@0.11.0-next.0:
+    resolution: {integrity: sha512-EeE2IBdcf9PDHOHJw4S12FpU4QHQJdiDm1R9hO7Jk0kBDvKtGlvDWKpFf+V4mYbRhXl7YvmpPyw5f1dN4x9lDA==}
     dependencies:
       '@atproto/common-web': 0.2.3
       '@atproto/lexicon': 0.3.2
-      '@atproto/syntax': 0.2.0
+      '@atproto/syntax': 0.1.5
       '@atproto/xrpc': 0.4.2
       multiformats: 9.9.0
       tlds: 1.250.0
@@ -111,11 +111,11 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@atproto/pds@0.4.6-next.0:
-    resolution: {integrity: sha512-JvFvmVfZNkb9o3b24si0VLvzfXO/Am+gCdP9s1gMvgQOlfPVKh0BAMAYf22TONm0lxcnBYYsipJNTxMNNNVakA==}
+  /@atproto/pds@0.4.6-next.1:
+    resolution: {integrity: sha512-1NhXhNYfKkj3JRKP2lzijF4XA0GRpU71PFv3o1ELAREHX3O+lu0dVSki5f6luQWZQqNMViHZjPa/riqe6UXClg==}
     hasBin: true
     dependencies:
-      '@atproto/api': 0.10.5
+      '@atproto/api': 0.11.0-next.0
       '@atproto/aws': 0.1.8
       '@atproto/common': 0.3.3
       '@atproto/crypto': 0.3.0
@@ -178,6 +178,12 @@ packages:
       zod: 3.22.4
     transitivePeerDependencies:
       - debug
+    dev: false
+
+  /@atproto/syntax@0.1.5:
+    resolution: {integrity: sha512-pbY5lOnThoAbsmrdbN9LC/dNmckfqODJiX9zjW2t3BIHYFeGBc6w9bK3Vre8A0Hg8yWkQpv6gaBLu+ykgi2DJQ==}
+    dependencies:
+      '@atproto/common-web': 0.2.3
     dev: false
 
   /@atproto/syntax@0.2.0:
