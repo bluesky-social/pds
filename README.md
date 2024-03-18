@@ -63,7 +63,7 @@ As of Feb, 2024, the AT Protocol data service (PDS) is now open to federation fo
 
 ✅ Federated data for self-hosters (PDS hosting)
 
-🚧 Federated moderation (labeling) (coming soon)
+✅ Federated moderation (labeling)
 
 🚧 Federated data for large service providers (coming soon)
 
