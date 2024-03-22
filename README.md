@@ -51,7 +51,7 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 
 ### What is the current status of federation?
 
-As of Feb, 2024, the AT Protocol data service (PDS) is now open to federation for self-hosters! 
+As of Feb, 2024, the AT Protocol PDS (Personal Data Server) is now open to federation for self-hosters!
 
 ✅ Federated domain handles (e.g. `@nytimes.com`)
 
