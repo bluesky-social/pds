@@ -6,6 +6,6 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@atproto/pds": "0.4.9"
+    "@atproto/pds": "0.4.12"
   }
 }
