@@ -115,7 +115,7 @@ You are within your rights to disable Watchtower auto-updates, but we strongly e
 
 📣 This is a sandbox version of a **public broadcast protocol** - please do not share sensitive information.
 
-🤝 Help each other out! Respond to issues & discussions, chat in [Matrix](https://matrix.to/#/%23bluesky-dev:matrix.org) or the community-run [Discord](https://discord.gg/3srmDsHSZJ), etc.
+🤝 Help each other out! Respond to issues & discussions, chat in the community-run [Discord](https://discord.gg/3srmDsHSZJ), etc.
 
 # Learn more about atproto federation
 
