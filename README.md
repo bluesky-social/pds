@@ -165,15 +165,24 @@ sudo bash installer.sh
 
 ### Verifying that your PDS is online and accessible
 
+> [!TIP]
+> The most common problems with getting PDS content consumed in the live network are when folks substitute the provided Caddy configuration for nginx, apache, or similar reverse proxies. Getting TLS certificates, WebSockets, and virtual server names all correct can be tricky. We are not currently providing tech support for other configurations.
+
 You can check if your server is online and healthy by requesting the healthcheck endpoint.
 
-You can visit `https://example.com/xrpc/_health` in your browser. You should see a JSON response with a version.
-
-For example:
+You can visit `https://example.com/xrpc/_health` in your browser. You should see a JSON response with a version, like:
 
 ```
 {"version":"0.2.2-beta.2"}
 ```
+
+You'll also need to check that WebSockets are working, for the rest of the network to pick up content from your PDS. You can test by installing a tool like `wsdump` and running a command like:
+
+```bash
+wsdump "wss://example.com/xrpc/com.atproto.sync.subscribeRepos?cursor=0"
+```
+
+Note that there will be no events output on the WebSocket until they are created in the PDS, so the above command may continue to run with no output if things are configured successfully.
 
 ### Creating an account using pdsadmin
 
