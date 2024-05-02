@@ -1,8 +1,8 @@
 # PDS
 
-Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with self-hosting a Bluesky PDS.
+Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with hosting a Bluesky PDS.
 
-Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/UWS6FFdhMe) to get started!
+Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/UWS6FFdhMe) to chat with other folks hosting instances and get important updates about the PDS distribution!
 
 ## Table of Contents
 
@@ -51,7 +51,7 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 
 ### What is the current status of federation?
 
-As of Feb, 2024, the AT Protocol PDS (Personal Data Server) is now open to federation for self-hosters!
+As of Spring 2024, the AT Protocol network is open to federation!
 
 ✅ Federated domain handles (e.g. `@nytimes.com`)
 
@@ -61,11 +61,9 @@ As of Feb, 2024, the AT Protocol PDS (Personal Data Server) is now open to feder
 
 ✅ Federated app views (API service)
 
-✅ Federated data for self-hosters (PDS hosting)
+✅ Federated data (PDS hosting)
 
 ✅ Federated moderation (labeling)
-
-🚧 Federated data for large service providers (coming soon)
 
 ### What should I know about running a PDS in the developer sandbox?
 
@@ -78,9 +76,6 @@ Read the [SANDBOX.md](https://github.com/bluesky-social/pds/blob/main/SANDBOX.md
 ## Self-hosting PDS
 
 Self-hosting a Bluesky PDS means running your own Personal Data Server that is capable of federating with the wider Bluesky social network.
-
-> [!IMPORTANT]
-> Initially to join the network you'll need to join the [AT Protocol PDS Admins Discord](https://discord.gg/UWS6FFdhMe) and register the hostname of your PDS. We recommend doing so before bringing your PDS online. In the future, this registration check will not be required.
 
 ### Preparation for self-hosting PDS
 
