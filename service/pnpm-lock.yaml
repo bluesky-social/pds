@@ -6,13 +6,13 @@ settings:
 
 dependencies:
   '@atproto/pds':
-    specifier: 0.4.12
-    version: 0.4.12
+    specifier: 0.4.21
+    version: 0.4.21
 
 packages:
 
-  /@atproto/api@0.12.2:
-    resolution: {integrity: sha512-UVzCiDZH2j0wrr/O8nb1edD5cYLVqB5iujueXUCbHS3rAwIxgmyLtA3Hzm2QYsGPo/+xsIg1fNvpq9rNT6KWUA==}
+  /@atproto/api@0.12.9:
+    resolution: {integrity: sha512-3D4n2ZAAsDRnjevvcoIxQxuMMoqc+7vtVyP7EnrEdeOmRSCF9j8yXTqhn6rcHCbzcs3DKyYR26nQemtZsMsE0g==}
     dependencies:
       '@atproto/common-web': 0.3.0
       '@atproto/lexicon': 0.4.0
@@ -107,11 +107,11 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@atproto/pds@0.4.12:
-    resolution: {integrity: sha512-qYwfPQRmSHgmvGr5Q/ZR6ejI4NfWAoY+xRwZmuwJD6JIhVMgyf0T5DI3ajYMCBRw+RxccTgQSBQQNlAmeOWfkg==}
+  /@atproto/pds@0.4.21:
+    resolution: {integrity: sha512-WOoJ72T3XqkSCVafBABthx6nmY+RcRF8sHZjn/Ickme4Y1kMWui7uHAQUbdCFmSvHvv/fD6MKrCmShOBFWfqiw==}
     hasBin: true
     dependencies:
-      '@atproto/api': 0.12.2
+      '@atproto/api': 0.12.9
       '@atproto/aws': 0.2.0
       '@atproto/common': 0.4.0
       '@atproto/crypto': 0.4.0
@@ -120,7 +120,7 @@ packages:
       '@atproto/repo': 0.4.0
       '@atproto/syntax': 0.3.0
       '@atproto/xrpc': 0.5.0
-      '@atproto/xrpc-server': 0.5.0
+      '@atproto/xrpc-server': 0.5.1
       '@did-plc/lib': 0.0.4
       better-sqlite3: 9.4.1
       bytes: 3.1.2
@@ -173,8 +173,8 @@ packages:
     resolution: {integrity: sha512-Weq0ZBxffGHDXHl9U7BQc2BFJi/e23AL+k+i5+D9hUq/bzT4yjGsrCejkjq0xt82xXDjmhhvQSZ0LqxyZ5woxA==}
     dev: false
 
-  /@atproto/xrpc-server@0.5.0:
-    resolution: {integrity: sha512-3g9cy6vCWnsEpThGR0mcepp4HiCQxs05L2XCuxZIOP20JcaIViMHFNlIm9lJdNwWXLb7dzSZLYjfA2QOWDZ3Gw==}
+  /@atproto/xrpc-server@0.5.1:
+    resolution: {integrity: sha512-SXU6dscVe5iYxPeV79QIFs/yEEu7LLOzyHGoHG1kSNO6DjwxXTdcWOc8GSYGV6H+7VycOoPZPkyD9q4teJlj/w==}
     dependencies:
       '@atproto/common': 0.4.0
       '@atproto/crypto': 0.4.0
