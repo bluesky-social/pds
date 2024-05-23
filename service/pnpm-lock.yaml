@@ -6,13 +6,13 @@ settings:
 
 dependencies:
   '@atproto/pds':
-    specifier: 0.4.23
-    version: 0.4.23
+    specifier: 0.4.24
+    version: 0.4.24
 
 packages:
 
-  /@atproto/api@0.12.11:
-    resolution: {integrity: sha512-NABsZ4ZYznWisr1bGuP6Z4X1GTiu5gNrmAQTxWp45M8RX88BFP1PskoG3J42d2iiyQMVBwTdoENTFYzvsKBuQg==}
+  /@atproto/api@0.12.12:
+    resolution: {integrity: sha512-FQwctodFipfXyF6j73cxq6qC8sLB2KqDCuEWe/p/sI1nLN4tkqFo5A80OOMY6rNgMtXoyQ9vPvq/lxRcV9mx2A==}
     dependencies:
       '@atproto/common-web': 0.3.0
       '@atproto/lexicon': 0.4.0
@@ -107,11 +107,11 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@atproto/pds@0.4.23:
-    resolution: {integrity: sha512-WENRfwfO1Q5UiI8fwoXu++kLSmbSNKjEhZto2Zb9IBq143mgSKo70ZF50EoKBqHUPzlbmGZae9rR9YMj1bfwaQ==}
+  /@atproto/pds@0.4.24:
+    resolution: {integrity: sha512-XcgVT+UIbBFw3+45AH7opSBU4bIyRTkbZx/f8+Gyg03snygSUaoxpGuzGtonwqFpfu6FdoXGiXe3Rqg+c+qLxQ==}
     hasBin: true
     dependencies:
-      '@atproto/api': 0.12.11
+      '@atproto/api': 0.12.12
       '@atproto/aws': 0.2.0
       '@atproto/common': 0.4.0
       '@atproto/crypto': 0.4.0
