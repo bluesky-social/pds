@@ -5,7 +5,7 @@ Account migration is a potentially destructive operation. Part of the operation 
 
 Therefore, we do not recommend migrating your primary account yet. And we specifically recommend _against_ migrating your main account if you do not understand how PLC operations work.
 
-As well, the Bluesky PDS is not currently accepting incoming migrations (it will in the future). Therefore this is currently a one-way street. If you migrate off of `bsky.social`, _you will not be able to return_. However, you will be able to migrate between other PDSs.
+Also, the Bluesky PDS is not currently accepting incoming migrations (it will in the future). Therefore this is currently a one-way street. If you migrate off of `bsky.social`, _you will not be able to return_. However, you will be able to migrate between other PDSs.
 
 ![Diagram of account migration flow](https://raw.githubusercontent.com/bluesky-social/pds/main/assets/account-migration.png)
 
@@ -20,17 +20,17 @@ Account Migration occurs in 4 main steps:
 
 In order to create an account, you first need to prove to the new PDS that you're in control of the DID that you're attempting to register as.
 
-To do so, you need a JWT signed with the signing key associated with your DID. You can obtain this through calling `com.atproto.server.getServiceAuth` from your old PDS. If you're old PDS is not willing to provide the authentication token, you will need to update your DID document to point to a signing key that you possess in order to mint an authentication token yourself.
+To do so, you need a JWT signed with the signing key associated with your DID. You can obtain this through calling `com.atproto.server.getServiceAuth` from your old PDS. If your old PDS is not willing to provide the authentication token, you will need to update your DID document to point to a signing key that you possess in order to mint an authentication token yourself.
 
 With this JWT set as a Bearer token, you can then create an account on the new PDS by calling `com.atproto.server.createAccount`. You'll need to fulfill any challenges that the new PDS requires - such as an invite code. 
 
-After creating an account, you'll have a signing key on the new PDS and an empty repository. You're account will be in a "deactivated" state such that it is not usable yet.
+After creating an account, you'll have a signing key on the new PDS and an empty repository. Your account will be in a "deactivated" state such that it is not usable yet.
 
 ### Migrating data
 
 Now that you have an account on the new PDS, you can start migrating data into it. After creating your account, you will have received an access token for the new PDS and it will be required for all incoming data.
 
-First, you can grab your entire repository in the from of a [CAR file](https://ipld.io/specs/transport/car/carv1/) by calling `com.atproto.sync.getRepo`. You can then upload those exact bytes to your new PDS through `com.atproto.repo.importRepo`. The new PDS will parse the CAR file, index all blocks and records, and sign a new commit for the repository.
+First, you can grab your entire repository in the form of a [CAR file](https://ipld.io/specs/transport/car/carv1/) by calling `com.atproto.sync.getRepo`. You can then upload those exact bytes to your new PDS through `com.atproto.repo.importRepo`. The new PDS will parse the CAR file, index all blocks and records, and sign a new commit for the repository.
 
 Next, you'll need to upload all relevant blobs. These can be discovered by calling `com.atproto.sync.listBlobs` on your old PDS. For each blob, you'll need to download the contents through `com.atproto.sync.getBlob` and upload them to your new PDS through `com.atproto.repo.uploadBlob`. 
 
@@ -69,7 +69,7 @@ After migrating, you should be good to start using the app as normal! You'll nee
 
 The below Typescript code gives an example of how this account migration flow may function. Please note that it is for documentation purposes only and can not be run exactly as is as there is an out-of-band step where you need to get a confirmation token from your email.
 
-It does also not handle some of the more advanced steps such as verifying a full import, looking for missing blobs, adding your own recovery key, or validating the PLC operation itself.
+It also does not handle some of the more advanced steps such as verifying a full import, looking for missing blobs, adding your own recovery key, or validating the PLC operation itself.
 
 ```ts
 import AtpAgent from '@atproto/api'
