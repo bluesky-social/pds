@@ -15,7 +15,6 @@ Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP)
   * [What is AT Protocol?](#what-is-at-protocol)
   * [Where is the code?](#where-is-the-code)
   * [What is the current status of federation?](#what-is-the-current-status-of-federation)
-  * [What should I know about running a PDS in the developer sandbox?](#what-should-i-know-about-running-a-pds-in-the-developer-sandbox)
 - [Self-hosting PDS](#self-hosting-pds)
   * [Preparation for self-hosting PDS](#preparation-for-self-hosting-pds)
   * [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
@@ -64,14 +63,6 @@ As of Spring 2024, the AT Protocol network is open to federation!
 ✅ Federated data (PDS hosting)
 
 ✅ Federated moderation (labeling)
-
-### What should I know about running a PDS in the developer sandbox?
-
-Developers may now run self-hosted PDS hosts on the production network!
-
-Though it is still recommended to run experiments in the developer sandbox network.
-
-Read the [SANDBOX.md](https://github.com/bluesky-social/pds/blob/main/SANDBOX.md) for an overview of the sandbox network.
 
 ## Self-hosting PDS
 
