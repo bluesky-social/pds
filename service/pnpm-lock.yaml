@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@atproto/pds':
-    specifier: 0.4.46
-    version: 0.4.46
+    specifier: 0.4.47
+    version: 0.4.47
 
 packages:
 
@@ -188,8 +188,8 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@atproto/pds@0.4.46:
-    resolution: {integrity: sha512-4uxwOAioSv+uy9btaJ2CNSAv9Uoa4gIc5obBIuNFM806CSV++b9WoOPAQa3lfaP+4hLSr1xdapXtpONo9LbFSQ==}
+  /@atproto/pds@0.4.47:
+    resolution: {integrity: sha512-AhAf7sDQYnMS+URK+ph2rIEy3O8f2bkEKhWeVuwoEvu+hWxOk8DiWYcqcQmmnN5RnoKfYm/rE2A+eIBdwq5lYQ==}
     hasBin: true
     dependencies:
       '@atproto-labs/fetch-node': 0.1.0
