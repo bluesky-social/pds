@@ -45,7 +45,7 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 
 ### Where is the code?
 
-* [TypeScript code](https://github.com/bluesky-social/atproto)
+* [TypeScript code](https://github.com/bluesky-social/atproto/tree/main/packages/pds)
 * [Go code](https://github.com/bluesky-social/indigo)
 
 ### What is the current status of federation?
