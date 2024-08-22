@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@atproto/pds':
-    specifier: 0.4.51
-    version: 0.4.51
+    specifier: 0.4.52
+    version: 0.4.52
 
 packages:
 
@@ -44,8 +44,8 @@ packages:
     resolution: {integrity: sha512-WKILW2b3QbAYKh+w5U2x6p5FqqLl0nAeLwGeDY+KjX01K4Dq3vQTR9b/qNp0jZm48CabPQVrqCv0PPU9LgRRRg==}
     dev: false
 
-  /@atproto/api@0.13.1:
-    resolution: {integrity: sha512-DL3iBfavn8Nnl48FmnAreQB0k0cIkW531DJ5JAHUCQZo10Nq0ZLk2/WFxcs0KuBG5wuLnGUdo+Y6/GQPVq8dYw==}
+  /@atproto/api@0.13.2:
+    resolution: {integrity: sha512-AkCr+GbSJu+TSJzML/Ggh7CC61TKi4cQEOGmFHeI/0x9sa110UAAWHHRKom2vV09+cW5p/FMAtWvA05YR+v4jw==}
     dependencies:
       '@atproto/common-web': 0.3.0
       '@atproto/lexicon': 0.4.1
@@ -189,12 +189,12 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@atproto/pds@0.4.51:
-    resolution: {integrity: sha512-NG0wUFe3a9KRW94Z/cuLZzEqpNOf0rH1ERl9OAAXGagjHyrWeuhknZRLPSA0uNKpQi1ISK2lwvtj8XWKD18eFA==}
+  /@atproto/pds@0.4.52:
+    resolution: {integrity: sha512-kSS2Qtm6BopvL5Wkz+4jP7H9F17562hfcnlHYvAyq46TpyRvY0hQKouTbVd97WTafZiZSx7eeTDON0lCITyzzg==}
     hasBin: true
     dependencies:
       '@atproto-labs/fetch-node': 0.1.0
-      '@atproto/api': 0.13.1
+      '@atproto/api': 0.13.2
       '@atproto/aws': 0.2.2
       '@atproto/common': 0.4.1
       '@atproto/crypto': 0.4.0
