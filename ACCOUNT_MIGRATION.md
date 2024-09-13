@@ -107,6 +107,7 @@ const migrateAccount = async () => {
 
   const serviceJwtRes = await oldAgent.com.atproto.server.getServiceAuth({
     aud: newServerDid,
+    lxm: 'com.atproto.server.createAccount',
   })
   const serviceJwt = serviceJwtRes.data.token
 
