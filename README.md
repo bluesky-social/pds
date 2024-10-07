@@ -25,6 +25,7 @@ Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP)
   * [Creating an account using pdsadmin](#creating-an-account-using-pdsadmin)
   * [Creating an account using an invite code](#creating-an-account-using-an-invite-code)
   * [Using the Bluesky app with your PDS](#using-the-bluesky-app-with-your-pds)
+  * [Setting up SMTP](#setting-up-smtp)
   * [Updating your PDS](#updating-your-pds)
 
 <!-- tocstop -->
@@ -199,6 +200,21 @@ You can use the Bluesky app to connect to your PDS.
 1. Enter the URL of your PDS (e.g. `https://example.com/`)
 
 _Note: because the subdomain TLS certificate is created on-demand, it may take 10-30s for your handle to be accessible. If you aren't seeing your first post/profile, wait 30s and try to make another post._
+
+### Setting up SMTP
+
+To be able to verify users' email addresses and send other emails, you need to set up an SMTP server.
+
+One way to do this is to use an email service. [Resend](https://resend.com/) and [SendGrid](https://sendgrid.com/) are two popular choices.
+
+Create an account and API key on an email service and set these variables in `/pds/pds.env` (example with Resend):
+
+```
+PDS_EMAIL_SMTP_URL=smtps://resend:<your api key here>@smtp.resend.com:465/
+PDS_EMAIL_FROM_ADDRESS=admin@your.domain
+```
+
+_Note: Your PDS will need to be restarted with those variables. This varies a bit depending on your setup. You might need to just restart the server or recreate the container, depending on what you are using._
 
 ### Updating your PDS
 
