@@ -95,7 +95,10 @@ function main {
       echo "* Detected supported distribution Ubuntu 22.04 LTS"
     elif [[ "${DISTRIB_CODENAME}" == "mantic" ]]; then
       SUPPORTED_OS="true"
-      echo "* Detected supported distribution Ubuntu 23.10 LTS"
+      echo "* Detected supported distribution Ubuntu 23.10"
+    elif [[ "${DISTRIB_CODENAME}" == "noble" ]]; then
+      SUPPORTED_OS="true"
+      echo "* Detected supported distribution Ubuntu 24.04 LTS"
     fi
   elif [[ "${DISTRIB_ID}" == "debian" ]]; then
     if [[ "${DISTRIB_CODENAME}" == "bullseye" ]]; then
