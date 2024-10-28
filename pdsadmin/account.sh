@@ -252,12 +252,15 @@ elif [[ "${SUBCOMMAND}" == "change-handle" ]]; then
     exit 1
   fi
 
-  curl_cmd_post \
+  RESULT="$(curl_cmd_post_nofail \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
     --data "{\"did\":\"${DID}\",\"handle\":\"${HANDLE}\"}" \
-    "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateAccountHandle" > /dev/null
+    "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateAccountHandle")"
 
-  echo "Updated handle to ${HANDLE} for account ${DID}"
+  if [[ -n "$(echo "$RESULT" | jq --raw-output '.error')" ]]; then
+    echo "ERROR: $(echo "$RESULT" | jq --raw-output '.message')" >/dev/stderr
+    exit 1
+  fi
 
 else
   echo "Unknown subcommand: ${SUBCOMMAND}" >/dev/stderr
