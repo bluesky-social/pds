@@ -228,6 +228,32 @@ elif [[ "${SUBCOMMAND}" == "reset-password" ]]; then
   echo "New password: ${PASSWORD}"
   echo
 
+#
+# account change-handle
+#
+elif [[ "${SUBCOMMAND}" == "change-handle" ]]; then
+  DID="${2:-}"
+  HANDLE="${3:-}"
+   
+  if [[ "${DID}" == "" ]]; then
+    echo "ERROR: missing DID parameter." >/dev/stderr
+    echo "Usage: $0 ${SUBCOMMAND} <DID> <handle>" >/dev/stderr
+    exit 1
+  i
+  
+  if [[ "${DID}" != did:* ]]; then
+    echo "ERROR: DID parameter must start with \"did:\"." >/dev/stderr
+    echo "Usage: $0 ${SUBCOMMAND} <DID> <handle>" >/dev/stderr
+    exit 1
+  fi
+  
+  curl_cmd_post \
+    --user "admin:${PDS_ADMIN_PASSWORD}"
+    --data "{\"did\": \"${DID}\", \"handle\": \"${HANDLE}\"}" \
+    "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateAccountHandle" > /dev/null
+
+  echo "Changed handle of ${DID} to ${HANDLE}"
+
 else
   echo "Unknown subcommand: ${SUBCOMMAND}" >/dev/stderr
   exit 1
