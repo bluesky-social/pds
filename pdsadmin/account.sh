@@ -243,7 +243,8 @@ elif [[ "${SUBCOMMAND}" == "change-handle" ]]; then
 
   if [[ "${HANDLE}" == "" ]]; then
     echo "ERROR: missing handle parameter" >/dev/stderr
-    echo "Usave: $0 ${SUBCOMMAND} <DID> <HANDLE>"
+    echo "Usage: $0 ${SUBCOMMAND} <DID> <HANDLE>"
+    exit 1
   fi
 
   if [[ "${DID}" != did:* ]]; then
