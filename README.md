@@ -207,14 +207,14 @@ To be able to verify users' email addresses and send other emails, you need to s
 
 One way to do this is to use an email service. [Resend](https://resend.com/) and [SendGrid](https://sendgrid.com/) are two popular choices.
 
-Create an account and API key on an email service and set these variables in `/pds/pds.env` (example with Resend):
+Create an account and API key on an email service, ensure your server allows access on the required ports, and set these variables in `/pds/pds.env` (example with Resend):
 
 ```
 PDS_EMAIL_SMTP_URL=smtps://resend:<your api key here>@smtp.resend.com:465/
 PDS_EMAIL_FROM_ADDRESS=admin@your.domain
 ```
 
-_Note: Your PDS will need to be restarted with those variables. This varies a bit depending on your setup. You might need to just restart the server or recreate the container, depending on what you are using._
+_Note: Your PDS will need to be restarted with those variables. This varies depending on your setup. If you followed this installation guide, run `systemctl restart pds`. You might need to restart the server or recreate the container, depending on what you are using._
 
 ### Updating your PDS
 
