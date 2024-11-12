@@ -10,7 +10,10 @@ RUN pnpm install --production --frozen-lockfile > /dev/null
 # Uses assets from build stage to reduce build size
 FROM node:20.11-alpine3.18
 
-RUN apk add --update dumb-init
+# Install required packages and pdsadmin tool
+RUN apk add --update dumb-init bash curl openssl jq util-linux && \
+  curl --silent --show-error --fail --output "/usr/local/bin/pdsadmin" "https://raw.githubusercontent.com/bluesky-social/pds/main/pdsadmin.sh" && \
+  chmod +x /usr/local/bin/pdsadmin
 
 # Avoid zombie processes, handle signal forwarding
 ENTRYPOINT ["dumb-init", "--"]
