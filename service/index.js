@@ -40,7 +40,8 @@ async function checkHandleRoute(
         message: "bad or missing domain query param",
       });
     }
-    if (domain === pds.ctx.cfg.service.hostname) {
+    if (domain === pds.ctx.cfg.service.hostname
+      || pds.ctx.cfg.service.manualCertSet.has(domain)) {
       return res.json({ success: true });
     }
     const isHostedHandle = pds.ctx.cfg.identity.serviceHandleDomains.find(
