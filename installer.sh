@@ -342,6 +342,10 @@ PDS_REPORT_SERVICE_DID=${PDS_REPORT_SERVICE_DID}
 PDS_CRAWLERS=${PDS_CRAWLERS}
 LOG_ENABLED=true
 PDS_CONFIG
+  #
+  # fix pds.env file permissions
+  #
+  chmod o= ${PDS_DATADIR}/pds.env
 
   #
   # Download and install pds launcher.
