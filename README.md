@@ -214,6 +214,8 @@ PDS_EMAIL_SMTP_URL=smtps://resend:<your api key here>@smtp.resend.com:465/
 PDS_EMAIL_FROM_ADDRESS=admin@your.domain
 ```
 
+If the username and/or password contain special characters, the special characters will need to be [percent encoded](https://en.wikipedia.org/wiki/Percent-encoding). For example, `user&name:p@ssword` would become `user%26name:p%40ssword`.
+
 _Note: Your PDS will need to be restarted with those variables. This varies depending on your setup. If you followed this installation guide, run `systemctl restart pds`. You might need to restart the server or recreate the container, depending on what you are using._
 
 ### Updating your PDS
