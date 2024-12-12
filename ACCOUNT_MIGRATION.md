@@ -7,6 +7,9 @@ Therefore, we do not recommend migrating your primary account yet. And we specif
 
 Also, the Bluesky PDS is not currently accepting incoming migrations (it will in the future). Therefore this is currently a one-way street. If you migrate off of `bsky.social`, _you will not be able to return_. However, you will be able to migrate between other PDSs.
 
+Note that the new PDS must have SMTP set up in order to send emails, which is necessary in order to verify the account email address after the PDS migration.
+Without this, you will not be able to post on the Bluesky app. See [here](https://github.com/bluesky-social/pds/blob/main/README.md#setting-up-smtp) for more details.
+
 ![Diagram of account migration flow](https://raw.githubusercontent.com/bluesky-social/pds/main/assets/account-migration.png)
 
 Account Migration occurs in 4 main steps:
@@ -63,7 +66,6 @@ As a clean up step, you can deactivate or delete your account on your old PDS by
 ### After migration
 
 After migrating, you should be good to start using the app as normal! You'll need to log out and log back in through your new PDS so that the client is talking to the correct service. It's possible that some services (such as feed generators) will have a stale DID cache and may not be able to accurately verify your auth tokens immediately. However, we've found that most services handle this gracefully, and those that don't should sort themselves out pretty quickly.
-
 
 ## Example Code
 
