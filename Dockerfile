@@ -25,7 +25,7 @@ ENV NODE_ENV=production
 ENV UV_USE_IO_URING=0
 
 CMD ["node", "--enable-source-maps", "index.js"]
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD [ "curl", "localhost:3000/xrpc/_health" ]
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl localhost:${PDS_PORT}/xrpc/_health || exit 1
 
 LABEL org.opencontainers.image.source=https://github.com/bluesky-social/pds
 LABEL org.opencontainers.image.description="AT Protocol PDS"
