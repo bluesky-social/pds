@@ -2,6 +2,8 @@ version: '3.9'
 services:
   caddy:
     container_name: caddy
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     image: caddy:2
     network_mode: host
     depends_on:
@@ -16,6 +18,8 @@ services:
         target: /etc/caddy
   pds:
     container_name: pds
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
     image: ghcr.io/bluesky-social/pds:0.4
     network_mode: host
     restart: unless-stopped
@@ -37,3 +41,4 @@ services:
     environment:
       WATCHTOWER_CLEANUP: true
       WATCHTOWER_SCHEDULE: "@midnight"
+      WATCHTOWER_LABEL_ENABLE: true
