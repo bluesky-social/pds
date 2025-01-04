@@ -9,10 +9,10 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /pds/caddy/data
+        source: @PDS_DATADIR@/caddy/data
         target: /data
       - type: bind
-        source: /pds/caddy/etc/caddy
+        source: @PDS_DATADIR@/caddy/etc/caddy
         target: /etc/caddy
   pds:
     container_name: pds
@@ -21,10 +21,10 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /pds
+        source: @PDS_DATADIR@
         target: /pds
     env_file:
-      - /pds/pds.env
+      - @PDS_DATADIR@/pds.env
   watchtower:
     container_name: watchtower
     image: containrrr/watchtower:latest

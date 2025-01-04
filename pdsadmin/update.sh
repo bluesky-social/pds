@@ -3,7 +3,9 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-PDS_DATADIR="/pds"
+PDS_ENV_FILE=${PDS_ENV_FILE:-"/pds/pds.env"}
+source "${PDS_ENV_FILE}"
+
 COMPOSE_FILE="${PDS_DATADIR}/compose.yaml"
 COMPOSE_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml"
 
@@ -19,6 +21,9 @@ curl \
   --fail \
   --output "${COMPOSE_TEMP_FILE}" \
   "${COMPOSE_URL}"
+
+# Replace the /pds paths with the ${PDS_DATADIR} path.
+sed --in-place "s|@PDS_DATADIR@|${PDS_DATADIR}|g" "${COMPOSE_TEMP_FILE}"
 
 if cmp --quiet "${COMPOSE_FILE}" "${COMPOSE_TEMP_FILE}"; then
   echo "PDS is already up to date"
