@@ -58,6 +58,7 @@ jobs:
           file: ./Dockerfile
           tags: |
             ${{ steps.meta.outputs.tags }}
+            latest
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
