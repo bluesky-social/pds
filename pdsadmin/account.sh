@@ -28,19 +28,26 @@ SUBCOMMAND="${1:-}"
 # account list
 #
 if [[ "${SUBCOMMAND}" == "list" ]]; then
-  DIDS="$(curl_cmd_get \
-    "https://${PDS_HOSTNAME}/xrpc/com.atproto.sync.listRepos?limit=100" | jq --raw-output '.repos[].did'
+  REPOS="$(curl_cmd_get \
+    "https://${PDS_HOSTNAME}/xrpc/com.atproto.sync.listRepos?limit=100" | jq --raw-output '.repos[]'
   )"
-  OUTPUT='[{"handle":"Handle","email":"Email","did":"DID"}'
+  DIDS="$(echo \
+    ${REPOS} | jq --raw-output '.did'
+  )"
+  OUTPUT='[{"handle":"Handle","email":"Email","did":"DID","active":"Enabled?"}'
   for did in ${DIDS}; do
     ITEM="$(curl_cmd_get \
       --user "admin:${PDS_ADMIN_PASSWORD}" \
       "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.getAccountInfo?did=${did}"
     )"
+    ITEMACTIVE="$(echo \
+      ${REPOS} | jq --raw-output "select(.did == \"${did}\") | {active: .active}"
+    )"
+    ITEM=$(echo $ITEM $ITEMACTIVE | jq -s '.[0] * .[1]')
     OUTPUT="${OUTPUT},${ITEM}"
   done
   OUTPUT="${OUTPUT}]"
-  echo "${OUTPUT}" | jq --raw-output '.[] | [.handle, .email, .did] | @tsv' | column --table
+  echo "${OUTPUT}" | jq --raw-output '.[] | [.handle, .email, .did, .active] | @tsv' | column --table
 
 #
 # account create
