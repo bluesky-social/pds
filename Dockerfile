@@ -1,6 +1,6 @@
 FROM node:20.11-alpine3.18 AS build
 
-RUN npm install -g pnpm
+RUN npm install -g pnpm@9
 
 # Move files into the image and install
 WORKDIR /app
