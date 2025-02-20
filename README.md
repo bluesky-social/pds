@@ -214,6 +214,18 @@ PDS_EMAIL_SMTP_URL=smtps://resend:<your api key here>@smtp.resend.com:465/
 PDS_EMAIL_FROM_ADDRESS=admin@your.domain
 ```
 
+If you prefer to use a standard SMTP server (a local one or from your email provider), put your account's username and password in the URL:
+
+```
+PDS_EMAIL_SMTP_URL=smtps://username:password@smtp.example.com/
+```
+
+Alternatively, if you're running a local sendmail-compatible mail service like Postfix or Exim on the same host, you can configure the PDS to use the sendmail transport by using such URL:
+
+```
+PDS_EMAIL_SMTP_URL=smtp:///?sendmail=true
+```
+
 _Note: Your PDS will need to be restarted with those variables. This varies depending on your setup. If you followed this installation guide, run `systemctl restart pds`. You might need to restart the server or recreate the container, depending on what you are using._
 
 ### Updating your PDS
