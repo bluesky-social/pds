@@ -1,8 +1,8 @@
 # PDS
 
-Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with self-hosting a Bluesky PDS.
+Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with hosting a Bluesky PDS.
 
-Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/UWS6FFdhMe) to get started!
+Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP) to chat with other folks hosting instances and get important updates about the PDS distribution!
 
 ## Table of Contents
 
@@ -15,7 +15,6 @@ Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/UWS6FFdhMe)
   * [What is AT Protocol?](#what-is-at-protocol)
   * [Where is the code?](#where-is-the-code)
   * [What is the current status of federation?](#what-is-the-current-status-of-federation)
-  * [What should I know about running a PDS in the developer sandbox?](#what-should-i-know-about-running-a-pds-in-the-developer-sandbox)
 - [Self-hosting PDS](#self-hosting-pds)
   * [Preparation for self-hosting PDS](#preparation-for-self-hosting-pds)
   * [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
@@ -26,6 +25,7 @@ Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/UWS6FFdhMe)
   * [Creating an account using pdsadmin](#creating-an-account-using-pdsadmin)
   * [Creating an account using an invite code](#creating-an-account-using-an-invite-code)
   * [Using the Bluesky app with your PDS](#using-the-bluesky-app-with-your-pds)
+  * [Setting up SMTP](#setting-up-smtp)
   * [Updating your PDS](#updating-your-pds)
 
 <!-- tocstop -->
@@ -46,12 +46,12 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 
 ### Where is the code?
 
-* [TypeScript code](https://github.com/bluesky-social/atproto)
+* [TypeScript code](https://github.com/bluesky-social/atproto/tree/main/packages/pds)
 * [Go code](https://github.com/bluesky-social/indigo)
 
 ### What is the current status of federation?
 
-As of Feb, 2024, the AT Protocol data service (PDS) is now open to federation for self-hosters! 
+As of Spring 2024, the AT Protocol network is open to federation!
 
 ✅ Federated domain handles (e.g. `@nytimes.com`)
 
@@ -61,26 +61,13 @@ As of Feb, 2024, the AT Protocol data service (PDS) is now open to federation fo
 
 ✅ Federated app views (API service)
 
-✅ Federated data for self-hosters (PDS hosting)
+✅ Federated data (PDS hosting)
 
 ✅ Federated moderation (labeling)
-
-🚧 Federated data for large service providers (coming soon)
-
-### What should I know about running a PDS in the developer sandbox?
-
-Developers may now run self-hosted PDS hosts on the production network!
-
-Though it is still recommended to run experiments in the developer sandbox network.
-
-Read the [SANDBOX.md](https://github.com/bluesky-social/pds/blob/main/SANDBOX.md) for an overview of the sandbox network.
 
 ## Self-hosting PDS
 
 Self-hosting a Bluesky PDS means running your own Personal Data Server that is capable of federating with the wider Bluesky social network.
-
-> [!IMPORTANT]
-> Initially to join the network you'll need to join the [AT Protocol PDS Admins Discord](https://discord.gg/UWS6FFdhMe) and register the hostname of your PDS. We recommend doing so before bringing your PDS online. In the future, this registration check will not be required.
 
 ### Preparation for self-hosting PDS
 
@@ -165,15 +152,24 @@ sudo bash installer.sh
 
 ### Verifying that your PDS is online and accessible
 
+> [!TIP]
+> The most common problems with getting PDS content consumed in the live network are when folks substitute the provided Caddy configuration for nginx, apache, or similar reverse proxies. Getting TLS certificates, WebSockets, and virtual server names all correct can be tricky. We are not currently providing tech support for other configurations.
+
 You can check if your server is online and healthy by requesting the healthcheck endpoint.
 
-You can visit `https://example.com/xrpc/_health` in your browser. You should see a JSON response with a version.
-
-For example:
+You can visit `https://example.com/xrpc/_health` in your browser. You should see a JSON response with a version, like:
 
 ```
 {"version":"0.2.2-beta.2"}
 ```
+
+You'll also need to check that WebSockets are working, for the rest of the network to pick up content from your PDS. You can test by installing a tool like `wsdump` and running a command like:
+
+```bash
+wsdump "wss://example.com/xrpc/com.atproto.sync.subscribeRepos?cursor=0"
+```
+
+Note that there will be no events output on the WebSocket until they are created in the PDS, so the above command may continue to run with no output if things are configured successfully.
 
 ### Creating an account using pdsadmin
 
@@ -204,6 +200,55 @@ You can use the Bluesky app to connect to your PDS.
 1. Enter the URL of your PDS (e.g. `https://example.com/`)
 
 _Note: because the subdomain TLS certificate is created on-demand, it may take 10-30s for your handle to be accessible. If you aren't seeing your first post/profile, wait 30s and try to make another post._
+
+### Setting up SMTP
+
+To be able to verify users' email addresses and send other emails, you need to set up an SMTP server.
+
+One way to do this is to use an email service. [Resend](https://resend.com/) and [SendGrid](https://sendgrid.com/) are two popular choices.
+
+Create an account and API key on an email service, ensure your server allows access on the required ports, and set these variables in `/pds/pds.env` (example with Resend):
+
+```
+PDS_EMAIL_SMTP_URL=smtps://resend:<your api key here>@smtp.resend.com:465/
+PDS_EMAIL_FROM_ADDRESS=admin@your.domain
+```
+
+If you prefer to use a standard SMTP server (a local one or from your email provider), put your account's username and password in the URL:
+
+```
+PDS_EMAIL_SMTP_URL=smtps://username:password@smtp.example.com/
+```
+
+Alternatively, if you're running a local sendmail-compatible mail service like Postfix or Exim on the same host, you can configure the PDS to use the sendmail transport by using such URL:
+
+```
+PDS_EMAIL_SMTP_URL=smtp:///?sendmail=true
+```
+
+_Note: Your PDS will need to be restarted with those variables. This varies depending on your setup. If you followed this installation guide, run `systemctl restart pds`. You might need to restart the server or recreate the container, depending on what you are using._
+
+### Logging
+
+By default, logs from the PDS are printed to `stdout` and end up in Docker's log. You can browse them by running:
+
+```
+[sudo] docker logs pds
+```
+
+Note: these logs are not persisted, so they will be lost after server reboot.
+
+Alternatively, you can configure the logs to be printed to a file by setting `LOG_DESTINATION`:
+
+```
+LOG_DESTINATION=/pds/pds.log
+```
+
+You can also change the minimum level of logs to be printed (default: `info`):
+
+```
+LOG_LEVEL=debug
+```
 
 ### Updating your PDS
 
