@@ -228,6 +228,28 @@ PDS_EMAIL_SMTP_URL=smtp:///?sendmail=true
 
 _Note: Your PDS will need to be restarted with those variables. This varies depending on your setup. If you followed this installation guide, run `systemctl restart pds`. You might need to restart the server or recreate the container, depending on what you are using._
 
+### Logging
+
+By default, logs from the PDS are printed to `stdout` and end up in Docker's log. You can browse them by running:
+
+```
+[sudo] docker logs pds
+```
+
+Note: these logs are not persisted, so they will be lost after server reboot.
+
+Alternatively, you can configure the logs to be printed to a file by setting `LOG_DESTINATION`:
+
+```
+LOG_DESTINATION=/pds/pds.log
+```
+
+You can also change the minimum level of logs to be printed (default: `info`):
+
+```
+LOG_LEVEL=debug
+```
+
 ### Updating your PDS
 
 It is recommended that you keep your PDS up to date with new versions, otherwise things may break. You can use the `pdsadmin` tool to update your PDS.
