@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@atproto/pds':
-    specifier: 0.4.106
-    version: 0.4.106
+    specifier: 0.4.107
+    version: 0.4.107
 
 packages:
 
@@ -167,8 +167,8 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@atproto/oauth-provider@0.5.1:
-    resolution: {integrity: sha512-GexFRl8E8JTDVrF6zpGCOhrWvgrO6VvCow1PZyL6dpNjbJ88+6pa/8eDa9Hsrl6o1gr86Qof5wbhYwGLIzZ18Q==}
+  /@atproto/oauth-provider@0.5.2:
+    resolution: {integrity: sha512-moUJ0KD1zgE5j+XVxkpKgj593BYj4y7aIAWY2c0iWJ97DSOwTlo04R4FTJAFyrF3Oszo5Srgpg+mqDvCxrPAnA==}
     engines: {node: '>=18.7.0'}
     dependencies:
       '@atproto-labs/fetch': 0.2.2
@@ -180,6 +180,7 @@ packages:
       '@atproto/jwk': 0.1.4
       '@atproto/jwk-jose': 0.1.5
       '@atproto/oauth-types': 0.2.4
+      '@atproto/syntax': 0.3.4
       '@hapi/accept': 6.0.3
       '@hapi/address': 5.1.1
       '@hapi/bourne': 3.0.0
@@ -203,8 +204,8 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@atproto/pds@0.4.106:
-    resolution: {integrity: sha512-XYEl2hzmZo1XFyirUfiuyBoNxAaafntQNZ9HfAyIx5t6M8KWDbSedcd5I1bsWIKJ1OAIRMdqS6YgyaXHp2ABww==}
+  /@atproto/pds@0.4.107:
+    resolution: {integrity: sha512-MCzuD6YffgaOnS/ETN/aRK0z0hR1rW8yewB7Dz3p71AO+PtA04uBXWDI6QPvm4ZX2/gkK94P3svo/RSy2nnS+g==}
     engines: {node: '>=18.7.0'}
     hasBin: true
     dependencies:
@@ -216,7 +217,7 @@ packages:
       '@atproto/crypto': 0.4.4
       '@atproto/identity': 0.4.6
       '@atproto/lexicon': 0.4.8
-      '@atproto/oauth-provider': 0.5.1
+      '@atproto/oauth-provider': 0.5.2
       '@atproto/repo': 0.7.1
       '@atproto/syntax': 0.3.4
       '@atproto/xrpc': 0.6.10
