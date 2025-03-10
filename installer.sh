@@ -32,12 +32,30 @@ REQUIRED_SYSTEM_PACKAGES="
   sqlite3
   xxd
 "
+
+# System dependencies for Arch Linux
+REQUIRED_SYSTEM_PACKAGES_ARCH="
+  ca-certificates
+  curl
+  gnupg
+  jq
+  lsb-release
+  openssl
+  sqlite
+"
+
 # Docker packages.
 REQUIRED_DOCKER_PACKAGES="
   containerd.io
   docker-ce
   docker-ce-cli
   docker-compose-plugin
+"
+
+# Docker packages for Arch Linux
+REQUIRED_DOCKER_PACKAGES_ARCH="
+  docker
+  docker-compose
 "
 
 PUBLIC_IP=""
@@ -86,6 +104,7 @@ function main {
 
   # Check for a supported distribution.
   SUPPORTED_OS="false"
+  IS_ARCH="false"
   if [[ "${DISTRIB_ID}" == "ubuntu" ]]; then
     if [[ "${DISTRIB_CODENAME}" == "focal" ]]; then
       SUPPORTED_OS="true"
@@ -105,10 +124,14 @@ function main {
       SUPPORTED_OS="true"
       echo "* Detected supported distribution Debian 12"
     fi
+  elif [[ "${DISTRIB_ID}" == "arch" ]] || [[ "$(grep -i 'arch linux' /etc/os-release || true)" ]]; then
+    SUPPORTED_OS="true"
+    IS_ARCH="true"
+    echo "* Detected supported distribution Arch Linux"
   fi
 
   if [[ "${SUPPORTED_OS}" != "true" ]]; then
-    echo "Sorry, only Ubuntu 20.04, 22.04, Debian 11 and Debian 12 are supported by this installer. Exiting..."
+    echo "Sorry, only Ubuntu 20.04, 22.04, Debian 11, Debian 12, and Arch Linux are supported by this installer. Exiting..."
     exit 1
   fi
 
@@ -145,10 +168,18 @@ function main {
   # Attempt to determine server's public IP.
   #
 
-  # First try using the hostname command, which usually works.
+    # Get IP addresses using a cross-platform approach - use ip command if available, fall back to ifconfig
   if [[ -z "${PUBLIC_IP}" ]]; then
-    PUBLIC_IP=$(hostname --all-ip-addresses | awk '{ print $1 }')
+    if command -v ip >/dev/null 2>&1; then
+      PUBLIC_IP=$(ip -4 addr show scope global | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n1)
+    elif command -v ifconfig >/dev/null 2>&1; then
+      PUBLIC_IP=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | head -n1)
+    elif [[ "${IS_ARCH}" == "false" ]] && command -v hostname >/dev/null 2>&1; then
+      # Try hostname command with --all-ip-addresses flag (Debian/Ubuntu only)
+      PUBLIC_IP=$(hostname --all-ip-addresses 2>/dev/null | awk '{ print $1 }' || true)
+    fi
   fi
+
 
   # Prevent any private IP address from being used, since it won't work.
   if [[ "${PUBLIC_IP}" =~ ^(127\.|10\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|192\.168\.) ]]; then
@@ -231,58 +262,87 @@ INSTALLER_MESSAGE
   #
   # Install system packages.
   #
-  if lsof -v >/dev/null 2>&1; then
-    while true; do
-      apt_process_count="$(lsof -n -t /var/cache/apt/archives/lock /var/lib/apt/lists/lock /var/lib/dpkg/lock | wc --lines || true)"
-      if (( apt_process_count == 0 )); then
-        break
-      fi
-      echo "* Waiting for other apt process to complete..."
-      sleep 2
-    done
-  fi
+  if [[ "${IS_ARCH}" == "true" ]]; then
+    echo "* Installing system packages for Arch Linux"
+    # Check if pacman is already running
+    if [[ -f /var/lib/pacman/db.lck ]]; then
+      echo "* Waiting for other pacman process to complete..."
+      while [[ -f /var/lib/pacman/db.lck ]]; do
+        sleep 2
+      done
+    fi
 
-  apt-get update
-  apt-get install --yes ${REQUIRED_SYSTEM_PACKAGES}
+    # Install system packages for Arch
+    pacman -Sy --noconfirm ${REQUIRED_SYSTEM_PACKAGES_ARCH}
+  else
+    if lsof -v >/dev/null 2>&1; then
+      while true; do
+        apt_process_count="$(lsof -n -t /var/cache/apt/archives/lock /var/lib/apt/lists/lock /var/lib/dpkg/lock | wc --lines || true)"
+        if (( apt_process_count == 0 )); then
+          break
+        fi
+        echo "* Waiting for other apt process to complete..."
+        sleep 2
+      done
+    fi
+
+    apt-get update
+    apt-get install --yes ${REQUIRED_SYSTEM_PACKAGES}
+  fi
 
   #
   # Install Docker
   #
   if ! docker version >/dev/null 2>&1; then
     echo "* Installing Docker"
-    mkdir --parents /etc/apt/keyrings
 
-    # Remove the existing file, if it exists,
-    # so there's no prompt on a second run.
-    rm --force /etc/apt/keyrings/docker.gpg
-    curl --fail --silent --show-error --location "https://download.docker.com/linux/${DISTRIB_ID}/gpg" | \
-      gpg --dearmor --output /etc/apt/keyrings/docker.gpg
+    if [[ "${IS_ARCH}" == "true" ]]; then
+      # Install Docker on Arch Linux
+      pacman -Sy --noconfirm ${REQUIRED_DOCKER_PACKAGES_ARCH}
 
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/${DISTRIB_ID} ${DISTRIB_CODENAME} stable" >/etc/apt/sources.list.d/docker.list
+      # Start and enable Docker service
+      systemctl enable docker.service
+      systemctl start docker.service
+    else
+      mkdir --parents /etc/apt/keyrings
 
-    apt-get update
-    apt-get install --yes ${REQUIRED_DOCKER_PACKAGES}
+      # Remove the existing file, if it exists,
+      # so there's no prompt on a second run.
+      rm --force /etc/apt/keyrings/docker.gpg
+      curl --fail --silent --show-error --location "https://download.docker.com/linux/${DISTRIB_ID}/gpg" | \
+        gpg --dearmor --output /etc/apt/keyrings/docker.gpg
+
+      echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/${DISTRIB_ID} ${DISTRIB_CODENAME} stable" >/etc/apt/sources.list.d/docker.list
+
+      apt-get update
+      apt-get install --yes ${REQUIRED_DOCKER_PACKAGES}
+    fi
   fi
 
   #
   # Configure the Docker daemon so that logs don't fill up the disk.
   #
-  if ! [[ -e /etc/docker/daemon.json ]]; then
-    echo "* Configuring Docker daemon"
-    cat <<'DOCKERD_CONFIG' >/etc/docker/daemon.json
-{
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "500m",
-    "max-file": "4"
-  }
-}
-DOCKERD_CONFIG
-    systemctl restart docker
-  else
-    echo "* Docker daemon already configured! Ensure log rotation is enabled."
+  # Configure Docker daemon for log rotation
+  if [ ! -d /etc/docker ]; then
+      mkdir -p /etc/docker
+      echo "* Created /etc/docker directory"
   fi
 
+  if [ ! -e /etc/docker/daemon.json ]; then
+      echo "* Configuring Docker daemon"
+      cat <<'DOCKERD_CONFIG' >/etc/docker/daemon.json
+{
+ "log-driver": "json-file",
+ "log-opts": {
+   "max-size": "500m",
+   "max-file": "4"
+ }
+}
+DOCKERD_CONFIG
+      systemctl restart docker
+  else
+      echo "* Docker daemon already configured! Ensure log rotation is enabled."
+  fi
   #
   # Create data directory.
   #
