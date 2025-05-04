@@ -1,10 +1,9 @@
 services:
   pds:
     container_name: pds
-    image: ghcr.io/samanthavbarron/pds
-    restart: unless-stopped
+    build: ./
+    restart: no
     volumes:
-      - ./pds/data:/pds
       - ./pds.env:/config/pds.env
     env_file:
       - ./pds.env
