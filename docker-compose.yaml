@@ -1,0 +1,13 @@
+services:
+  pds:
+    container_name: pds
+    # image: ghcr.io/samanthavbarron/pds
+    build: ./
+    restart: no
+    volumes:
+      # - ./pds/data:/pds
+      - ./pds.env:/config/pds.env
+    env_file:
+      - ./pds.env
+    ports:
+      - 8080:80
