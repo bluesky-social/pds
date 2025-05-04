@@ -13,7 +13,7 @@ FROM node:20.11-alpine3.18
 
 RUN apk add --update dumb-init \
     bash openssl jq ca-certificates curl gnupg jq \
-    lsb-release openssl
+    lsb-release openssl util-linux
 
 RUN mkdir /tmp-scripts /config /pds
 COPY ./scripts /tmp-scripts/

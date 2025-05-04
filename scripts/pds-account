@@ -29,13 +29,13 @@ SUBCOMMAND="${1:-}"
 #
 if [[ "${SUBCOMMAND}" == "list" ]]; then
   DIDS="$(curl_cmd_get \
-    "https://${PDS_HOSTNAME}/xrpc/com.atproto.sync.listRepos?limit=100" | jq --raw-output '.repos[].did'
+    "localhost:${PDS_PORT}/xrpc/com.atproto.sync.listRepos?limit=100" | jq --raw-output '.repos[].did'
   )"
   OUTPUT='[{"handle":"Handle","email":"Email","did":"DID"}'
   for did in ${DIDS}; do
     ITEM="$(curl_cmd_get \
       --user "admin:${PDS_ADMIN_PASSWORD}" \
-      "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.getAccountInfo?did=${did}"
+      "localhost:${PDS_PORT}/xrpc/com.atproto.admin.getAccountInfo?did=${did}"
     )"
     OUTPUT="${OUTPUT},${ITEM}"
   done
@@ -66,11 +66,11 @@ elif [[ "${SUBCOMMAND}" == "create" ]]; then
   INVITE_CODE="$(curl_cmd_post \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
     --data '{"useCount": 1}' \
-    "https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createInviteCode" | jq --raw-output '.code'
+    "localhost:${PDS_PORT}/xrpc/com.atproto.server.createInviteCode" | jq --raw-output '.code'
   )"
   RESULT="$(curl_cmd_post_nofail \
     --data "{\"email\":\"${EMAIL}\", \"handle\":\"${HANDLE}\", \"password\":\"${PASSWORD}\", \"inviteCode\":\"${INVITE_CODE}\"}" \
-    "https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createAccount"
+    "localhost:${PDS_PORT}/xrpc/com.atproto.server.createAccount"
   )"
 
   DID="$(echo $RESULT | jq --raw-output '.did')"
@@ -118,7 +118,7 @@ elif [[ "${SUBCOMMAND}" == "delete" ]]; then
   curl_cmd_post \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
     --data "{\"did\": \"${DID}\"}" \
-    "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.deleteAccount" >/dev/null
+    "localhost:${PDS_PORT}/xrpc/com.atproto.admin.deleteAccount" >/dev/null
 
   echo "${DID} deleted"
 
@@ -158,7 +158,7 @@ EOF
   curl_cmd_post \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
     --data "${PAYLOAD}" \
-    "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateSubjectStatus" >/dev/null
+    "localhost:${PDS_PORT}/xrpc/com.atproto.admin.updateSubjectStatus" >/dev/null
 
   echo "${DID} taken down"
 
@@ -196,7 +196,7 @@ EOF
   curl_cmd_post \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
     --data "${PAYLOAD}" \
-    "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateSubjectStatus" >/dev/null
+    "localhost:${PDS_PORT}/xrpc/com.atproto.admin.updateSubjectStatus" >/dev/null
 
   echo "${DID} untaken down"
 #
@@ -221,7 +221,7 @@ elif [[ "${SUBCOMMAND}" == "reset-password" ]]; then
   curl_cmd_post \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
     --data "{ \"did\": \"${DID}\", \"password\": \"${PASSWORD}\" }" \
-    "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateAccountPassword" >/dev/null
+    "localhost:${PDS_PORT}/xrpc/com.atproto.admin.updateAccountPassword" >/dev/null
 
   echo
   echo "Password reset for ${DID}"
