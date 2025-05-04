@@ -1,7 +1,7 @@
 services:
   pds:
     container_name: pds
-    image: ghcr.io/samanthavbarron/pds
+    image: ghcr.io/samanthavbarron/pds:latest
     restart: unless-stopped
     volumes:
       - ./pds/data:/pds
