@@ -228,6 +228,12 @@ PDS_EMAIL_SMTP_URL=smtp:///?sendmail=true
 
 _Note: Your PDS will need to be restarted with those variables. This varies depending on your setup. If you followed this installation guide, run `systemctl restart pds`. You might need to restart the server or recreate the container, depending on what you are using._
 
+#### Common SMTP issues
+
+If you find that your test messages using cURL or other sources go out correctly, but you are not receiving emails from your PDS, you may need to URL encode your username and password on `/pds/pds.env` and restart the PDS service.
+
+If you are migrating an account, Bluesky's UI will ask you to confirm your email address. The confirmation code email is meant to come from your PDS. If you are encountering issues with SMTP and want to confirm the address before solving it, you can find the confirmation code on the `email_token` table on `accounts.sqlite`.
+
 ### Logging
 
 By default, logs from the PDS are printed to `stdout` and end up in Docker's log. You can browse them by running:
