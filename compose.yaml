@@ -1,9 +1,11 @@
-version: '3.9'
+version: "3.9"
 services:
   caddy:
     container_name: caddy
     image: caddy:2
-    network_mode: host
+    ports:
+      - "80:80"
+      - "443:443"
     depends_on:
       - pds
     restart: unless-stopped
@@ -17,7 +19,6 @@ services:
   pds:
     container_name: pds
     image: ghcr.io/bluesky-social/pds:0.4
-    network_mode: host
     restart: unless-stopped
     volumes:
       - type: bind
@@ -28,7 +29,6 @@ services:
   watchtower:
     container_name: watchtower
     image: containrrr/watchtower:latest
-    network_mode: host
     volumes:
       - type: bind
         source: /var/run/docker.sock
