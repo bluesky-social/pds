@@ -222,13 +222,6 @@ INSTALLER_MESSAGE
     usage "No admin email specified"
   fi
 
-  if [[ -z "${PDS_ADMIN_EMAIL}" ]]; then
-    read -p "Enter an admin email address (e.g. you@example.com): " PDS_ADMIN_EMAIL
-  fi
-  if [[ -z "${PDS_ADMIN_EMAIL}" ]]; then
-    usage "No admin email specified"
-  fi
-
   #
   # Install system packages.
   #
