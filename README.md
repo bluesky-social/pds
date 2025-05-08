@@ -214,9 +214,49 @@ PDS_EMAIL_SMTP_URL=smtps://resend:<your api key here>@smtp.resend.com:465/
 PDS_EMAIL_FROM_ADDRESS=admin@your.domain
 ```
 
-If the username and/or password contain special characters, the special characters will need to be [percent encoded](https://en.wikipedia.org/wiki/Percent-encoding).  For some email services, the username will contain an extra `@` symbol that will also need to be percent encoded. For example, the URL `user&name@oci:p@ssword@smtphost:465` after percent encoding for the username and password fields would become `user%26name%40oci:p%40ssword@smtphost:465`.
+If you prefer to use a standard SMTP server (a local one or from your email provider), put your account's username and password in the URL:
+
+```
+PDS_EMAIL_SMTP_URL=smtps://username:password@smtp.example.com/
+```
+
+Alternatively, if you're running a local sendmail-compatible mail service like Postfix or Exim on the same host, you can configure the PDS to use the sendmail transport by using such URL:
+
+```
+PDS_EMAIL_SMTP_URL=smtp:///?sendmail=true
+```
 
 _Note: Your PDS will need to be restarted with those variables. This varies depending on your setup. If you followed this installation guide, run `systemctl restart pds`. You might need to restart the server or recreate the container, depending on what you are using._
+
+#### Common SMTP issues
+
+If you find that your test messages using cURL or other sources go out correctly, but you are not receiving emails from your PDS, you may need to URL encode your username and password on `/pds/pds.env` and restart the PDS service.
+
+If the username and/or password contain special characters, the special characters will need to be [percent encoded](https://en.wikipedia.org/wiki/Percent-encoding).  For some email services, the username will contain an extra `@` symbol that will also need to be percent encoded. For example, the URL `user&name@oci:p@ssword@smtphost:465` after percent encoding for the username and password fields would become `user%26name%40oci:p%40ssword@smtphost:465`.
+
+If you are migrating an account, Bluesky's UI will ask you to confirm your email address. The confirmation code email is meant to come from your PDS. If you are encountering issues with SMTP and want to confirm the address before solving it, you can find the confirmation code on the `email_token` table on `accounts.sqlite`.
+
+### Logging
+
+By default, logs from the PDS are printed to `stdout` and end up in Docker's log. You can browse them by running:
+
+```
+[sudo] docker logs pds
+```
+
+Note: these logs are not persisted, so they will be lost after server reboot.
+
+Alternatively, you can configure the logs to be printed to a file by setting `LOG_DESTINATION`:
+
+```
+LOG_DESTINATION=/pds/pds.log
+```
+
+You can also change the minimum level of logs to be printed (default: `info`):
+
+```
+LOG_LEVEL=debug
+```
 
 ### Updating your PDS
 
