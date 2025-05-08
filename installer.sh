@@ -31,6 +31,7 @@ REQUIRED_SYSTEM_PACKAGES="
   openssl
   sqlite3
   xxd
+  jq
 "
 # Docker packages.
 REQUIRED_DOCKER_PACKAGES="
