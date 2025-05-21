@@ -1,5 +1,7 @@
 # Account Migration 
 
+**Update May 2025:** An updated guide to account migration is now [part of the atproto specifications](https://atproto.com/guides/account-migration). There is also [a blog post available](https://whtwnd.com/bnewbold.net/3l5ii332pf32u) which describes how to do an account migration using a command-line tool (`goat`).
+
 ### ⚠️ Warning ⚠️ ️
 Account migration is a potentially destructive operation. Part of the operation involves signing away your old PDS's ability to make updates to your DID. If something goes wrong, you could be permanently locked out of your account, and Bluesky will not be able to help you recover it. 
 
