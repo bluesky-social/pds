@@ -1,6 +1,6 @@
 # PDS
 
-Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with hosting a Bluesky PDS.
+Welcome to the repository for the official Gander PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with hosting a Gander PDS.
 
 Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP) to chat with other folks hosting instances and get important updates about the PDS distribution!
 
@@ -11,7 +11,7 @@ Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP)
 <!-- toc -->
 
 - [FAQ](#faq)
-  * [What is Bluesky?](#what-is-bluesky)
+  * [What is Gander?](#what-is-gander)
   * [What is AT Protocol?](#what-is-at-protocol)
   * [Where is the code?](#where-is-the-code)
   * [What is the current status of federation?](#what-is-the-current-status-of-federation)
@@ -24,7 +24,7 @@ Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP)
   * [Verifying that your PDS is online and accessible](#verifying-that-your-pds-is-online-and-accessible)
   * [Creating an account using pdsadmin](#creating-an-account-using-pdsadmin)
   * [Creating an account using an invite code](#creating-an-account-using-an-invite-code)
-  * [Using the Bluesky app with your PDS](#using-the-bluesky-app-with-your-pds)
+  * [Using the Gander app with your PDS](#using-the-gander-app-with-your-pds)
   * [Setting up SMTP](#setting-up-smtp)
   * [Updating your PDS](#updating-your-pds)
 
@@ -32,11 +32,11 @@ Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP)
 
 ## FAQ
 
-### What is Bluesky?
+### What is Gander?
 
-Bluesky is a social media application built on AT Protocol.
+Gander is a social media application built on AT Protocol.
 
-Please visit the [Bluesky website](https://bsky.social/) for more information.
+Please visit the [Gander website](https://gndr.social/) for more information.
 
 ### What is AT Protocol?
 
@@ -46,8 +46,8 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 
 ### Where is the code?
 
-* [TypeScript code](https://github.com/bluesky-social/atproto/tree/main/packages/pds)
-* [Go code](https://github.com/bluesky-social/indigo)
+* [TypeScript code](https://github.com/gander-social/atproto/tree/main/packages/pds)
+* [Go code](https://github.com/gander-social/gander-indigo-sovereign)
 
 ### What is the current status of federation?
 
@@ -67,7 +67,7 @@ As of Spring 2024, the AT Protocol network is open to federation!
 
 ## Self-hosting PDS
 
-Self-hosting a Bluesky PDS means running your own Personal Data Server that is capable of federating with the wider Bluesky social network.
+Self-hosting a Gander PDS means running your own Personal Data Server that is capable of federating with the wider Gander social network.
 
 ### Preparation for self-hosting PDS
 
@@ -135,13 +135,13 @@ These should all return your server's public IP.
 On your server via ssh, download the installer script using wget:
 
 ```bash
-wget https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh
+wget https://raw.githubusercontent.com/gander-social/pds/main/installer.sh
 ```
 
 or download it using curl:
 
 ```bash
-curl https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh >installer.sh
+curl https://raw.githubusercontent.com/gander-social/pds/main/installer.sh >installer.sh
 ```
 
 And then run the installer using bash:
@@ -189,14 +189,14 @@ sudo pdsadmin create-invite-code
 
 When creating an account using the app, enter this invite code.
 
-### Using the Bluesky app with your PDS
+### Using the Gander app with your PDS
 
-You can use the Bluesky app to connect to your PDS.
+You can use the Gander app to connect to your PDS.
 
-1. Get the Bluesky app
-    * [Bluesky for Web](https://bsky.app/)
-    * [Bluesky for iPhone](https://apps.apple.com/us/app/bluesky-social/id6444370199)
-    * [Bluesky for Android](https://play.google.com/store/apps/details?id=xyz.blueskyweb.app)
+1. Get the Gander app
+    * [Gander for Web](https://gndr.app/)
+    * [Gander for iPhone](https://apps.apple.com/us/app/gander-social/id6444370199)
+    * [Gander for Android](https://play.google.com/store/apps/details?id=xyz.ganderweb.app)
 1. Enter the URL of your PDS (e.g. `https://example.com/`)
 
 _Note: because the subdomain TLS certificate is created on-demand, it may take 10-30s for your handle to be accessible. If you aren't seeing your first post/profile, wait 30s and try to make another post._
@@ -234,7 +234,7 @@ If you find that your test messages using cURL or other sources go out correctly
 
 If the username and/or password contain special characters, the special characters will need to be [percent encoded](https://en.wikipedia.org/wiki/Percent-encoding).  For some email services, the username will contain an extra `@` symbol that will also need to be percent encoded. For example, the URL `user&name@oci:p@ssword@smtphost:465` after percent encoding for the username and password fields would become `user%26name%40oci:p%40ssword@smtphost:465`.
 
-If you are migrating an account, Bluesky's UI will ask you to confirm your email address. The confirmation code email is meant to come from your PDS. If you are encountering issues with SMTP and want to confirm the address before solving it, you can find the confirmation code on the `email_token` table on `accounts.sqlite`.
+If you are migrating an account, Gander's UI will ask you to confirm your email address. The confirmation code email is meant to come from your PDS. If you are encountering issues with SMTP and want to confirm the address before solving it, you can find the confirmation code on the `email_token` table on `accounts.sqlite`.
 
 ### Logging
 
@@ -270,7 +270,7 @@ sudo pdsadmin update
 
 This project is dual-licensed under MIT and Apache 2.0 terms:
 
-- MIT license ([LICENSE-MIT.txt](https://github.com/bluesky-social/pds/blob/main/LICENSE-MIT.txt) or http://opensource.org/licenses/MIT)
-- Apache License, Version 2.0, ([LICENSE-APACHE.txt](https://github.com/bluesky-social/pds/blob/main/LICENSE-APACHE.txt) or http://www.apache.org/licenses/LICENSE-2.0)
+- MIT license ([LICENSE-MIT.txt](https://github.com/gander-social/pds/blob/main/LICENSE-MIT.txt) or http://opensource.org/licenses/MIT)
+- Apache License, Version 2.0, ([LICENSE-APACHE.txt](https://github.com/gander-social/pds/blob/main/LICENSE-APACHE.txt) or http://www.apache.org/licenses/LICENSE-2.0)
 
 Downstream projects and end users may choose either license individually, or both together, at their discretion. The motivation for this dual-licensing is the additional software patent assurance provided by Apache 2.0.

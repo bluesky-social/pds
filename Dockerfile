@@ -27,6 +27,6 @@ ENV UV_USE_IO_URING=0
 
 CMD ["node", "--enable-source-maps", "index.js"]
 
-LABEL org.opencontainers.image.source=https://github.com/bluesky-social/pds
+LABEL org.opencontainers.image.source=https://github.com/gander-social/pds
 LABEL org.opencontainers.image.description="AT Protocol PDS"
 LABEL org.opencontainers.image.licenses=MIT

@@ -33,7 +33,7 @@ account
 
 request-crawl [<RELAY HOST>]
     Request a crawl from a relay host.
-    e.g. pdsadmin request-crawl bsky.network
+    e.g. pdsadmin request-crawl gndr.network
 
 create-invite-code
   Create a new invite code.

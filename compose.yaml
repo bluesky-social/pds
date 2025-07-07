@@ -16,7 +16,7 @@ services:
         target: /etc/caddy
   pds:
     container_name: pds
-    image: ghcr.io/bluesky-social/pds:0.4
+    image: ghcr.io/gander-social/pds:0.4
     network_mode: host
     restart: unless-stopped
     volumes:

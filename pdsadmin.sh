@@ -3,7 +3,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-PDSADMIN_BASE_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/pdsadmin"
+PDSADMIN_BASE_URL="https://raw.githubusercontent.com/gander-social/pds/main/pdsadmin"
 
 # Command to run.
 COMMAND="${1:-help}"

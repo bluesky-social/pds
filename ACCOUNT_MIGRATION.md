@@ -3,13 +3,13 @@
 **Update May 2025:** An updated guide to account migration is now [part of the atproto specifications](https://atproto.com/guides/account-migration). There is also [a blog post available](https://whtwnd.com/bnewbold.net/3l5ii332pf32u) which describes how to do an account migration using a command-line tool (`goat`).
 
 ### ⚠️ Warning ⚠️ ️
-Account migration is a potentially destructive operation. Part of the operation involves signing away your old PDS's ability to make updates to your DID. If something goes wrong, you could be permanently locked out of your account, and Bluesky will not be able to help you recover it. 
+Account migration is a potentially destructive operation. Part of the operation involves signing away your old PDS's ability to make updates to your DID. If something goes wrong, you could be permanently locked out of your account, and Gander will not be able to help you recover it. 
 
 Therefore, we do not recommend migrating your primary account yet. And we specifically recommend _against_ migrating your main account if you do not understand how PLC operations work.
 
-Also, the Bluesky PDS is not currently accepting incoming migrations (it will in the future). Therefore this is currently a one-way street. If you migrate off of `bsky.social`, _you will not be able to return_. However, you will be able to migrate between other PDSs.
+Also, the Gander PDS is not currently accepting incoming migrations (it will in the future). Therefore this is currently a one-way street. If you migrate off of `gndr.social`, _you will not be able to return_. However, you will be able to migrate between other PDSs.
 
-![Diagram of account migration flow](https://raw.githubusercontent.com/bluesky-social/pds/main/assets/account-migration.png)
+![Diagram of account migration flow](https://raw.githubusercontent.com/gander-social/pds/main/assets/account-migration.png)
 
 Account Migration occurs in 4 main steps:
 - Creating an account on the new PDS
@@ -36,7 +36,7 @@ First, you can grab your entire repository in the form of a [CAR file](https://i
 
 Next, you'll need to upload all relevant blobs. These can be discovered by calling `com.atproto.sync.listBlobs` on your old PDS. For each blob, you'll need to download the contents through `com.atproto.sync.getBlob` and upload them to your new PDS through `com.atproto.repo.uploadBlob`. 
 
-Finally, you'll need to migrate private state. Currently the only private state held on your PDS is your preferences. You can migrate this by calling `app.bsky.actor.getPreferences` on your old PDS, and submitting the results to `app.bsky.actor.putPreferences` on your new PDS.
+Finally, you'll need to migrate private state. Currently the only private state held on your PDS is your preferences. You can migrate this by calling `app.gndr.actor.getPreferences` on your old PDS, and submitting the results to `app.gndr.actor.putPreferences` on your new PDS.
 
 At any point during this process, you can check the status of your new account by calling `com.atproto.server.checkAccountStatus` which will inform you of your repo state, how many records are indexed, how many private state values are stored, how many blobs it is expecting (based on parsing records), and how many blobs have been uploaded. If you find you are missing blobs and are not sure which, you may use `com.atproto.repo.listMissingBlobs` on your new PDS to find them.
 
@@ -78,9 +78,9 @@ import AtpAgent from '@atproto/api'
 import { Secp256k1Keypair } from '@atproto/crypto'
 import * as ui8 from 'uint8arrays'
 
-const OLD_PDS_URL = 'https://bsky.social'
+const OLD_PDS_URL = 'https://gndr.social'
 const NEW_PDS_URL = 'https://example.com'
-const CURRENT_HANDLE = 'to-migrate.bsky.social'
+const CURRENT_HANDLE = 'to-migrate.gndr.social'
 const CURRENT_PASSWORD = 'password'
 const NEW_HANDLE = 'migrated.example.com'
 const NEW_ACCOUNT_EMAIL = 'migrated@example.com'
@@ -157,8 +157,8 @@ const migrateAccount = async () => {
     blobCursor = listedBlobs.data.cursor
   } while (blobCursor)
 
-  const prefs = await oldAgent.api.app.bsky.actor.getPreferences()
-  await newAgent.api.app.bsky.actor.putPreferences(prefs.data)
+  const prefs = await oldAgent.api.app.gndr.actor.getPreferences()
+  await newAgent.api.app.gndr.actor.putPreferences(prefs.data)
 
   // Migrate Identity
   // ------------------
