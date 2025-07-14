@@ -3,14 +3,15 @@ on:
   push:
     branches:
       - main
-      - pdsv2
     tags:
       - v*
+  pull_request:
+    branches:
+      - main
 env:
   REGISTRY: ghcr.io
   USERNAME: ${{ github.actor }}
   PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
@@ -46,6 +47,12 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=sha,format=long
+            type=raw,value=latest,enable={{is_default_branch}}
+          labels: |
+            org.opencontainers.image.title=Gander Social PDS
+            org.opencontainers.image.description=AT Protocol Personal Data Server for Gander Social
+            org.opencontainers.image.vendor=Gander Social
+            org.opencontainers.image.licenses=MIT
 
       - name: Build and push Docker image
         id: build-and-push

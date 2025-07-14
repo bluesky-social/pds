@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   caddy:
     container_name: caddy
@@ -16,7 +15,7 @@ services:
         target: /etc/caddy
   pds:
     container_name: pds
-    image: ghcr.io/gander-social/pds:0.4
+    image: ghcr.io/gander-social/pds:latest
     network_mode: host
     restart: unless-stopped
     volumes:
