@@ -94,9 +94,9 @@ function main {
     elif [[ "${DISTRIB_CODENAME}" == "jammy" ]]; then
       SUPPORTED_OS="true"
       echo "* Detected supported distribution Ubuntu 22.04 LTS"
-    elif [[ "${DISTRIB_CODENAME}" == "mantic" ]]; then
+    elif [[ "${DISTRIB_CODENAME}" == "noble" ]]; then
       SUPPORTED_OS="true"
-      echo "* Detected supported distribution Ubuntu 23.10 LTS"
+      echo "* Detected supported distribution Ubuntu 24.04 LTS"
     fi
   elif [[ "${DISTRIB_ID}" == "debian" ]]; then
     if [[ "${DISTRIB_CODENAME}" == "bullseye" ]]; then
@@ -109,7 +109,7 @@ function main {
   fi
 
   if [[ "${SUPPORTED_OS}" != "true" ]]; then
-    echo "Sorry, only Ubuntu 20.04, 22.04, Debian 11 and Debian 12 are supported by this installer. Exiting..."
+    echo "Sorry, only Ubuntu 20.04, 22.04, 24.04, Debian 11 and Debian 12 are supported by this installer. Exiting..."
     exit 1
   fi
 
