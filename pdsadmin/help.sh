@@ -30,6 +30,9 @@ account
   reset-password <DID>
     Reset a password for an account specified by DID.
     e.g. pdsadmin account reset-password did:plc:xyz123abc456
+  change-handle <DID> <HANDLE>
+    Change the handle for an account specified by DID
+    e.g. pdsadmin account change-handle did:plc:xyz123abc456 alice.example.com
 
 request-crawl [<RELAY HOST>]
     Request a crawl from a relay host.
