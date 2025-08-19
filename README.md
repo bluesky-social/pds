@@ -20,7 +20,7 @@ Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP)
   * [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
   * [Configure DNS for your domain](#configure-dns-for-your-domain)
   * [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
-  * [Installer on Ubuntu 20.04/22.04 and Debian 11/12](#installer-on-ubuntu-20042204-and-debian-1112)
+  * [Installer on Ubuntu 20.04/22.04, Debian 11/12, and Arch Linux](#installer-on-ubuntu-20042204-debian-1112-and-arch-linux)
   * [Verifying that your PDS is online and accessible](#verifying-that-your-pds-is-online-and-accessible)
   * [Creating an account using pdsadmin](#creating-an-account-using-pdsadmin)
   * [Creating an account using an invite code](#creating-an-account-using-an-invite-code)
@@ -130,7 +130,7 @@ Examples to check (record type `A`):
 
 These should all return your server's public IP.
 
-### Installer on Ubuntu 20.04/22.04 and Debian 11/12
+### Installer on Ubuntu 20.04/22.04, Debian 11/12, and Arch Linux
 
 On your server via ssh, download the installer script using wget:
 
