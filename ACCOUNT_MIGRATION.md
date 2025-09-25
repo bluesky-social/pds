@@ -1,13 +1,11 @@
-# Account Migration 
+# Account Migration
 
 **Update May 2025:** An updated guide to account migration is now [part of the atproto specifications](https://atproto.com/guides/account-migration). There is also [a blog post available](https://whtwnd.com/bnewbold.net/3l5ii332pf32u) which describes how to do an account migration using a command-line tool (`goat`).
 
 ### ⚠️ Warning ⚠️ ️
-Account migration is a potentially destructive operation. Part of the operation involves signing away your old PDS's ability to make updates to your DID. If something goes wrong, you could be permanently locked out of your account, and Bluesky will not be able to help you recover it. 
+Account migration is a potentially destructive operation. Part of the operation involves signing away your old PDS's ability to make updates to your DID. If something goes wrong, you could be permanently locked out of your account, and Bluesky will not be able to help you recover it.
 
 Therefore, we do not recommend migrating your primary account yet. And we specifically recommend _against_ migrating your main account if you do not understand how PLC operations work.
-
-Also, the Bluesky PDS is not currently accepting incoming migrations (it will in the future). Therefore this is currently a one-way street. If you migrate off of `bsky.social`, _you will not be able to return_. However, you will be able to migrate between other PDSs.
 
 ![Diagram of account migration flow](https://raw.githubusercontent.com/bluesky-social/pds/main/assets/account-migration.png)
 
@@ -24,7 +22,7 @@ In order to create an account, you first need to prove to the new PDS that you'r
 
 To do so, you need a JWT signed with the signing key associated with your DID. You can obtain this through calling `com.atproto.server.getServiceAuth` from your old PDS. If your old PDS is not willing to provide the authentication token, you will need to update your DID document to point to a signing key that you possess in order to mint an authentication token yourself.
 
-With this JWT set as a Bearer token, you can then create an account on the new PDS by calling `com.atproto.server.createAccount`. You'll need to fulfill any challenges that the new PDS requires - such as an invite code. 
+With this JWT set as a Bearer token, you can then create an account on the new PDS by calling `com.atproto.server.createAccount`. You'll need to fulfill any challenges that the new PDS requires - such as an invite code.
 
 After creating an account, you'll have a signing key on the new PDS and an empty repository. Your account will be in a "deactivated" state such that it is not usable yet.
 
@@ -34,7 +32,7 @@ Now that you have an account on the new PDS, you can start migrating data into i
 
 First, you can grab your entire repository in the form of a [CAR file](https://ipld.io/specs/transport/car/carv1/) by calling `com.atproto.sync.getRepo`. You can then upload those exact bytes to your new PDS through `com.atproto.repo.importRepo`. The new PDS will parse the CAR file, index all blocks and records, and sign a new commit for the repository.
 
-Next, you'll need to upload all relevant blobs. These can be discovered by calling `com.atproto.sync.listBlobs` on your old PDS. For each blob, you'll need to download the contents through `com.atproto.sync.getBlob` and upload them to your new PDS through `com.atproto.repo.uploadBlob`. 
+Next, you'll need to upload all relevant blobs. These can be discovered by calling `com.atproto.sync.listBlobs` on your old PDS. For each blob, you'll need to download the contents through `com.atproto.sync.getBlob` and upload them to your new PDS through `com.atproto.repo.uploadBlob`.
 
 Finally, you'll need to migrate private state. Currently the only private state held on your PDS is your preferences. You can migrate this by calling `app.bsky.actor.getPreferences` on your old PDS, and submitting the results to `app.bsky.actor.putPreferences` on your new PDS.
 
