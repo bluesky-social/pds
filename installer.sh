@@ -112,7 +112,7 @@ function main {
   fi
 
   if [[ "${SUPPORTED_OS}" != "true" ]]; then
-    echo "Sorry, only Ubuntu 20.04, 22.04, 24.04, Debian 11, Debian 12 and Debian 13 are supported by this installer. Exiting..."
+    echo "Sorry, only Ubuntu 20.04, 22.04, 24.04, Debian 11, 12 and 13 are supported by this installer. Exiting..."
     exit 1
   fi
 
