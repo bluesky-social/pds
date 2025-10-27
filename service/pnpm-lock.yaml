@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@atproto/pds':
-    specifier: 0.4.187
-    version: 0.4.187
+    specifier: 0.4.188
+    version: 0.4.188
 
 packages:
 
@@ -208,15 +208,15 @@ packages:
       '@atproto/oauth-provider-api': 0.3.2
     dev: false
 
-  /@atproto/oauth-provider-ui@0.3.3:
-    resolution: {integrity: sha512-7niE/0So882nzGzPpE+q3lVjoYn3bQfWKBSwsKUz4wp0Szwa2xqVaS5PEgxz/KNsTMLlQcRagK4tmN90BVquAw==}
+  /@atproto/oauth-provider-ui@0.3.4:
+    resolution: {integrity: sha512-3FgdDRY8JloCeJ8XayNVhJ5AMYilqgvP408uE08k92pOuS0wZEicEGFJNoWiqZj7zAEGRFe5A9FEmcI49tTPLA==}
     engines: {node: '>=18.7.0'}
     optionalDependencies:
       '@atproto/oauth-provider-api': 0.3.2
     dev: false
 
-  /@atproto/oauth-provider@0.13.3:
-    resolution: {integrity: sha512-nhBmIsnpYTmMaYiOFTFIA1M0ITdySSQ4IW4kALgdzRnSocE35THTwgkyjyuPxmAniRe+Rb0APIunGbgDJPyibw==}
+  /@atproto/oauth-provider@0.13.4:
+    resolution: {integrity: sha512-MxMfc1cZ/eP4l+cgXOrKbZWd7qjyvJb0XKRGMcpBOHE9fVnnoN2wGxf2Gv/cxnp7v478F5t3kdgGq0Minzdsrw==}
     engines: {node: '>=18.7.0'}
     dependencies:
       '@atproto-labs/fetch': 0.2.3
@@ -232,7 +232,7 @@ packages:
       '@atproto/lexicon-resolver': 0.2.3
       '@atproto/oauth-provider-api': 0.3.2
       '@atproto/oauth-provider-frontend': 0.2.3
-      '@atproto/oauth-provider-ui': 0.3.3
+      '@atproto/oauth-provider-ui': 0.3.4
       '@atproto/oauth-scopes': 0.2.1
       '@atproto/oauth-types': 0.5.0
       '@atproto/syntax': 0.4.1
@@ -267,8 +267,8 @@ packages:
       zod: 3.25.76
     dev: false
 
-  /@atproto/pds@0.4.187:
-    resolution: {integrity: sha512-ZwgUJSOgtqHHJWgWnhjDbo3rh1MolnwYNnqGWWgiMhugfto/ODMeBK++u/Sr5kH306+xAWcgzDk3qyw1xTY5Bg==}
+  /@atproto/pds@0.4.188:
+    resolution: {integrity: sha512-kSSp94bb6B1afJFc4xyR9Dbg03923l/ip0kpn+IzJ4zxbCNGK2dwcGr71fdFvdc2Geb0rRylMFV/2IHCpdgSEQ==}
     engines: {node: '>=18.7.0'}
     dependencies:
       '@atproto-labs/fetch-node': 0.2.0
@@ -283,7 +283,7 @@ packages:
       '@atproto/identity': 0.4.9
       '@atproto/lexicon': 0.5.1
       '@atproto/lexicon-resolver': 0.2.3
-      '@atproto/oauth-provider': 0.13.3
+      '@atproto/oauth-provider': 0.13.4
       '@atproto/oauth-scopes': 0.2.1
       '@atproto/repo': 0.8.10
       '@atproto/syntax': 0.4.1
