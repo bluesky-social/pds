@@ -2,7 +2,7 @@
 
 Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with hosting a Bluesky PDS.
 
-Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP) to chat with other folks hosting instances and get important updates about the PDS distribution!
+Head over to the [ATProto Touchers Discord](https://discord.atprotocol.dev/) to chat with other folks hosting instances and get important updates about the PDS distribution!
 
 ## Table of Contents
 
@@ -10,23 +10,28 @@ Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP)
 
 <!-- toc -->
 
-- [FAQ](#faq)
-  * [What is Bluesky?](#what-is-bluesky)
-  * [What is AT Protocol?](#what-is-at-protocol)
-  * [Where is the code?](#where-is-the-code)
-  * [What is the current status of federation?](#what-is-the-current-status-of-federation)
-- [Self-hosting PDS](#self-hosting-pds)
-  * [Preparation for self-hosting PDS](#preparation-for-self-hosting-pds)
-  * [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
-  * [Configure DNS for your domain](#configure-dns-for-your-domain)
-  * [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
-  * [Installer on Ubuntu 20.04/22.04/24.04 and Debian 11/12](#installer-on-ubuntu-200422042404-and-debian-1112)
-  * [Verifying that your PDS is online and accessible](#verifying-that-your-pds-is-online-and-accessible)
-  * [Creating an account using pdsadmin](#creating-an-account-using-pdsadmin)
-  * [Creating an account using an invite code](#creating-an-account-using-an-invite-code)
-  * [Using the Bluesky app with your PDS](#using-the-bluesky-app-with-your-pds)
-  * [Setting up SMTP](#setting-up-smtp)
-  * [Updating your PDS](#updating-your-pds)
+- [PDS](#pds)
+  - [Table of Contents](#table-of-contents)
+  - [FAQ](#faq)
+    - [What is Bluesky?](#what-is-bluesky)
+    - [What is AT Protocol?](#what-is-at-protocol)
+    - [Where is the code?](#where-is-the-code)
+    - [What is the current status of federation?](#what-is-the-current-status-of-federation)
+  - [Self-hosting PDS](#self-hosting-pds)
+    - [Preparation for self-hosting PDS](#preparation-for-self-hosting-pds)
+    - [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
+    - [Configure DNS for your domain](#configure-dns-for-your-domain)
+    - [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
+    - [Installer on Ubuntu 20.04/22.04/24.04 and Debian 11/12](#installer-on-ubuntu-200422042404-and-debian-1112)
+    - [Verifying that your PDS is online and accessible](#verifying-that-your-pds-is-online-and-accessible)
+    - [Creating an account using pdsadmin](#creating-an-account-using-pdsadmin)
+    - [Creating an account using an invite code](#creating-an-account-using-an-invite-code)
+    - [Using the Bluesky app with your PDS](#using-the-bluesky-app-with-your-pds)
+    - [Setting up SMTP](#setting-up-smtp)
+      - [Common SMTP issues](#common-smtp-issues)
+    - [Logging](#logging)
+    - [Updating your PDS](#updating-your-pds)
+  - [License](#license)
 
 <!-- tocstop -->
 
