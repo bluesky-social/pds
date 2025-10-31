@@ -137,6 +137,8 @@ These should all return your server's public IP.
 
 ### Installing on Ubuntu 20.04/22.04/24.04 and Debian 11/12/13
 
+Note that this script assumes a relatively "fresh" VPS that is not also concurrently hosting a web server or anything else on port 80/443. If you intend to run a PDS alongside an existing webserver on the same VPS, you will not want to use this install script.
+
 On your server, download the install script using `curl`:
 
 ```bash
