@@ -76,7 +76,7 @@ Self-hosting a Bluesky PDS means running your own Personal Data Server that is c
 
 ### Preparation for self-hosting PDS
 
-Launch a server on any cloud provider, [Digital Ocean](https://digitalocean.com/) and [Vultr](https://vultr.com/) are two popular choices.
+Launch a server on any cloud provider, [Digital Ocean](https://marketplace.digitalocean.com/apps/bluesky-social-pds) and [Vultr](https://vultr.com/) are two popular choices.
 
 Ensure that you can ssh to your server and have root access.
 
