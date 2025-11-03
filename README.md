@@ -153,7 +153,7 @@ sudo bash installer.sh
 
 You will need `sudo` permissions to continue. The install script is interactive and will prompt for input during the install process. You will need to provide your public DNS address, an admin email address (which does not need to be from the same domain), and be prompted to create a PDS user account with its own email address and handle. If you plan to reuse an existing AT handle, you can skip user account creation, though if it is your first time deploying a PDS you may want to create an account using your domain like `account.your-domain.net` for testing purposes.
 
-You should receive the following output following a successful installation:
+Upon completion of a successful installation, you'll receive output similar to the following:
 
 ```
 ========================================================================
