@@ -203,7 +203,7 @@ Save this password, it will not be displayed again.
 > [!TIP]
 > The most common problems with getting PDS content consumed in the live network usually result from users trying to port the provided Caddy configuration to Nginx, Apache, or other reverse proxies. Getting TLS certificates, WebSockets, and virtual server names provisioned can be challenging. We are not currently providing tech support for other configurations.
 
-After installation, your PDS should be live and web-accessible. You can check if your server is online and healthy by requesting the healthcheck endpoint.
+After installation, your PDS should be live and accessible on the web. You can check if your server is online and healthy by making a request to `https://your-domain.net/xrpc/_health` (the healthcheck endpoint). You should see a JSON response with a version, like:
 
 Visit `https://your-domain.net/xrpc/_health` in your browser. You should see a JSON response with a version, like:
 
