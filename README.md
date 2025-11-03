@@ -106,7 +106,7 @@ In your cloud provider's console, the following ports should be open to inbound 
 * 80/tcp (Used only for TLS certification verification)
 * 443/tcp (Used for all application requests)
 
-**Note:** there is no need to set up TLS or redirect requests from port 80 to 443 because the Caddy web server, included in the Dockerfile install method, will handle this for you.
+**Note:** there is no need to set up TLS or redirect requests from port 80 to 443 because the Caddy web server, included in the Docker compose file, will handle this for you.
 
 ### Configure DNS for your domain
 
@@ -145,13 +145,13 @@ On your server, download the install script using `curl`:
 curl https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh > installer.sh
 ```
 
-And then run the installer using bash:
+And then run the installer using `bash`. You will need `sudo` permissions to continue:
 
 ```bash
 sudo bash installer.sh
 ```
 
-You will need `sudo` permissions to continue. The install script is interactive and will prompt for input during the install process. You will need to provide your public DNS address, an admin email address (which does not need to be from the same domain), and be prompted to create a PDS user account with its own email address and handle. If you plan to reuse an existing AT handle, you can skip user account creation, though if it is your first time deploying a PDS you may want to create an account using your domain like `account.your-domain.net` for testing purposes.
+The install script is interactive and will prompt for input during the install process. You will need to provide your public DNS address, an admin email address (which does not need to be from the same domain), and be prompted to create a PDS user account with its own email address and handle. If you plan to reuse an existing AT handle, you can skip user account creation, though if it is your first time deploying a PDS you may want to create an account using your domain like `account.your-domain.net` for testing purposes.
 
 Upon completion of a successful installation, you'll receive output similar to the following:
 
