@@ -26,5 +26,5 @@ fi
 
 chmod +x "${SCRIPT_FILE}"
 if "${SCRIPT_FILE}" "$@"; then
-  rm --force "${SCRIPT_FILE}"
+  rm -f "${SCRIPT_FILE}"
 fi
