@@ -31,6 +31,7 @@ Head over to the [ATProto Touchers Discord](https://discord.atprotocol.dev/) to 
       - [Common SMTP issues](#common-smtp-issues)
     - [Logging](#logging)
     - [Updating your PDS](#updating-your-pds)
+    - [Environment Variables](#environment-variables)
   - [License](#license)
 
 <!-- tocstop -->
@@ -313,6 +314,27 @@ It is recommended that you keep your PDS up to date with new versions. You can u
 ```bash
 sudo pdsadmin update
 ```
+
+### Environment Variables
+
+| Environment Variable | Value | Default |
+|---------------------|-------|---------|
+| `PDS_HOSTNAME` | Empty | None |
+| `PDS_JWT_SECRET` | Empty | None |
+| `PDS_ADMIN_PASSWORD` | Empty | None |
+| `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX` | Empty | None |
+| `PDS_DATA_DIRECTORY` | `/pds` | `/pds` |
+| `PDS_BLOBSTORE_DISK_LOCATION` | `/pds/blocks` | `/pds/blocks` |
+| `PDS_BLOB_UPLOAD_LIMIT` | `52428800` | `52428800` (50MB) |
+| `PDS_DID_PLC_URL` | `https://plc.directory` | `https://plc.directory` |
+| `PDS_BSKY_APP_VIEW_URL` | `https://api.bsky.app` | `https://api.bsky.app` |
+| `PDS_BSKY_APP_VIEW_DID` | `did:web:api.bsky.app` | `did:web:api.bsky.app` |
+| `PDS_REPORT_SERVICE_URL` | `https://mod.bsky.app` | `https://mod.bsky.app` |
+| `PDS_REPORT_SERVICE_DID` | `did:plc:ar7c4by46qjdydhdevvrndac` | `did:plc:ar7c4by46qjdydhdevvrndac` |
+| `PDS_CRAWLERS` | `https://bsky.network` | `https://bsky.network` |
+| `LOG_ENABLED` | `true` | `true` |
+| `PDS_EMAIL_SMTP_URL` | Empty | None |
+| `PDS_EMAIL_FROM_ADDRESS` | Empty | None |
 
 ## License
 
