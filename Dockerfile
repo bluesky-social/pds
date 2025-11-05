@@ -1,10 +1,11 @@
 FROM node:20.11-alpine3.18 as build
 
-RUN npm install -g pnpm
+RUN corepack enable
 
 # Move files into the image and install
 WORKDIR /app
 COPY ./service ./
+RUN corepack prepare --activate
 RUN pnpm install --production --frozen-lockfile > /dev/null
 
 # Uses assets from build stage to reduce build size
