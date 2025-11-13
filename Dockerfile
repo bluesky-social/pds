@@ -19,6 +19,7 @@ ENTRYPOINT ["dumb-init", "--"]
 WORKDIR /app
 COPY --from=build /app /app
 
+RUN apk add --no-cache curl tar
 RUN curl -L https://github.com/bluesky-social/goat/releases/download/v0.1.2/goat_Linux_x86_64.tar.gz > /tmp/goat.tar.gz && tar -xf /tmp/goat.tar.gz goat && mv goat /usr/local/bin/goat && rm /tmp/goat.tar.gz
 
 EXPOSE 3000
