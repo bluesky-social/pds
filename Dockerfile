@@ -1,11 +1,11 @@
-FROM node:20.11-alpine3.18 as build
+FROM node:20.19-alpine3.22 as build
 
 RUN corepack enable
 
 # Download and extract goat binary
 WORKDIR /tmp
-RUN apk add --no-cache curl tar
-RUN curl -L https://github.com/bluesky-social/goat/releases/download/v0.1.2/goat_Linux_x86_64.tar.gz > /tmp/goat.tar.gz && tar -xf /tmp/goat.tar.gz goat
+RUN apk add --no-cache git go
+RUN git clone https://github.com/bluesky-social/goat.git && cd goat && CGO_ENABLED=0 go build -o /tmp/goat .
 
 # Move files into the image and install
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN corepack prepare --activate
 RUN pnpm install --production --frozen-lockfile > /dev/null
 
 # Uses assets from build stage to reduce build size
-FROM node:20.11-alpine3.18
+FROM node:20.19-alpine3.22
 
 RUN apk add --update dumb-init
 
