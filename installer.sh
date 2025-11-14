@@ -306,7 +306,7 @@ DOCKERD_CONFIG
 {
 	email ${PDS_ADMIN_EMAIL}
 	on_demand_tls {
-		ask http://localhost:3000/tls-check
+		ask http://pds:3000/tls-check
 	}
 }
 
@@ -314,7 +314,7 @@ DOCKERD_CONFIG
 	tls {
 		on_demand
 	}
-	reverse_proxy http://localhost:3000
+	reverse_proxy http://pds:3000
 }
 CADDYFILE
 
