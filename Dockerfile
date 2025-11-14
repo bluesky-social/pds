@@ -2,10 +2,12 @@ FROM node:20.19-alpine3.22 as build
 
 RUN corepack enable
 
-# Download and extract goat binary
+# Build goat binary
+ENV CGO_ENABLED=0
+ENV GODEBUG="netdns=go"
 WORKDIR /tmp
 RUN apk add --no-cache git go
-RUN git clone https://github.com/bluesky-social/goat.git && cd goat && CGO_ENABLED=0 go build -o /tmp/goat .
+RUN git clone https://github.com/bluesky-social/goat.git && cd goat && git checkout v0.1.2 && go build -o /tmp/goat .
 
 # Move files into the image and install
 WORKDIR /app
