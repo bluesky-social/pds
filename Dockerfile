@@ -7,7 +7,7 @@ ENV CGO_ENABLED=0
 ENV GODEBUG="netdns=go"
 WORKDIR /tmp
 RUN apk add --no-cache git go
-RUN git clone https://github.com/bluesky-social/goat.git && cd goat && git checkout v0.1.2 && go build -o /tmp/goat .
+RUN git clone https://github.com/bluesky-social/goat.git && cd goat && git checkout v0.1.2 && go build -o /tmp/goat-build .
 
 # Move files into the image and install
 WORKDIR /app
@@ -25,7 +25,7 @@ ENTRYPOINT ["dumb-init", "--"]
 
 WORKDIR /app
 COPY --from=build /app /app
-COPY --from=build /tmp/goat /usr/local/bin/goat
+COPY --from=build /tmp/goat-build /usr/local/bin/goat
 
 EXPOSE 3000
 ENV PDS_PORT=3000
