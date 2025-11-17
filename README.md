@@ -31,6 +31,7 @@ Head over to the [ATProto Touchers Discord](https://discord.atprotocol.dev/) to 
       - [Common SMTP issues](#common-smtp-issues)
     - [Logging](#logging)
     - [Updating your PDS](#updating-your-pds)
+    - [goat CLI](#goat-cli)
     - [Environment Variables](#environment-variables)
   - [License](#license)
 
@@ -314,6 +315,10 @@ It is recommended that you keep your PDS up to date with new versions. You can u
 ```bash
 sudo pdsadmin update
 ```
+
+### goat CLI
+
+The PDS image includes [goat](https://github.com/bluesky-social/goat), our command line tool for performing admin functions. `goat` is more portable than the `pdsadmin` scripts and can be used locally or within the container installed by this script.
 
 ### Environment Variables
 
