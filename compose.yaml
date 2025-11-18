@@ -27,7 +27,7 @@ services:
       - /pds/pds.env
   watchtower:
     container_name: watchtower
-    image: containrrr/watchtower:latest
+    image: ghcr.io/nicholas-fedor/watchtower:latest
     network_mode: host
     volumes:
       - type: bind
