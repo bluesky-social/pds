@@ -116,12 +116,6 @@ function main {
     exit 1
   fi
 
-  # Enforce that the data directory is /pds since we're assuming it for now.
-  # Later we can make this actually configurable.
-  if [[ "${PDS_DATADIR}" != "/pds" ]]; then
-    usage "The data directory must be /pds. Exiting..."
-  fi
-
   # Check if PDS is already installed.
   if [[ -e "${PDS_DATADIR}/pds.sqlite" ]]; then
     echo
@@ -351,8 +345,8 @@ PDS_CONFIG
     --output "${PDS_DATADIR}/compose.yaml" \
     "${COMPOSE_URL}"
 
-  # Replace the /pds paths with the ${PDS_DATADIR} path.
-  sed --in-place "s|/pds|${PDS_DATADIR}|g" "${PDS_DATADIR}/compose.yaml"
+  # Replace the @PDS_DATADIR@ paths with the ${PDS_DATADIR} path.
+  sed --in-place "s|@PDS_DATADIR@|${PDS_DATADIR}|g" "${PDS_DATADIR}/compose.yaml"
 
   #
   # Create the systemd service.
