@@ -11,7 +11,7 @@ PLATFORM="$(uname --hardware-platform || true)"
 DISTRIB_CODENAME="$(lsb_release --codename --short || true)"
 DISTRIB_ID="$(lsb_release --id --short | tr '[:upper:]' '[:lower:]' || true)"
 
-# Secure generator comands
+# Secure generator commands
 GENERATE_SECURE_SECRET_CMD="openssl rand --hex 16"
 GENERATE_K256_PRIVATE_KEY_CMD="openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32"
 
@@ -31,7 +31,6 @@ REQUIRED_SYSTEM_PACKAGES="
   openssl
   sqlite3
   xxd
-  jq
 "
 # Docker packages.
 REQUIRED_DOCKER_PACKAGES="
@@ -123,7 +122,7 @@ function main {
   fi
 
   # Check if PDS is already installed.
-  if [[ -e "${PDS_DATADIR}/pds.sqlite" ]]; then
+  if [[ -e "${PDS_DATADIR}/account.sqlite" ]]; then
     echo
     echo "ERROR: pds is already configured in ${PDS_DATADIR}"
     echo
@@ -393,7 +392,7 @@ SYSTEMD_UNIT_FILE
   fi
 
   #
-  # Download and install pdadmin.
+  # Download and install pdsadmin.
   #
   echo "* Downloading pdsadmin"
   curl \
