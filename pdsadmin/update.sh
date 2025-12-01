@@ -20,6 +20,8 @@ curl \
   --output "${COMPOSE_TEMP_FILE}" \
   "${COMPOSE_URL}"
 
+sed --in-place "s|/pds|${PDS_DATADIR}|g" "${PDS_DATADIR}/compose.yaml"
+
 if cmp --quiet "${COMPOSE_FILE}" "${COMPOSE_TEMP_FILE}"; then
   echo "PDS is already up to date"
   rm --force "${COMPOSE_TEMP_FILE}"
