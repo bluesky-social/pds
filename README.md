@@ -340,6 +340,7 @@ The PDS image includes [goat](https://github.com/bluesky-social/goat), our comma
 | `LOG_ENABLED`                               | `true`                             |
 | `PDS_EMAIL_SMTP_URL`                        | None                               |
 | `PDS_EMAIL_FROM_ADDRESS`                    | None                               |
+| `PDS_PRIVACY_POLICY_URL`                    | None                               |
 
 
 ## License
