@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
   caddy:
     container_name: caddy
@@ -14,6 +14,7 @@ services:
       - type: bind
         source: /pds/caddy/etc/caddy
         target: /etc/caddy
+    labels: ["com.centurylinklabs.watchtower.scope=bluesky"]
   pds:
     container_name: pds
     image: ghcr.io/bluesky-social/pds:0.4
@@ -25,6 +26,7 @@ services:
         target: /pds
     env_file:
       - /pds/pds.env
+    labels: ["com.centurylinklabs.watchtower.scope=bluesky"]
   watchtower:
     container_name: watchtower
     image: ghcr.io/nicholas-fedor/watchtower:latest
@@ -37,3 +39,5 @@ services:
     environment:
       WATCHTOWER_CLEANUP: true
       WATCHTOWER_SCHEDULE: "@midnight"
+      WATCHTOWER_SCOPE: "bluesky"
+    labels: ["com.centurylinklabs.watchtower.scope=bluesky"]
