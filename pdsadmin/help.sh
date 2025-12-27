@@ -35,9 +35,18 @@ request-crawl [<RELAY HOST>]
     Request a crawl from a relay host.
     e.g. pdsadmin request-crawl bsky.network
 
+invite
+  list [FILTER]
+    List invite codes. Filter: used, disabled, free
+    e.g. pdsadmin invite list
+    e.g. pdsadmin invite list free
+  create [COUNT]
+    Create a new invite code with optional use count (default: 1)
+    e.g. pdsadmin invite create
+    e.g. pdsadmin invite create 5
+
 create-invite-code
-  Create a new invite code.
-    e.g. pdsadmin create-invite-code
+  Removed. Use 'pdsadmin invite create' instead.
 
 help
     Display this help information.
