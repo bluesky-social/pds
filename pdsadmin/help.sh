@@ -45,8 +45,10 @@ invite
     e.g. pdsadmin invite create
     e.g. pdsadmin invite create 5
 
-create-invite-code
-  Removed. Use 'pdsadmin invite create' instead.
+create-invite-code [COUNT]
+    Create a new invite code (deprecated, use 'pdsadmin invite create' instead)
+    e.g. pdsadmin create-invite-code
+    e.g. pdsadmin create-invite-code 5
 
 help
     Display this help information.
