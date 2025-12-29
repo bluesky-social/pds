@@ -41,19 +41,39 @@ if [[ "${SUBCOMMAND}" == "list" ]]; then
   elif [[ "${FILTER}" == "free" ]]; then
     # Show codes that are not used and not disabled
     JQ_FILTER='.codes[] | select(.uses == [] and .disabled == false) | [.code, "0", "active"] | @tsv'
-  else
-    # Show all codes
+  elif [[ -z "${FILTER}" ]]; then
+    # No filter provided: show all codes
     JQ_FILTER='.codes[] | [.code, (.uses | length | tostring), (if .disabled then "disabled" else "active" end)] | @tsv'
+  else
+    echo "Unknown filter: ${FILTER}" >/dev/stderr
+    echo "Valid filters: used, disabled, free" >/dev/stderr
+    exit 1
   fi
 
-  echo -e "Code\tUses\tStatus"
-  echo "${CODES_JSON}" | jq --raw-output "${JQ_FILTER}" | column --table
+  RESULTS="$(echo "${CODES_JSON}" | jq --raw-output "${JQ_FILTER}")"
+  if [[ -z "${RESULTS}" ]]; then
+    if [[ -n "${FILTER}" ]]; then
+      echo "No invite codes found matching filter: ${FILTER}"
+    else
+      echo "No invite codes found."
+    fi
+  else
+    echo -e "Code\tUses\tStatus"
+    echo "${RESULTS}" | column --table
+  fi
 
 #
 # invite create [use_count]
 #
 elif [[ "${SUBCOMMAND}" == "create" ]]; then
   USE_COUNT="${2:-1}"
+
+  # Validate that USE_COUNT is a positive integer to avoid invalid JSON payloads.
+  if ! [[ "${USE_COUNT}" =~ ^[1-9][0-9]*$ ]]; then
+    echo "Error: USE_COUNT must be a positive integer (got: '${USE_COUNT}')." >/dev/stderr
+    echo "Usage: pdsadmin invite create [count]" >/dev/stderr
+    exit 1
+  fi
 
   CODE="$(curl_cmd_post \
     --user "admin:${PDS_ADMIN_PASSWORD}" \
