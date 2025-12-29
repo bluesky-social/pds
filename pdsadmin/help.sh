@@ -7,6 +7,9 @@ set -o pipefail
 cat <<HELP
 pdsadmin help
 --
+NOTE: These scripts are not actively maintained. For a more robust solution,
+consider using goat: https://github.com/bluesky-social/goat
+--
 update
   Update to the latest PDS version.
     e.g. pdsadmin update
