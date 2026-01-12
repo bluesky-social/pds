@@ -7,7 +7,7 @@ ENV CGO_ENABLED=0
 ENV GODEBUG="netdns=go"
 WORKDIR /tmp
 RUN apk add --no-cache git go
-RUN git clone https://github.com/bluesky-social/goat.git && cd goat && git checkout v0.1.2 && go build -o /tmp/goat-build .
+RUN git clone https://github.com/bluesky-social/goat.git && cd goat && git checkout v0.2.1 && go build -o /tmp/goat-build .
 
 # Move files into the image and install
 WORKDIR /app
