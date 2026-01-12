@@ -1,4 +1,4 @@
-FROM node:20.19-alpine3.22 as build
+FROM node:20.19-alpine3.23 as build
 
 RUN corepack enable
 
