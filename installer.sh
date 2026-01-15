@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -11,7 +11,7 @@ PLATFORM="$(uname --hardware-platform || true)"
 DISTRIB_CODENAME="$(lsb_release --codename --short || true)"
 DISTRIB_ID="$(lsb_release --id --short | tr '[:upper:]' '[:lower:]' || true)"
 
-# Secure generator comands
+# Secure generator commands
 GENERATE_SECURE_SECRET_CMD="openssl rand --hex 16"
 GENERATE_K256_PRIVATE_KEY_CMD="openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32"
 
@@ -93,9 +93,9 @@ function main {
     elif [[ "${DISTRIB_CODENAME}" == "jammy" ]]; then
       SUPPORTED_OS="true"
       echo "* Detected supported distribution Ubuntu 22.04 LTS"
-    elif [[ "${DISTRIB_CODENAME}" == "mantic" ]]; then
+    elif [[ "${DISTRIB_CODENAME}" == "noble" ]]; then
       SUPPORTED_OS="true"
-      echo "* Detected supported distribution Ubuntu 23.10 LTS"
+      echo "* Detected supported distribution Ubuntu 24.04 LTS"
     fi
   elif [[ "${DISTRIB_ID}" == "debian" ]]; then
     if [[ "${DISTRIB_CODENAME}" == "bullseye" ]]; then
@@ -104,11 +104,14 @@ function main {
     elif [[ "${DISTRIB_CODENAME}" == "bookworm" ]]; then
       SUPPORTED_OS="true"
       echo "* Detected supported distribution Debian 12"
+    elif [[ "${DISTRIB_CODENAME}" == "trixie" ]]; then
+        SUPPORTED_OS="true"
+        echo "* Detected supported distribution Debian 13"
     fi
   fi
 
   if [[ "${SUPPORTED_OS}" != "true" ]]; then
-    echo "Sorry, only Ubuntu 20.04, 22.04, Debian 11 and Debian 12 are supported by this installer. Exiting..."
+    echo "Sorry, only Ubuntu 20.04, 22.04, 24.04, and Debian 11, 12, and 13 are supported by this installer. Exiting..."
     exit 1
   fi
 
@@ -119,7 +122,7 @@ function main {
   fi
 
   # Check if PDS is already installed.
-  if [[ -e "${PDS_DATADIR}/pds.sqlite" ]]; then
+  if [[ -e "${PDS_DATADIR}/account.sqlite" ]]; then
     echo
     echo "ERROR: pds is already configured in ${PDS_DATADIR}"
     echo
@@ -214,13 +217,6 @@ INSTALLER_MESSAGE
   fi
 
   # Admin email
-  if [[ -z "${PDS_ADMIN_EMAIL}" ]]; then
-    read -p "Enter an admin email address (e.g. you@example.com): " PDS_ADMIN_EMAIL
-  fi
-  if [[ -z "${PDS_ADMIN_EMAIL}" ]]; then
-    usage "No admin email specified"
-  fi
-
   if [[ -z "${PDS_ADMIN_EMAIL}" ]]; then
     read -p "Enter an admin email address (e.g. you@example.com): " PDS_ADMIN_EMAIL
   fi
@@ -333,7 +329,7 @@ PDS_ADMIN_PASSWORD=${PDS_ADMIN_PASSWORD}
 PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX=$(eval "${GENERATE_K256_PRIVATE_KEY_CMD}")
 PDS_DATA_DIRECTORY=${PDS_DATADIR}
 PDS_BLOBSTORE_DISK_LOCATION=${PDS_DATADIR}/blocks
-PDS_BLOB_UPLOAD_LIMIT=52428800
+PDS_BLOB_UPLOAD_LIMIT=104857600
 PDS_DID_PLC_URL=${PDS_DID_PLC_URL}
 PDS_BSKY_APP_VIEW_URL=${PDS_BSKY_APP_VIEW_URL}
 PDS_BSKY_APP_VIEW_DID=${PDS_BSKY_APP_VIEW_DID}
@@ -341,6 +337,7 @@ PDS_REPORT_SERVICE_URL=${PDS_REPORT_SERVICE_URL}
 PDS_REPORT_SERVICE_DID=${PDS_REPORT_SERVICE_DID}
 PDS_CRAWLERS=${PDS_CRAWLERS}
 LOG_ENABLED=true
+PDS_RATE_LIMITS_ENABLED=true
 PDS_CONFIG
 
   #
@@ -396,7 +393,7 @@ SYSTEMD_UNIT_FILE
   fi
 
   #
-  # Download and install pdadmin.
+  # Download and install pdsadmin.
   #
   echo "* Downloading pdsadmin"
   curl \

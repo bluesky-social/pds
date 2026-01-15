@@ -2,7 +2,7 @@
 
 Welcome to the repository for the official Bluesky PDS (Personal Data Server). This repository includes container images and documentation designed to assist technical people with hosting a Bluesky PDS.
 
-Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP) to chat with other folks hosting instances and get important updates about the PDS distribution!
+Head over to the [ATProto Touchers Discord](https://discord.atprotocol.dev/) to chat with other folks hosting instances and get important updates about the PDS distribution!
 
 ## Table of Contents
 
@@ -10,23 +10,30 @@ Head over to the [AT Protocol PDS Admins Discord](https://discord.gg/e7hpHxRfBP)
 
 <!-- toc -->
 
-- [FAQ](#faq)
-  * [What is Bluesky?](#what-is-bluesky)
-  * [What is AT Protocol?](#what-is-at-protocol)
-  * [Where is the code?](#where-is-the-code)
-  * [What is the current status of federation?](#what-is-the-current-status-of-federation)
-- [Self-hosting PDS](#self-hosting-pds)
-  * [Preparation for self-hosting PDS](#preparation-for-self-hosting-pds)
-  * [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
-  * [Configure DNS for your domain](#configure-dns-for-your-domain)
-  * [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
-  * [Installer on Ubuntu 20.04/22.04 and Debian 11/12](#installer-on-ubuntu-20042204-and-debian-1112)
-  * [Verifying that your PDS is online and accessible](#verifying-that-your-pds-is-online-and-accessible)
-  * [Creating an account using pdsadmin](#creating-an-account-using-pdsadmin)
-  * [Creating an account using an invite code](#creating-an-account-using-an-invite-code)
-  * [Using the Bluesky app with your PDS](#using-the-bluesky-app-with-your-pds)
-  * [Setting up SMTP](#setting-up-smtp)
-  * [Updating your PDS](#updating-your-pds)
+- [PDS](#pds)
+  - [Table of Contents](#table-of-contents)
+  - [FAQ](#faq)
+    - [What is Bluesky?](#what-is-bluesky)
+    - [What is AT Protocol?](#what-is-at-protocol)
+    - [Where is the code?](#where-is-the-code)
+    - [What is the current status of federation?](#what-is-the-current-status-of-federation)
+  - [Self-hosting a PDS](#self-hosting-a-pds)
+    - [Deploying a PDS onto a VPS](#deploying-a-pds-onto-a-vps)
+    - [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
+    - [Configure DNS for your domain](#configure-dns-for-your-domain)
+    - [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
+    - [Installing on Ubuntu 20.04/22.04/24.04 and Debian 11/12/13](#installing-on-ubuntu-200422042404-and-debian-111213)
+    - [Verifying that your PDS is online and accessible](#verifying-that-your-pds-is-online-and-accessible)
+    - [Creating an account using pdsadmin](#creating-an-account-using-pdsadmin)
+    - [Creating an account using an invite code](#creating-an-account-using-an-invite-code)
+    - [Using the Bluesky app with your PDS](#using-the-bluesky-app-with-your-pds)
+    - [Setting up SMTP](#setting-up-smtp)
+      - [Common SMTP issues](#common-smtp-issues)
+    - [Logging](#logging)
+    - [Updating your PDS](#updating-your-pds)
+    - [goat CLI](#goat-cli)
+    - [Environment Variables](#environment-variables)
+  - [License](#license)
 
 <!-- tocstop -->
 
@@ -51,7 +58,7 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 
 ### What is the current status of federation?
 
-As of Spring 2024, the AT Protocol network is open to federation!
+The AT Protocol network is open to federation!
 
 ✅ Federated domain handles (e.g. `@nytimes.com`)
 
@@ -65,13 +72,13 @@ As of Spring 2024, the AT Protocol network is open to federation!
 
 ✅ Federated moderation (labeling)
 
-## Self-hosting PDS
+## Self-hosting a PDS
 
 Self-hosting a Bluesky PDS means running your own Personal Data Server that is capable of federating with the wider Bluesky social network.
 
-### Preparation for self-hosting PDS
+### Deploying a PDS onto a VPS
 
-Launch a server on any cloud provider, [Digital Ocean](https://digitalocean.com/) and [Vultr](https://vultr.com/) are two popular choices.
+This README provides instructions for deploying a PDS using our install script onto a Virtual Private Server. [Digital Ocean](https://digitalocean.com/) and [Vultr](https://vultr.com/) are two popular choices for VPS hosting.
 
 Ensure that you can ssh to your server and have root access.
 
@@ -83,7 +90,7 @@ Ensure that you can ssh to your server and have root access.
 **Server Recommendations**
 |                  |              |
 | ---------------- | ------------ |
-| Operating System | Ubuntu 22.04 |
+| Operating System | Ubuntu 24.04 |
 | Memory (RAM)     | 1 GB         |
 | CPU Cores        | 1            |
 | Storage          | 20 GB SSD    |
@@ -130,34 +137,77 @@ Examples to check (record type `A`):
 
 These should all return your server's public IP.
 
-### Installer on Ubuntu 20.04/22.04 and Debian 11/12
+### Installing on Ubuntu 20.04/22.04/24.04 and Debian 11/12/13
 
-On your server via ssh, download the installer script using wget:
+Note that this script assumes a relatively "fresh" VPS that is not also concurrently hosting a web server or anything else on port 80/443. If you intend to run a PDS alongside an existing webserver on the same VPS, you will not want to use this install script.
 
-```bash
-wget https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh
-```
-
-or download it using curl:
+On your server, download the install script using `curl`:
 
 ```bash
-curl https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh >installer.sh
+curl https://raw.githubusercontent.com/bluesky-social/pds/main/installer.sh > installer.sh
 ```
 
-And then run the installer using bash:
+And then run the installer using `bash`. You will need `sudo` permissions to continue:
 
 ```bash
 sudo bash installer.sh
 ```
 
+The install script is interactive and will prompt for input during the install process. You will need to provide your public DNS address, an admin email address (which does not need to be from the same domain), and be prompted to create a PDS user account with its own email address and handle. If you plan to reuse an existing AT handle, you can skip user account creation, though if it is your first time deploying a PDS you may want to create an account using your domain like `account.your-domain.net` for testing purposes.
+
+Upon completion of a successful installation, you'll receive output similar to the following:
+
+```
+========================================================================
+PDS installation successful!
+------------------------------------------------------------------------
+
+Check service status      : sudo systemctl status pds
+Watch service logs        : sudo docker logs -f pds
+Backup service data       : /pds
+PDS Admin command         : pdsadmin
+
+Required Firewall Ports
+------------------------------------------------------------------------
+Service                Direction  Port   Protocol  Source
+-------                ---------  ----   --------  ----------------------
+HTTP TLS verification  Inbound    80     TCP       Any
+HTTP Control Panel     Inbound    443    TCP       Any
+
+Required DNS entries
+------------------------------------------------------------------------
+Name                         Type       Value
+-------                      ---------  ---------------
+your-domain.net              A          your-ip-address
+*.your-domain.net            A          your-ip-address
+
+Detected public IP of this server: your-ip-address
+
+To see pdsadmin commands, run "pdsadmin help"
+
+========================================================================
+```
+
+And, following account creation:
+
+```
+Account created successfully!
+-----------------------------
+Handle   : handle.your-domain.net
+DID      : did:plc:your-did
+Password : your-password
+-----------------------------
+Save this password, it will not be displayed again.
+```
+
 ### Verifying that your PDS is online and accessible
 
 > [!TIP]
-> The most common problems with getting PDS content consumed in the live network are when folks substitute the provided Caddy configuration for nginx, apache, or similar reverse proxies. Getting TLS certificates, WebSockets, and virtual server names all correct can be tricky. We are not currently providing tech support for other configurations.
+> The most common problems with getting PDS content consumed in the live network usually result from users trying to port the provided Caddy configuration to Nginx, Apache, or other reverse proxies. Getting TLS certificates, WebSockets, and virtual server names provisioned can be challenging. We are not currently providing tech support for other configurations.
 
-You can check if your server is online and healthy by requesting the healthcheck endpoint.
+After installation, your PDS should be live and accessible on the web. You can check if your server is online and healthy by making a request to `https://your-domain.net/xrpc/_health` (the healthcheck endpoint). You should see a JSON response with a version, like:
 
-You can visit `https://example.com/xrpc/_health` in your browser. You should see a JSON response with a version, like:
+Visit `https://your-domain.net/xrpc/_health` in your browser. You should see a JSON response with a version, like:
 
 ```
 {"version":"0.2.2-beta.2"}
@@ -169,11 +219,11 @@ You'll also need to check that WebSockets are working, for the rest of the netwo
 wsdump "wss://example.com/xrpc/com.atproto.sync.subscribeRepos?cursor=0"
 ```
 
-Note that there will be no events output on the WebSocket until they are created in the PDS, so the above command may continue to run with no output if things are configured successfully.
+Note that there will be no events output on the WebSocket until they are created in the PDS, so the above command may continue to run with no output immediately post-installation.
 
 ### Creating an account using pdsadmin
 
-Using ssh on your server, use `pdsadmin` to create an account if you haven't already.
+You'll now have access to some additional command line tools on this server. Use `pdsadmin` to create an account if you haven't already:
 
 ```bash
 sudo pdsadmin account create
@@ -181,7 +231,7 @@ sudo pdsadmin account create
 
 ### Creating an account using an invite code
 
-Using ssh on your server, use `pdsadmin` to create an invite code.
+If needed, use `pdsadmin` to create an invite code:
 
 ```bash
 sudo pdsadmin create-invite-code
@@ -205,9 +255,9 @@ _Note: because the subdomain TLS certificate is created on-demand, it may take 1
 
 To be able to verify users' email addresses and send other emails, you need to set up an SMTP server.
 
-One way to do this is to use an email service. [Resend](https://resend.com/) and [SendGrid](https://sendgrid.com/) are two popular choices.
+As an alternative to running your own SMTP server, you can use an email service. [Resend](https://resend.com/) and [SendGrid](https://sendgrid.com/) are two popular choices.
 
-Create an account and API key on an email service, ensure your server allows access on the required ports, and set these variables in `/pds/pds.env` (example with Resend):
+Create an account and API key on an email service, ensure your server allows access on the required ports, and then you can add these configuration variables to `/pds/pds.env` on your server (example with Resend):
 
 ```
 PDS_EMAIL_SMTP_URL=smtps://resend:<your api key here>@smtp.resend.com:465/
@@ -227,6 +277,14 @@ PDS_EMAIL_SMTP_URL=smtp:///?sendmail=true
 ```
 
 _Note: Your PDS will need to be restarted with those variables. This varies depending on your setup. If you followed this installation guide, run `systemctl restart pds`. You might need to restart the server or recreate the container, depending on what you are using._
+
+#### Common SMTP issues
+
+If you find that your test messages using cURL or other sources go out correctly, but you are not receiving emails from your PDS, you may need to URL encode your username and password on `/pds/pds.env` and restart the PDS service.
+
+If the username and/or password contain special characters, the special characters will need to be [percent encoded](https://en.wikipedia.org/wiki/Percent-encoding).  For some email services, the username will contain an extra `@` symbol that will also need to be percent encoded. For example, the URL `user&name@oci:p@ssword@smtphost:465` after percent encoding for the username and password fields would become `user%26name%40oci:p%40ssword@smtphost:465`.
+
+If you are migrating an account, Bluesky's UI will ask you to confirm your email address. The confirmation code email is meant to come from your PDS. If you are encountering issues with SMTP and want to confirm the address before solving it, you can find the confirmation code on the `email_token` table on `accounts.sqlite`.
 
 ### Logging
 
@@ -252,11 +310,39 @@ LOG_LEVEL=debug
 
 ### Updating your PDS
 
-It is recommended that you keep your PDS up to date with new versions, otherwise things may break. You can use the `pdsadmin` tool to update your PDS.
+It is recommended that you keep your PDS up to date with new versions. You can use the `pdsadmin` tool to update your PDS.
 
 ```bash
 sudo pdsadmin update
 ```
+
+### goat CLI
+
+The PDS image includes [goat](https://github.com/bluesky-social/goat), our command line tool for performing admin functions. `goat` is more portable than the `pdsadmin` scripts and can be used locally or within the container installed by this script.
+
+### Environment Variables
+
+| Environment Variable                        | Default                            |
+| ------------------------------------------- | ---------------------------------- |
+| `PDS_HOSTNAME`                              | None                               |
+| `PDS_JWT_SECRET`                            | None                               |
+| `PDS_ADMIN_PASSWORD`                        | None                               |
+| `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX` | None                               |
+| `PDS_DATA_DIRECTORY`                        | `/pds`                             |
+| `PDS_BLOBSTORE_DISK_LOCATION`               | `/pds/blocks`                      |
+| `PDS_BLOB_UPLOAD_LIMIT`                     | `5242880` (5MB)                    |
+| `PDS_DID_PLC_URL`                           | `https://plc.directory`            |
+| `PDS_BSKY_APP_VIEW_URL`                     | `https://api.bsky.app`             |
+| `PDS_BSKY_APP_VIEW_DID`                     | `did:web:api.bsky.app`             |
+| `PDS_REPORT_SERVICE_URL`                    | `https://mod.bsky.app`             |
+| `PDS_REPORT_SERVICE_DID`                    | `did:plc:ar7c4by46qjdydhdevvrndac` |
+| `PDS_CRAWLERS`                              | `https://bsky.network`             |
+| `LOG_ENABLED`                               | `true`                             |
+| `PDS_EMAIL_SMTP_URL`                        | None                               |
+| `PDS_EMAIL_FROM_ADDRESS`                    | None                               |
+| `PDS_PRIVACY_POLICY_URL`                    | None                               |
+| `PDS_RATE_LIMITS_ENABLED`                   | `true`                             |
+
 
 ## License
 
