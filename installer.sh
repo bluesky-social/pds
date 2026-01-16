@@ -7,7 +7,7 @@ set -o pipefail
 export DEBIAN_FRONTEND="noninteractive"
 
 # System info.
-PLATFORM="$(uname --hardware-platform || true)"
+ARCH="$(uname --machine || true)"
 DISTRIB_CODENAME="$(lsb_release --codename --short || true)"
 DISTRIB_ID="$(lsb_release --id --short | tr '[:upper:]' '[:lower:]' || true)"
 
@@ -76,13 +76,18 @@ function main {
   fi
 
   # Check for a supported architecture.
-  # If the platform is unknown (not uncommon) then we assume x86_64
-  if [[ "${PLATFORM}" == "unknown" ]]; then
-    PLATFORM="x86_64"
-  fi
-  if [[ "${PLATFORM}" != "x86_64" ]] && [[ "${PLATFORM}" != "aarch64" ]] && [[ "${PLATFORM}" != "arm64" ]]; then
-    usage "Sorry, only x86_64 and aarch64/arm64 are supported. Exiting..."
-  fi
+  case "$ARCH" in
+    x86_64|amd64)
+	  ARCH="x86_64"
+	  ;;
+	aarch64|arm64)
+	  ARCH="arm64"
+	  ;;
+    *)
+      usage "Sorry, only x86_64 and aarch64/arm64 are supported. Exiting..."
+	  ARCH="unsupported"
+	  ;;
+  esac
 
   # Check for a supported distribution.
   SUPPORTED_OS="false"
