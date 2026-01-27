@@ -24,14 +24,14 @@ Head over to the [ATProto Touchers Discord](https://discord.atprotocol.dev/) to 
     - [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
     - [Installing on Ubuntu 20.04/22.04/24.04 and Debian 11/12/13](#installing-on-ubuntu-200422042404-and-debian-111213)
     - [Verifying that your PDS is online and accessible](#verifying-that-your-pds-is-online-and-accessible)
-    - [Creating an account using pdsadmin](#creating-an-account-using-pdsadmin)
+    - [goat CLI](#goat-cli)
+    - [Creating an account](#creating-an-account)
     - [Creating an account using an invite code](#creating-an-account-using-an-invite-code)
     - [Using the Bluesky app with your PDS](#using-the-bluesky-app-with-your-pds)
     - [Setting up SMTP](#setting-up-smtp)
       - [Common SMTP issues](#common-smtp-issues)
     - [Logging](#logging)
     - [Updating your PDS](#updating-your-pds)
-    - [goat CLI](#goat-cli)
     - [Environment Variables](#environment-variables)
   - [License](#license)
 
@@ -221,20 +221,27 @@ wsdump "wss://example.com/xrpc/com.atproto.sync.subscribeRepos?cursor=0"
 
 Note that there will be no events output on the WebSocket until they are created in the PDS, so the above command may continue to run with no output immediately post-installation.
 
-### Creating an account using pdsadmin
+### goat CLI
 
-You'll now have access to some additional command line tools on this server. Use `pdsadmin` to create an account if you haven't already:
+The PDS image includes [goat](https://github.com/bluesky-social/goat), our command line tool for performing admin functions. `goat` can be used locally with a `--pds-host` parameter or within the container installed by this script.
+
+### Creating an account
+
+Use `goat pds admin account create` to create an account if you haven't already:
 
 ```bash
-sudo pdsadmin account create
+goat pds admin account create --admin-password `PDS_ADMIN_PASSWORD` --handle newuser.pds.net --email new-user@email.com --password new-password
 ```
+
+> [!NOTE]
+> You can find `PDS_ADMIN_PASSWORD` in `/pds/pds.env` following installation.
 
 ### Creating an account using an invite code
 
-If needed, use `pdsadmin` to create an invite code:
+If needed, use `goat` to create an invite code:
 
 ```bash
-sudo pdsadmin create-invite-code
+goat pds admin --admin-password PDS_ADMIN_PASSWORD create-invites
 ```
 
 When creating an account using the app, enter this invite code.
@@ -315,10 +322,6 @@ It is recommended that you keep your PDS up to date with new versions. You can u
 ```bash
 sudo pdsadmin update
 ```
-
-### goat CLI
-
-The PDS image includes [goat](https://github.com/bluesky-social/goat), our command line tool for performing admin functions. `goat` is more portable than the `pdsadmin` scripts and can be used locally or within the container installed by this script.
 
 ### Environment Variables
 
