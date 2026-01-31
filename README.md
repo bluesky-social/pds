@@ -227,21 +227,23 @@ The PDS image includes [goat](https://github.com/bluesky-social/goat), our comma
 
 ### Creating an account
 
+You can run the `goat` command included in this container with `docker exec pds goat`.
+
 Use `goat pds admin account create` to create an account if you haven't already:
 
 ```bash
-goat pds admin account create --admin-password `PDS_ADMIN_PASSWORD` --handle newuser.pds.net --email new-user@email.com --password new-password
+docker exec pds goat pds admin account create --admin-password `PDS_ADMIN_PASSWORD` --handle newuser.pds.net --email new-user@email.com --password new-password
 ```
 
 > [!NOTE]
-> You can find `PDS_ADMIN_PASSWORD` in `/pds/pds.env` following installation.
+> You can find `PDS_ADMIN_PASSWORD` in `/pds/pds.env` following installation. You can typically skip this arg when running `goat` from the `docker` container as `PDS_ADMIN_PASSWORD` should already be set.
 
 ### Creating an account using an invite code
 
 If needed, use `goat` to create an invite code:
 
 ```bash
-goat pds admin --admin-password PDS_ADMIN_PASSWORD create-invites
+docker exec pds goat pds admin --admin-password PDS_ADMIN_PASSWORD create-invites
 ```
 
 When creating an account using the app, enter this invite code.
