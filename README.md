@@ -33,6 +33,7 @@ Head over to the [ATProto Touchers Discord](https://discord.atprotocol.dev/) to 
     - [Updating your PDS](#updating-your-pds)
     - [goat CLI](#goat-cli)
     - [Environment Variables](#environment-variables)
+    - [Migrating your PDS](#migrating-your-pds)
   - [License](#license)
 
 <!-- tocstop -->
@@ -343,6 +344,13 @@ The PDS image includes [goat](https://github.com/bluesky-social/goat), our comma
 | `PDS_PRIVACY_POLICY_URL`                    | None                               |
 | `PDS_RATE_LIMITS_ENABLED`                   | `true`                             |
 
+### Migrating your PDS
+
+Once you've deployed a PDS, it will automatically begin broadcasting events to Relay servers.
+
+This means that if you wipe and reinstall your PDS on the same hostname, or move it to a new hostname without performing the appropriate cutover steps, the PDS and Relay can go out of sync.
+
+To avoid this, you should always [migrate accounts individually](https://atproto.com/guides/account-migration) from one PDS to another when updating your PDS host configuration.
 
 ## License
 
