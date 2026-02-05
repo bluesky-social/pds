@@ -412,7 +412,7 @@ PDS installation successful!
 Check service status      : sudo systemctl status pds
 Watch service logs        : sudo docker logs -f pds
 Backup service data       : ${PDS_DATADIR}
-PDS Admin command         : pdsadmin
+PDS Admin command         : docker exec pds goat pds admin
 
 Required Firewall Ports
 ------------------------------------------------------------------------
@@ -430,7 +430,7 @@ ${PDS_HOSTNAME}              A          ${PUBLIC_IP}
 
 Detected public IP of this server: ${PUBLIC_IP}
 
-To see pdsadmin commands, run "pdsadmin help"
+To see pds admin commands, run "docker exec pds goat pds admin"
 
 ========================================================================
 INSTALLER_MESSAGE
