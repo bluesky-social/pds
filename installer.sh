@@ -3,26 +3,34 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-# Disable prompts for apt-get.
-export DEBIAN_FRONTEND="noninteractive"
-
 # System info.
 PLATFORM="$(uname --hardware-platform || true)"
-DISTRIB_CODENAME="$(lsb_release --codename --short || true)"
-DISTRIB_ID="$(lsb_release --id --short | tr '[:upper:]' '[:lower:]' || true)"
+DISTRIB_CODENAME="$(grep -w "VERSION_CODENAME" /etc/os-release | cut -d= -f 2 | tr -d '"' || true)"
+DISTRIB_ID="$(grep -w "ID" /etc/os-release | cut -d= -f 2 | tr -d '"' || true)"
+DISTRIB_VERSION_ID="$(grep -w "VERSION_ID" /etc/os-release | cut -d= -f 2 | tr -d '"' || true)"
+DISTRIB_ID_LIKE="$(grep -w "ID_LIKE" /etc/os-release | cut -d= -f 2 | tr -d '"' || true)"
 
 # Secure generator commands
 GENERATE_SECURE_SECRET_CMD="openssl rand --hex 16"
 GENERATE_K256_PRIVATE_KEY_CMD="openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32"
 
-# The Docker compose file.
-COMPOSE_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml"
-
-# The pdsadmin script.
-PDSADMIN_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/pdsadmin.sh"
-
-# System dependencies.
-REQUIRED_SYSTEM_PACKAGES="
+# Set value for container engine, compose file URL, required system packages,
+# and container engine packages.
+# Fedora-like hosts will use Podman. Debian-like hosts will use Docker.
+CONTAINER_ENGINE="docker"
+DOCKER_COMPOSE_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/docker-compose.yaml"
+PODMAN_COMPOSE_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/podman-compose.yaml"
+REQUIRED_DNF_PACKAGES="
+  ca-certificates
+  curl
+  gnupg2
+  jq
+  lsb_release
+  openssl
+  sqlite
+  xxd
+"
+REQUIRED_APT_PACKAGES="
   ca-certificates
   curl
   gnupg
@@ -32,7 +40,10 @@ REQUIRED_SYSTEM_PACKAGES="
   sqlite3
   xxd
 "
-# Docker packages.
+REQUIRED_PODMAN_PACKAGES="
+  '@container-management'
+  podman-compose
+"
 REQUIRED_DOCKER_PACKAGES="
   containerd.io
   docker-ce
@@ -40,12 +51,15 @@ REQUIRED_DOCKER_PACKAGES="
   docker-compose-plugin
 "
 
+# The pdsadmin script.
+PDSADMIN_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/pdsadmin.sh"
+
 PUBLIC_IP=""
 METADATA_URLS=()
-METADATA_URLS+=("http://169.254.169.254/v1/interfaces/0/ipv4/address") # Vultr
+METADATA_URLS+=("http://169.254.169.254/v1/interfaces/0/ipv4/address")                 # Vultr
 METADATA_URLS+=("http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address") # DigitalOcean
-METADATA_URLS+=("http://169.254.169.254/2021-03-23/meta-data/public-ipv4") # AWS
-METADATA_URLS+=("http://169.254.169.254/hetzner/v1/metadata/public-ipv4") # Hetzner
+METADATA_URLS+=("http://169.254.169.254/2021-03-23/meta-data/public-ipv4")             # AWS
+METADATA_URLS+=("http://169.254.169.254/hetzner/v1/metadata/public-ipv4")              # Hetzner
 
 PDS_DATADIR="${1:-/pds}"
 PDS_HOSTNAME="${2:-}"
@@ -84,36 +98,80 @@ function main {
     usage "Sorry, only x86_64 and aarch64/arm64 are supported. Exiting..."
   fi
 
+  supported_message() {
+    echo "Sorry, only the following distributions are supported. Exiting..."
+    echo
+    echo "Ubuntu: 20.04 LTS, 22.04 LTS, 24.04 LTS"
+    echo "Debian: 11, 12, 13"
+    echo "Fedora: 43"
+    echo "CentOS Stream: 10"
+    echo "AlmaLinux: 10"
+    echo "Rocky Linux: 10"
+  }
+
   # Check for a supported distribution.
-  SUPPORTED_OS="false"
-  if [[ "${DISTRIB_ID}" == "ubuntu" ]]; then
+  case "${DISTRIB_ID}" in
+  "ubuntu")
     if [[ "${DISTRIB_CODENAME}" == "focal" ]]; then
-      SUPPORTED_OS="true"
       echo "* Detected supported distribution Ubuntu 20.04 LTS"
     elif [[ "${DISTRIB_CODENAME}" == "jammy" ]]; then
-      SUPPORTED_OS="true"
       echo "* Detected supported distribution Ubuntu 22.04 LTS"
     elif [[ "${DISTRIB_CODENAME}" == "noble" ]]; then
-      SUPPORTED_OS="true"
       echo "* Detected supported distribution Ubuntu 24.04 LTS"
+    else
+      supported_message
+      exit 1
     fi
-  elif [[ "${DISTRIB_ID}" == "debian" ]]; then
+    ;;
+  "debian")
     if [[ "${DISTRIB_CODENAME}" == "bullseye" ]]; then
-      SUPPORTED_OS="true"
       echo "* Detected supported distribution Debian 11"
     elif [[ "${DISTRIB_CODENAME}" == "bookworm" ]]; then
-      SUPPORTED_OS="true"
       echo "* Detected supported distribution Debian 12"
     elif [[ "${DISTRIB_CODENAME}" == "trixie" ]]; then
-        SUPPORTED_OS="true"
-        echo "* Detected supported distribution Debian 13"
+      echo "* Detected supported distribution Debian 13"
+    else
+      supported_message
+      exit 1
     fi
-  fi
-
-  if [[ "${SUPPORTED_OS}" != "true" ]]; then
-    echo "Sorry, only Ubuntu 20.04, 22.04, 24.04, and Debian 11, 12, and 13 are supported by this installer. Exiting..."
+    ;;
+  "centos")
+    if [[ $(echo "${DISTRIB_VERSION_ID}" | cut -d. -f 1) == "10" ]]; then
+      echo "* Detected supported distribution CentOS Stream 10"
+    else
+      supported_message
+      exit 1
+    fi
+    ;;
+  "almalinux")
+    if [[ $(echo "${DISTRIB_VERSION_ID}" | cut -d. -f 1) == "10" ]]; then
+      echo "* Detected supported distribution AlmaLinux 10"
+    else
+      supported_message
+      exit 1
+    fi
+    ;;
+  "rocky")
+    if [[ $(echo "${DISTRIB_VERSION_ID}" | cut -d. -f 1) == "10" ]]; then
+      echo "* Detected supported distribution Rocky Linux 10"
+    else
+      supported_message
+      exit 1
+    fi
+    ;;
+  "fedora")
+    if [[ "${DISTRIB_VERSION_ID}" == "43" ]]; then
+      echo "* Detected supported distribution Fedora 43"
+    else
+      supported_message
+      exit 1
+    fi
+    ;;
+  *)
+    supported_message
     exit 1
-  fi
+    ;;
+  esac
 
   # Enforce that the data directory is /pds since we're assuming it for now.
   # Later we can make this actually configurable.
@@ -137,7 +195,7 @@ function main {
     echo "  sudo rm -rf ${PDS_DATADIR}"
     echo
     echo "3. Re-run this installation script"
-      echo
+    echo
     echo "  sudo bash ${0}"
     echo
     echo "For assistance, check https://github.com/bluesky-social/pds"
@@ -224,48 +282,79 @@ INSTALLER_MESSAGE
     usage "No admin email specified"
   fi
 
+  # Set container engine to Podman if on Fedora-like
+  if [[ "${DISTRIB_ID_LIKE}" =~ "fedora" ]] || [[ "${DISTRIB_ID}" == "fedora" ]]; then
+    CONTAINER_ENGINE="podman"
+  fi
+
   #
   # Install system packages.
   #
   if lsof -v >/dev/null 2>&1; then
-    while true; do
-      apt_process_count="$(lsof -n -t /var/cache/apt/archives/lock /var/lib/apt/lists/lock /var/lib/dpkg/lock | wc --lines || true)"
-      if (( apt_process_count == 0 )); then
-        break
-      fi
-      echo "* Waiting for other apt process to complete..."
-      sleep 2
-    done
+    if command -v dnf >/dev/null; then
+      while true; do
+        dnf_process_count="$(lsof -n -t /var/lib/dnf/rpmdb_lock.pid | wc --lines || true)"
+        if ((dnf_process_count == 0)); then
+          break
+        fi
+        echo "* Waiting for other dnf process to complete..."
+        sleep 2
+      done
+    fi
+    if command -v apt-get >/dev/null; then
+      while true; do
+        apt_process_count="$(lsof -n -t /var/cache/apt/archives/lock /var/lib/apt/lists/lock /var/lib/dpkg/lock | wc --lines || true)"
+        if ((apt_process_count == 0)); then
+          break
+        fi
+        echo "* Waiting for other apt process to complete..."
+        sleep 2
+      done
+    fi
   fi
 
-  apt-get update
-  apt-get install --yes ${REQUIRED_SYSTEM_PACKAGES}
+  if [[ "${DISTRIB_ID_LIKE}" =~ "fedora" ]] || [[ "${DISTRIB_ID}" == "fedora" ]]; then
+    dnf update --assumeyes
+    if [[ "${DISTRIB_ID}" != "fedora" ]]; then
+      dnf install --assumeyes epel-release
+    fi
+    echo "${REQUIRED_DNF_PACKAGES}" | xargs dnf install --assumeyes
+  fi
+
+  if [[ "${DISTRIB_ID_LIKE}" =~ "debian" ]] || [[ "${DISTRIB_ID}" == "debian" ]]; then
+    # Disable prompts for apt-get
+    export DEBIAN_FRONTEND="noninteractive"
+
+    apt-get update
+    echo "${REQUIRED_APT_PACKAGES}" | xargs apt-get install --yes
+  fi
 
   #
   # Install Docker
   #
-  if ! docker version >/dev/null 2>&1; then
-    echo "* Installing Docker"
-    mkdir --parents /etc/apt/keyrings
+  if [[ "${DISTRIB_ID_LIKE}" =~ "debian" ]] || [[ "${DISTRIB_ID}" == "debian" ]]; then
+    if ! docker version >/dev/null 2>&1; then
+      echo "* Installing Docker"
+      mkdir --parents /etc/apt/keyrings
 
-    # Remove the existing file, if it exists,
-    # so there's no prompt on a second run.
-    rm --force /etc/apt/keyrings/docker.gpg
-    curl --fail --silent --show-error --location "https://download.docker.com/linux/${DISTRIB_ID}/gpg" | \
-      gpg --dearmor --output /etc/apt/keyrings/docker.gpg
+      # Remove the existing file, if it exists,
+      # so there's no prompt on a second run.
+      rm --force /etc/apt/keyrings/docker.gpg
+      curl --fail --silent --show-error --location "https://download.docker.com/linux/${DISTRIB_ID}/gpg" |
+        gpg --dearmor --output /etc/apt/keyrings/docker.gpg
 
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/${DISTRIB_ID} ${DISTRIB_CODENAME} stable" >/etc/apt/sources.list.d/docker.list
+      echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/${DISTRIB_ID} ${DISTRIB_CODENAME} stable" >/etc/apt/sources.list.d/docker.list
 
-    apt-get update
-    apt-get install --yes ${REQUIRED_DOCKER_PACKAGES}
-  fi
+      apt-get update
+      echo "${REQUIRED_DOCKER_PACKAGES}" | xargs apt-get install --yes
+    fi
 
-  #
-  # Configure the Docker daemon so that logs don't fill up the disk.
-  #
-  if ! [[ -e /etc/docker/daemon.json ]]; then
-    echo "* Configuring Docker daemon"
-    cat <<'DOCKERD_CONFIG' >/etc/docker/daemon.json
+    #
+    # Configure the Docker daemon so that logs don't fill up the disk.
+    #
+    if ! [[ -e /etc/docker/daemon.json ]]; then
+      echo "* Configuring Docker daemon"
+      cat <<'DOCKERD_CONFIG' >/etc/docker/daemon.json
 {
   "log-driver": "json-file",
   "log-opts": {
@@ -274,9 +363,51 @@ INSTALLER_MESSAGE
   }
 }
 DOCKERD_CONFIG
-    systemctl restart docker
-  else
-    echo "* Docker daemon already configured! Ensure log rotation is enabled."
+      systemctl restart docker.service
+    else
+      echo "* Docker daemon already configured! Ensure log rotation is enabled."
+    fi
+  fi
+
+  #
+  # Install Podman
+  #
+  if [[ "${DISTRIB_ID_LIKE}" =~ "fedora" ]] || [[ "${DISTRIB_ID}" == "fedora" ]]; then
+    echo "${REQUIRED_PODMAN_PACKAGES}" | xargs dnf install --assumeyes
+  fi
+
+  #
+  # SELinux
+  #
+
+  if [[ "${DISTRIB_ID_LIKE}" =~ "fedora" ]] || [[ "${DISTRIB_ID}" == "fedora" ]]; then
+    if [[ $(getenforce) == "Enforcing" ]]; then
+      echo "Configuring SELinux..."
+      mkdir --parents /usr/local/share/selinux
+      cat <<EOF >/usr/local/share/selinux/pds.te
+module pds 1.0;
+
+require {
+        type container_runtime_t;
+        type var_run_t;
+        type container_t;
+        type default_t;
+        class file { create lock map open read setattr unlink write };
+        class dir { add_name remove_name write };
+        class unix_stream_socket connectto;
+        class sock_file write;
+}
+
+#============= container_t ==============
+allow container_t container_runtime_t:unix_stream_socket connectto;
+allow container_t default_t:dir { add_name remove_name write };
+allow container_t default_t:file { create lock map open read setattr unlink write };
+allow container_t var_run_t:sock_file write;
+EOF
+      checkmodule -M -m -o /usr/local/share/selinux/pds.mod /usr/local/share/selinux/pds.te
+      semodule_package --outfile /usr/local/share/selinux/pds.pp --module /usr/local/share/selinux/pds.mod
+      semodule --install=/usr/local/share/selinux/pds.pp
+    fi
   fi
 
   #
@@ -344,12 +475,21 @@ PDS_CONFIG
   # Download and install pds launcher.
   #
   echo "* Downloading PDS compose file"
-  curl \
-    --silent \
-    --show-error \
-    --fail \
-    --output "${PDS_DATADIR}/compose.yaml" \
-    "${COMPOSE_URL}"
+  if [[ "${DISTRIB_ID_LIKE}" =~ "debian" ]] || [[ "${DISTRIB_ID}" == "debian" ]]; then
+    curl \
+      --silent \
+      --show-error \
+      --fail \
+      --output "${PDS_DATADIR}/compose.yaml" \
+      "${DOCKER_COMPOSE_URL}"
+  elif [[ "${DISTRIB_ID_LIKE}" =~ "fedora" ]] || [[ "${DISTRIB_ID}" == "fedora" ]]; then
+    curl \
+      --silent \
+      --show-error \
+      --fail \
+      --output "${PDS_DATADIR}/compose.yaml" \
+      "${PODMAN_COMPOSE_URL}"
+  fi
 
   # Replace the /pds paths with the ${PDS_DATADIR} path.
   sed --in-place "s|/pds|${PDS_DATADIR}|g" "${PDS_DATADIR}/compose.yaml"
@@ -358,7 +498,8 @@ PDS_CONFIG
   # Create the systemd service.
   #
   echo "* Starting the pds systemd service"
-  cat <<SYSTEMD_UNIT_FILE >/etc/systemd/system/pds.service
+  if [[ "${DISTRIB_ID_LIKE}" =~ "debian" ]] || [[ "${DISTRIB_ID}" == "debian" ]]; then
+    cat <<SYSTEMD_UNIT_FILE >/etc/systemd/system/pds.service
 [Unit]
 Description=Bluesky PDS Service
 Documentation=https://github.com/bluesky-social/pds
@@ -375,10 +516,31 @@ ExecStop=/usr/bin/docker compose --file ${PDS_DATADIR}/compose.yaml down
 [Install]
 WantedBy=default.target
 SYSTEMD_UNIT_FILE
+  fi
+
+  if [[ "${DISTRIB_ID_LIKE}" =~ "fedora" ]] || [[ "${DISTRIB_ID}" == "fedora" ]]; then
+    cat <<SYSTEMD_UNIT_FILE >/etc/systemd/system/pds.service
+[Unit]
+Description=Bluesky PDS Service
+Documentation=https://github.com/bluesky-social/pds
+Requires=podman.socket
+After=podman.socket
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=${PDS_DATADIR}
+ExecStart=/usr/bin/podman-compose --file ${PDS_DATADIR}/compose.yaml up --detach
+ExecStop=/usr/bin/podman-compose --file ${PDS_DATADIR}/compose.yaml down
+
+[Install]
+WantedBy=default.target
+SYSTEMD_UNIT_FILE
+  fi
 
   systemctl daemon-reload
-  systemctl enable pds
-  systemctl restart pds
+  systemctl enable pds.service
+  systemctl restart pds.service
 
   # Enable firewall access if ufw is in use.
   if ufw status >/dev/null 2>&1; then
@@ -390,6 +552,20 @@ SYSTEMD_UNIT_FILE
       echo "* Enabling access on TCP port 443 using ufw"
       ufw allow 443/tcp >/dev/null
     fi
+  fi
+
+  # Enable firewall access if firewalld is in use.
+  if systemctl is-active firewalld.service >/dev/null 2>&1; then
+    DEFAULT_ZONE=$(firewall-cmd --get-default-zone)
+    if ! firewall-cmd --info-zone="$DEFAULT_ZONE" | grep --quiet -w "http"; then
+      echo "* Enabling access to TCP port 80 using firewalld"
+      firewall-cmd --permanent --zone="$DEFAULT_ZONE" --add-service=http >/dev/null
+    fi
+    if ! firewall-cmd --info-zone="$DEFAULT_ZONE" | grep --quiet -w "https"; then
+      echo "* Enabling access to TCP port 443 using firewalld"
+      firewall-cmd --permanent --zone="$DEFAULT_ZONE" --add-service=https >/dev/null
+    fi
+    firewall-cmd --reload >/dev/null 2>&1
   fi
 
   #
@@ -410,7 +586,7 @@ PDS installation successful!
 ------------------------------------------------------------------------
 
 Check service status      : sudo systemctl status pds
-Watch service logs        : sudo docker logs -f pds
+Watch service logs        : sudo ${CONTAINER_ENGINE} logs -f pds
 Backup service data       : ${PDS_DATADIR}
 PDS Admin command         : pdsadmin
 
@@ -446,3 +622,5 @@ INSTALLER_MESSAGE
 
 # Run main function.
 main
+
+# vim: ai et ft=bash sts=2 sw=2 ts=2

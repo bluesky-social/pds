@@ -54,8 +54,8 @@ Please visit the [AT Protocol docs](https://atproto.com/guides/overview) for add
 
 ### Where is the code?
 
-* [TypeScript code](https://github.com/bluesky-social/atproto/tree/main/packages/pds)
-* [Go code](https://github.com/bluesky-social/indigo)
+- [TypeScript code](https://github.com/bluesky-social/atproto/tree/main/packages/pds)
+- [Go code](https://github.com/bluesky-social/indigo)
 
 ### What is the current status of federation?
 
@@ -84,11 +84,12 @@ This README provides instructions for deploying a PDS using our install script o
 Ensure that you can ssh to your server and have root access.
 
 **Server Requirements**
-* Public IPv4 address
-* Public DNS name
-* Public inbound internet access permitted on port 80/tcp and 443/tcp
+- Public IPv4 address
+- Public DNS name
+- Public inbound internet access permitted on port 80/tcp and 443/tcp
 
 **Server Recommendations**
+
 |                  |              |
 | ---------------- | ------------ |
 | Operating System | Ubuntu 24.04 |
@@ -106,8 +107,8 @@ One of the most common sources of misconfiguration is not opening firewall ports
 
 In your cloud provider's console, the following ports should be open to inbound access from the public internet.
 
-* 80/tcp (Used only for TLS certification verification)
-* 443/tcp (Used for all application requests)
+- 80/tcp (Used only for TLS certification verification)
+- 443/tcp (Used for all application requests)
 
 **Note:** there is no need to set up TLS or redirect requests from port 80 to 443 because the Caddy web server, included in the Docker compose file, will handle this for you.
 
@@ -121,26 +122,36 @@ From your DNS provider's control panel, set up a domain with records pointing to
 | `*.example.com` | `A`  | `12.34.56.78` | 600 |
 
 **Note:**
-* Replace `example.com` with your domain name.
-* Replace `12.34.56.78` with your server's IP address.
-* Some providers may use the `@` symbol to represent the root of your domain.
-* The wildcard record is required when allowing users to create new accounts on your PDS.
-* The TTL can be anything but 600 (10 minutes) is reasonable
+- Replace `example.com` with your domain name.
+- Replace `12.34.56.78` with your server's IP address.
+- Some providers may use the `@` symbol to represent the root of your domain.
+- The wildcard record is required when allowing users to create new accounts on your PDS.
+- The TTL can be anything but 600 (10 minutes) is reasonable
 
 ### Check that DNS is working as expected
 
 Use a service like [DNS Checker](https://dnschecker.org/) to verify that you can resolve domain names.
 
 Examples to check (record type `A`):
-* `example.com`
-* `random.example.com`
-* `test123.example.com`
+- `example.com`
+- `random.example.com`
+- `test123.example.com`
 
 These should all return your server's public IP.
 
-### Installing on Ubuntu 20.04/22.04/24.04 and Debian 11/12/13
+### Installation
+
+Only the following distributions are supported:
+- Debian: 11, 12, 13
+- Ubuntu: 20.04 LTS, 22.04 LTS, 24.04 LTS
+- CentOS Stream: 10
+- AlmaLinux: 10
+- Rocky Linux: 10
+- Fedora: 43
 
 Note that this script assumes a relatively "fresh" VPS that is not also concurrently hosting a web server or anything else on port 80/443. If you intend to run a PDS alongside an existing webserver on the same VPS, you will not want to use this install script.
+
+> SELinux is not required, but recommended if running a RHEL-like distribution.
 
 On your server, download the install script using `curl`:
 
@@ -245,9 +256,9 @@ When creating an account using the app, enter this invite code.
 You can use the Bluesky app to connect to your PDS.
 
 1. Get the Bluesky app
-    * [Bluesky for Web](https://bsky.app/)
-    * [Bluesky for iPhone](https://apps.apple.com/us/app/bluesky-social/id6444370199)
-    * [Bluesky for Android](https://play.google.com/store/apps/details?id=xyz.blueskyweb.app)
+    - [Bluesky for Web](https://bsky.app/)
+    - [Bluesky for iPhone](https://apps.apple.com/us/app/bluesky-social/id6444370199)
+    - [Bluesky for Android](https://play.google.com/store/apps/details?id=xyz.blueskyweb.app)
 1. Enter the URL of your PDS (e.g. `https://example.com/`)
 
 _Note: because the subdomain TLS certificate is created on-demand, it may take 10-30s for your handle to be accessible. If you aren't seeing your first post/profile, wait 30s and try to make another post._
@@ -356,7 +367,7 @@ To avoid this, you should always [migrate accounts individually](https://atproto
 
 This project is dual-licensed under MIT and Apache 2.0 terms:
 
-- MIT license ([LICENSE-MIT.txt](https://github.com/bluesky-social/pds/blob/main/LICENSE-MIT.txt) or http://opensource.org/licenses/MIT)
-- Apache License, Version 2.0, ([LICENSE-APACHE.txt](https://github.com/bluesky-social/pds/blob/main/LICENSE-APACHE.txt) or http://www.apache.org/licenses/LICENSE-2.0)
+- MIT license ([LICENSE-MIT.txt](https://github.com/bluesky-social/pds/blob/main/LICENSE-MIT.txt) or <http://opensource.org/licenses/MIT>)
+- Apache License, Version 2.0, ([LICENSE-APACHE.txt](https://github.com/bluesky-social/pds/blob/main/LICENSE-APACHE.txt) or <http://www.apache.org/licenses/LICENSE-2.0>)
 
 Downstream projects and end users may choose either license individually, or both together, at their discretion. The motivation for this dual-licensing is the additional software patent assurance provided by Apache 2.0.
