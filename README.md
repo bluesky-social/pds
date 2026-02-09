@@ -235,7 +235,7 @@ sudo pdsadmin account create
 If needed, use `pdsadmin` to create an invite code:
 
 ```bash
-sudo pdsadmin create-invite-code
+sudo pdsadmin invite create
 ```
 
 When creating an account using the app, enter this invite code.

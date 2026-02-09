@@ -3,15 +3,17 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-PDS_ENV_FILE=${PDS_ENV_FILE:-"/pds/pds.env"}
-source "${PDS_ENV_FILE}"
+# Backwards compatibility wrapper for the old create-invite-code command.
+# Delegates to 'pdsadmin invite create'.
 
-curl \
-  --fail \
-  --silent \
-  --show-error \
-  --request POST \
-  --user "admin:${PDS_ADMIN_PASSWORD}" \
-  --header "Content-Type: application/json" \
-  --data '{"useCount": 1}' \
-  "https://${PDS_HOSTNAME}/xrpc/com.atproto.server.createInviteCode" | jq --raw-output '.code'
+PDSADMIN_BASE_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/pdsadmin"
+
+SCRIPT_URL="${PDSADMIN_BASE_URL}/invite.sh"
+SCRIPT_FILE="$(mktemp /tmp/pdsadmin.invite.XXXXXX)"
+
+curl --fail --silent --show-error --location --output "${SCRIPT_FILE}" "${SCRIPT_URL}"
+chmod +x "${SCRIPT_FILE}"
+
+if "${SCRIPT_FILE}" create "$@"; then
+  rm -f "${SCRIPT_FILE}"
+fi

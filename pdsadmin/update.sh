@@ -3,6 +3,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+echo "NOTE: pdsadmin is not actively maintained. Consider using goat: https://github.com/bluesky-social/goat" >/dev/stderr
+
 PDS_DATADIR="/pds"
 COMPOSE_FILE="${PDS_DATADIR}/compose.yaml"
 COMPOSE_URL="https://raw.githubusercontent.com/bluesky-social/pds/main/compose.yaml"

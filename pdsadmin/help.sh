@@ -7,6 +7,9 @@ set -o pipefail
 cat <<HELP
 pdsadmin help
 --
+NOTE: These scripts are not actively maintained. For a more robust solution,
+consider using goat: https://github.com/bluesky-social/goat
+--
 update
   Update to the latest PDS version.
     e.g. pdsadmin update
@@ -35,9 +38,20 @@ request-crawl [<RELAY HOST>]
     Request a crawl from a relay host.
     e.g. pdsadmin request-crawl bsky.network
 
-create-invite-code
-  Create a new invite code.
+invite
+  list [FILTER]
+    List invite codes. Filter: used, disabled, free
+    e.g. pdsadmin invite list
+    e.g. pdsadmin invite list free
+  create [COUNT]
+    Create a new invite code with optional use count (default: 1)
+    e.g. pdsadmin invite create
+    e.g. pdsadmin invite create 5
+
+create-invite-code [COUNT]
+    Create a new invite code (deprecated, use 'pdsadmin invite create' instead)
     e.g. pdsadmin create-invite-code
+    e.g. pdsadmin create-invite-code 5
 
 help
     Display this help information.
