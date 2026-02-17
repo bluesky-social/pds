@@ -362,13 +362,7 @@ To avoid this, you should always [migrate accounts individually](https://atproto
 
 If you become desynced from the Relay due to migration issues — i.e., new records created on your PDS aren't being picked up by other applications — you can fix it with these steps:
 
-1. Stop the `pds` service:
-
-```bash
-systemctl stop pds
-```
-
-2. Look up the last known sequence number for your PDS host. You can use `goat` to retrieve the last observed cursor from the `bsky.network` relay:
+1. Look up the last known sequence number for your PDS host. You can use `goat` to retrieve the last observed cursor from the `bsky.network` relay:
 
 ```bash
 docker exec pds sh -c 'goat relay host status "$PDS_HOSTNAME" --json'
@@ -378,7 +372,13 @@ docker exec pds sh -c 'goat relay host status "$PDS_HOSTNAME" --json'
 {"hostname":"justdothings.net","seq":12,"status":"active"}
 ```
 
-3. Set the cursor sequence on your PDS to the value of `seq` from the previous command, incremented by 1:
+2. Stop the `pds` service:
+
+```bash
+systemctl stop pds
+```
+
+3. Set the cursor sequence on your PDS to the value of `seq` from step 1, incremented by 1:
 
 ```bash
 sqlite3 /pds/sequencer.sqlite "UPDATE sqlite_sequence SET seq = {new_sequence_number} WHERE name = 'repo_seq';"
