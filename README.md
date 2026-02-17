@@ -34,6 +34,7 @@ Head over to the [ATProto Touchers Discord](https://discord.atprotocol.dev/) to 
     - [Updating your PDS](#updating-your-pds)
     - [Environment Variables](#environment-variables)
     - [Migrating your PDS](#migrating-your-pds)
+    - [Fixing a Relay desync](#fixing-a-relay-desync)
   - [License](#license)
 
 <!-- tocstop -->
@@ -356,6 +357,40 @@ Once you've deployed a PDS, it will automatically begin broadcasting events to R
 This means that if you wipe and reinstall your PDS on the same hostname, or move it to a new hostname without performing the appropriate cutover steps, the PDS and Relay can go out of sync.
 
 To avoid this, you should always [migrate accounts individually](https://atproto.com/guides/account-migration) from one PDS to another when updating your PDS host configuration.
+
+### Fixing a Relay desync
+
+If you become desynced from the Relay due to migration issues — i.e., new records created on your PDS aren't being picked up by other applications — you can fix it with these steps:
+
+1. Look up the last known sequence number for your PDS host. You can use `goat` to retrieve the last observed cursor from the `bsky.network` relay:
+
+```bash
+docker exec pds sh -c 'goat relay host status "$PDS_HOSTNAME" --json'
+```
+
+```
+{"hostname":"justdothings.net","seq":12,"status":"active"}
+```
+
+2. Stop the `pds` service:
+
+```bash
+systemctl stop pds
+```
+
+3. Set the cursor sequence on your PDS to the value of `seq` from step 1, incremented by 1:
+
+```bash
+sqlite3 /pds/sequencer.sqlite "UPDATE sqlite_sequence SET seq = {new_sequence_number} WHERE name = 'repo_seq';"
+```
+
+4. Restart your `pds` service:
+
+```bash
+systemctl start pds
+```
+
+New records should now be indexed as normal.
 
 ## License
 
