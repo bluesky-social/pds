@@ -16,9 +16,32 @@ const main = async () => {
   const pds = await PDS.create(cfg, secrets);
   await pds.start();
   httpLogger.info("pds has started");
+  
   pds.app.get("/tls-check", (req, res) => {
     checkHandleRoute(pds, req, res);
   });
+
+  pds.app.get("/.well-known/webfinger", (req, res) => {
+    const resource = req.query.resource;
+    if (!resource) {
+      return res.status(400).json({ error: "missing resource parameter" });
+    }
+
+    const issuerUrl = process.env.PDS_OIDC_ISSUER_URL;
+    if (!issuerUrl) {
+      return res.status(404).json({ error: "webfinger not configured" });
+    }
+
+    res.setHeader("Content-Type", "application/jrd+json");
+    res.json({
+      subject: resource,
+      links: [{
+        rel: "http://openid.net/specs/connect/1.0/issuer",
+        href: issuerUrl
+      }]
+    });
+  });
+
   // Graceful shutdown (see also https://aws.amazon.com/blogs/containers/graceful-shutdowns-with-ecs/)
   process.on("SIGTERM", async () => {
     httpLogger.info("pds is stopping");
