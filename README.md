@@ -349,6 +349,7 @@ sudo pdsadmin update
 | `PDS_EMAIL_FROM_ADDRESS`                    | None                               |
 | `PDS_PRIVACY_POLICY_URL`                    | None                               |
 | `PDS_RATE_LIMITS_ENABLED`                   | `true`                             |
+| `PDS_INVITE_REQUIRED`                       | `true`                             |
 
 ### Migrating your PDS
 
