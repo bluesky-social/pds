@@ -124,7 +124,7 @@ From your DNS provider's control panel, set up a domain with records pointing to
 **Note:**
 * Replace `example.com` with your domain name.
 * Replace `12.34.56.78` with your server's IP address.
-* Some providers may use the `@` symbol to represent the root of your domain.
+* Some providers (such as Cloudflare) may use the `@` symbol to represent the root of your domain.
 * The wildcard record is required when allowing users to create new accounts on your PDS.
 * The TTL can be anything but 600 (10 minutes) is reasonable
 
@@ -348,8 +348,8 @@ sudo pdsadmin update
 | `PDS_EMAIL_SMTP_URL`                        | None                               |
 | `PDS_EMAIL_FROM_ADDRESS`                    | None                               |
 | `PDS_PRIVACY_POLICY_URL`                    | None                               |
+| `PDS_TERMS_OF_SERVICE_URL`                  | None                               |
 | `PDS_RATE_LIMITS_ENABLED`                   | `true`                             |
-
 ### Migrating your PDS
 
 Once you've deployed a PDS, it will automatically begin broadcasting events to Relay servers.
