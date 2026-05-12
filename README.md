@@ -321,7 +321,7 @@ LOG_LEVEL=debug
 
 ### Updating your PDS
 
-It is recommended that you keep your PDS up to date with new versions. You can use the `pdsadmin` tool to update your PDS.
+It is recommended that you keep your PDS up to date with new versions. This repo sets up [watchtower](https://github.com/nicholas-fedor/watchtower), which handles automatic updates. You can also use the `pdsadmin` tool to manually update your PDS.
 
 ```bash
 sudo pdsadmin update
