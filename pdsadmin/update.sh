@@ -20,16 +20,17 @@ curl \
   --output "${COMPOSE_TEMP_FILE}" \
   "${COMPOSE_URL}"
 
-sed --in-place "s|/pds|${PDS_DATADIR}|g" "${PDS_DATADIR}/compose.yaml"
+sed --in-place "s|/pds|${PDS_DATADIR}|g" "${COMPOSE_TEMP_FILE}"
 
-if cmp --quiet "${COMPOSE_FILE}" "${COMPOSE_TEMP_FILE}"; then
-  echo "PDS is already up to date"
+if ! cmp --quiet "${COMPOSE_FILE}" "${COMPOSE_TEMP_FILE}"; then
+  echo "* Updating PDS compose file"
+  mv "${COMPOSE_TEMP_FILE}" "${COMPOSE_FILE}"
+else
   rm --force "${COMPOSE_TEMP_FILE}"
-  exit 0
 fi
 
-echo "* Updating PDS"
-mv "${COMPOSE_TEMP_FILE}" "${COMPOSE_FILE}"
+echo "* Pulling latest PDS image"
+docker compose --project-directory "${PDS_DATADIR}" pull
 
 echo "* Restarting PDS"
 systemctl restart pds
