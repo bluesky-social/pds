@@ -367,10 +367,9 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-Type=oneshot
 RemainAfterExit=yes
 WorkingDirectory=${PDS_DATADIR}
-ExecStart=/usr/bin/docker compose --file ${PDS_DATADIR}/compose.yaml up --detach
+ExecStart=/usr/bin/docker compose --file ${PDS_DATADIR}/compose.yaml up
 ExecStop=/usr/bin/docker compose --file ${PDS_DATADIR}/compose.yaml down
 
 [Install]
