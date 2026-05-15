@@ -20,7 +20,8 @@ SCRIPT_URL="${PDSADMIN_BASE_URL}/${COMMAND}.sh"
 SCRIPT_FILE="$(mktemp /tmp/pdsadmin.${COMMAND}.XXXXXX)"
 
 if ! curl --fail --silent --show-error --location --output "${SCRIPT_FILE}" "${SCRIPT_URL}"; then
-  echo "ERROR: ${COMMAND} not found"
+  echo "ERROR: command '$0 ${COMMAND}' not found"
+  echo "Run '$0 help' for a list of commands"
   exit 2
 fi
 
