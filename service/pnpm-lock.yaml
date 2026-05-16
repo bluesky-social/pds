@@ -1144,12 +1144,13 @@ packages:
       '@atproto/common': 0.1.1
       '@atproto/crypto': 0.1.0
       '@ipld/dag-cbor': 7.0.3
-      axios: 1.15.0
+      axios: 1.16.1
       multiformats: 9.9.0
       uint8arrays: 3.0.0
       zod: 3.25.76
     transitivePeerDependencies:
       - debug
+      - supports-color
     dev: false
 
   /@hapi/accept@6.0.3:
@@ -1781,6 +1782,15 @@ packages:
       negotiator: 0.6.3
     dev: false
 
+  /agent-base@6.0.2:
+    resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
+    engines: {node: '>= 6.0.0'}
+    dependencies:
+      debug: 4.4.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
@@ -1825,14 +1835,16 @@ packages:
     engines: {node: '>=8.0.0'}
     dev: false
 
-  /axios@1.15.0:
-    resolution: {integrity: sha512-wWyJDlAatxk30ZJer+GeCWS209sA42X+N5jU2jy6oHTp7ufw8uzUTVFBX9+wTfAlhiJXGS0Bq7X6efruWjuK9Q==}
+  /axios@1.16.1:
+    resolution: {integrity: sha512-caYkukvroVPO8KrzuJEb50Hm07KwfBZPEC3VeFHTsqWHvKTsy54hjJz9BS/cdaypROE2rH6xvm9mHX4fgWkr3A==}
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.5
+      https-proxy-agent: 5.0.1
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
+      - supports-color
     dev: false
 
   /balanced-match@1.0.2:
@@ -2586,6 +2598,16 @@ packages:
       p-wait-for: 3.2.0
       roarr: 7.21.4
       type-fest: 2.19.0
+    dev: false
+
+  /https-proxy-agent@5.0.1:
+    resolution: {integrity: sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==}
+    engines: {node: '>= 6'}
+    dependencies:
+      agent-base: 6.0.2
+      debug: 4.4.3
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /iconv-lite@0.4.24:
