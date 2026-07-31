@@ -1,0 +1,1 @@
+# Grafana logs an error at startup if this directory is missing.

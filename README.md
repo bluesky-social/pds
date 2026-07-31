@@ -31,6 +31,7 @@ Head over to the [ATProto Touchers Discord](https://discord.atprotocol.dev/) to 
     - [Setting up SMTP](#setting-up-smtp)
       - [Common SMTP issues](#common-smtp-issues)
     - [Logging](#logging)
+    - [Monitoring and metrics](#monitoring-and-metrics)
     - [Updating your PDS](#updating-your-pds)
     - [Environment Variables](#environment-variables)
     - [Migrating your PDS](#migrating-your-pds)
@@ -318,6 +319,22 @@ You can also change the minimum level of logs to be printed (default: `info`):
 ```
 LOG_LEVEL=debug
 ```
+
+### Monitoring and metrics
+
+The PDS can report metrics over [OpenTelemetry](https://opentelemetry.io/): host-level things like CPU, memory and disk, alongside PDS-level things like accounts created, sign-ins, OAuth grants, and XRPC request rate and latency.
+
+The [`monitoring/`](./monitoring) directory in this repo contains a self-contained Prometheus + Grafana + node_exporter stack and a ready-made Grafana dashboard. It is entirely optional, runs separately from the main PDS stack, and is not affected by `pdsadmin update`.
+
+```bash
+curl -sL https://github.com/bluesky-social/pds/archive/refs/heads/main.tar.gz \
+  | tar xz --strip-components=1 pds-main/monitoring
+cd monitoring && docker compose up --detach
+```
+
+You then add some `OTEL_*` variables to `/pds/pds.env` and restart the PDS. Everything binds to `127.0.0.1`, so you can reach Grafana over an SSH tunnel rather than opening ports. See [monitoring/README.md](./monitoring/README.md) for the full walkthrough of both paths.
+
+If you already run Prometheus and Grafana, you don't need the compose file — point the PDS at your own OTLP endpoint and import the dashboard JSON.
 
 ### Updating your PDS
 

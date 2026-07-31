@@ -1,0 +1,75 @@
+name: pds-monitoring
+
+# Self-contained monitoring stack for a self-hosted PDS.
+#
+#   docker compose up --detach
+#
+# All three services use host networking (matching the PDS stack) and bind to
+# 127.0.0.1, so nothing here is reachable from the internet. Reach Grafana with
+# an SSH tunnel:
+#
+#   ssh -L 3001:localhost:3001 you@your-pds-host
+#
+# Grafana is on 3001 because the PDS itself owns port 3000.
+#
+# If you already run Prometheus and Grafana elsewhere, don't use this file --
+# see README.md for the two pieces you need instead.
+
+services:
+  node-exporter:
+    container_name: pds-node-exporter
+    image: prom/node-exporter:v1
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - '--collector.filesystem.mount-points-exclude=^/(dev|proc|sys|run|var/lib/docker/.+)($$|/)'
+      - '--web.listen-address=127.0.0.1:9100'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+
+  prometheus:
+    container_name: pds-prometheus
+    image: prom/prometheus:v3
+    network_mode: host
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.listen-address=127.0.0.1:9090'
+      # Lets the PDS push OTLP metrics directly to Prometheus, so this stack
+      # does not need a separate OpenTelemetry Collector.
+      - '--web.enable-otlp-receiver'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+
+  grafana:
+    container_name: pds-grafana
+    # Grafana publishes no floating major tag, so this is pinned to an exact
+    # version and needs a manual bump to upgrade.
+    image: grafana/grafana:13.1.1
+    network_mode: host
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    environment:
+      GF_SERVER_HTTP_ADDR: 127.0.0.1
+      GF_SERVER_HTTP_PORT: 3001
+      GF_ANALYTICS_REPORTING_ENABLED: false
+      GF_ANALYTICS_CHECK_FOR_UPDATES: false
+      GF_USERS_ALLOW_SIGN_UP: false
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  prometheus-data:
+  grafana-data:
