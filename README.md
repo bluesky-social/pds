@@ -332,9 +332,7 @@ curl -sL https://github.com/bluesky-social/pds/archive/refs/heads/main.tar.gz \
 cd monitoring && docker compose up --detach
 ```
 
-You then add some `OTEL_*` variables to `/pds/pds.env` and restart the PDS. Everything binds to `127.0.0.1`, so you can reach Grafana over an SSH tunnel rather than opening ports. See [monitoring/README.md](./monitoring/README.md) for the full walkthrough of both paths.
-
-If you already run Prometheus and Grafana, you don't need the compose file — point the PDS at your own OTLP endpoint and import the dashboard JSON.
+You then add some `OTEL_*` variables to `/pds/pds.env` and restart the PDS. Everything binds to `127.0.0.1`, so you can reach Grafana over an SSH tunnel rather than opening ports. See [monitoring/README.md](./monitoring/README.md) for the a walkthrough.
 
 ### Updating your PDS
 
