@@ -349,8 +349,6 @@ sudo pdsadmin update
 | `PDS_EMAIL_SMTP_URL`                        | None                               |
 | `PDS_EMAIL_FROM_ADDRESS`                    | None                               |
 | `PDS_CONTACT_EMAIL_ADDRESS`                 | None                               |
-| `PDS_PRIVACY_POLICY_URL`                    | None                               |
-| `PDS_TERMS_OF_SERVICE_URL`                  | None                               |
 | `PDS_RATE_LIMITS_ENABLED`                   | `true`                             |
 | `PDS_INVITE_REQUIRED`                       | `true`                             |
 
@@ -400,7 +398,7 @@ Your PDS serves the sign-in, sign-up, authorization, and account-management scre
 
 The image fills the area behind the card (`cover`, centered) and is chosen by the visitor's light/dark preference. The card keeps its own opaque surface, so text stays legible over any image.
 
-**Tips:** Any common web image format works (WebP, AVIF, JPEG, PNG, SVG). Host it at a public **HTTPS** URL; like `PDS_LOGO_URL`, the auth pages only load images over `https:`. It loads on every sign-in and is scaled to fill the screen, so keep it lean: a well-compressed image around 2000px wide and comfortably under 1 MB (a few hundred KB is ideal). Keep important detail away from the edges, since the image is cropped to fill.
+**Tips:** Any common web image format works (WebP, AVIF, JPEG, PNG, SVG). Host it at a public **HTTPS** URL; like `PDS_LOGO_URL`, the auth pages only load images over `https:`. It loads on every sign-in and is scaled to fill the screen. Use a well-compressed image around 2000px wide and comfortably under 1 MB (a few hundred KB is ideal). Keep important detail away from the edges, since the image is cropped to fill.
 
 **Example**
 
