@@ -332,7 +332,7 @@ curl -sL https://github.com/bluesky-social/pds/archive/refs/heads/main.tar.gz \
 cd monitoring && docker compose up --detach
 ```
 
-You then add some `OTEL_*` variables to `/pds/pds.env` and restart the PDS. Everything binds to `127.0.0.1`, so you can reach Grafana over an SSH tunnel rather than opening ports. See [monitoring/README.md](./monitoring/README.md) for the a walkthrough.
+You then add some `OTEL_*` variables to `/pds/pds.env` and restart the PDS. Everything binds to `127.0.0.1`, so you can reach Grafana over an SSH tunnel rather than opening ports. See [monitoring/README.md](./monitoring/README.md) for a walkthrough.
 
 ### Updating your PDS
 

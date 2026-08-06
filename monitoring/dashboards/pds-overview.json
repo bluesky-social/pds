@@ -160,13 +160,13 @@
       "type": "timeseries",
       "id": 5,
       "title": "Top XRPC methods by request rate",
-      "description": "Requires per-route labels on HTTP server metrics — see monitoring/README.md if this panel is empty.",
+      "description": "Requires per-route labels on HTTP server metrics — see monitoring/README.md if this panel is empty. Requests the instrumentation could not attribute to a route are grouped as \"(unrouted)\".",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 5 },
       "datasource": { "type": "prometheus", "uid": "pds-prometheus" },
       "targets": [
         {
           "refId": "A",
-          "expr": "topk(10, sum by (http_route) (rate(http_server_request_duration_seconds_count[$__rate_interval])))",
+          "expr": "label_replace(topk(10, sum by (http_route) (rate(http_server_request_duration_seconds_count[$__rate_interval]))), \"http_route\", \"(unrouted)\", \"http_route\", \"^$\")",
           "legendFormat": "{{http_route}}"
         }
       ],

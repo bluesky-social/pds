@@ -39,3 +39,8 @@ CMD ["node", "--enable-source-maps", "index.ts"]
 LABEL org.opencontainers.image.source=https://github.com/bluesky-social/pds
 LABEL org.opencontainers.image.description="AT Protocol PDS"
 LABEL org.opencontainers.image.licenses=MIT
+
+# Indicates that the bundled @atproto/pds exposes "./telemetry", so operators who
+# want metrics can load the OTel SDK with
+# NODE_OPTIONS=--import=@atproto/pds/telemetry in pds.env (see monitoring/).
+LABEL social.bsky.pds.telemetry="otel"
