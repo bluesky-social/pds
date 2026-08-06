@@ -371,7 +371,7 @@ Your PDS serves the sign-in, sign-up, authorization, and account-management scre
 
 | Environment Variable | Description                                 | Default   |
 | -------------------- | ------------------------------------------- | --------- |
-| `PDS_PRIMARY_COLOR`  | Accent for buttons, links, and focus rings. | `#8338ec` |
+| `PDS_PRIMARY_COLOR`  | Accent for buttons and focus rings.         | `#8338ec` |
 | `PDS_ERROR_COLOR`    | Error states.                               | `#dc2626` |
 | `PDS_WARNING_COLOR`  | Warnings.                                   | `#ffab0f` |
 | `PDS_INFO_COLOR`     | Informational notices.                      | `#007aff` |
