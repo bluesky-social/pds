@@ -377,18 +377,6 @@ Your PDS serves the sign-in, sign-up, authorization, and account-management scre
 | `PDS_INFO_COLOR`     | Informational notices.                      | `#007aff` |
 | `PDS_SUCCESS_COLOR`  | Success states.                             | `#17cc88` |
 
-<details><summary>Advanced color controls (rarely needed)</summary>
-
-| Environment Variable         | Description                                                                              | Example   |
-| ---------------------------- | --------------------------------------------------------------------------------------- | --------- |
-| `PDS_PRIMARY_COLOR_CONTRAST` | Text color placed on the primary color. Auto-derived from `PDS_PRIMARY_COLOR` if unset. | `#ffffff` |
-| `PDS_PRIMARY_COLOR_HUE`      | Hue (0–360) used when deriving contrast colors. Auto-derived if unset.                  | `265`     |
-| `PDS_LIGHT_COLOR`            | Light contrast endpoint used to pick readable text colors.                              | `#f8f8f8` |
-| `PDS_DARK_COLOR`             | Dark contrast endpoint used to pick readable text colors.                               | `#111111` |
-| `PDS_CONTRAST_SATURATION`    | Saturation (0–100) of the derived contrast colors.                                      | `30`      |
-
-</details>
-
 **Background images**
 
 | Environment Variable       | Description                                               |
