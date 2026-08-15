@@ -1,5 +1,5 @@
 # NOTE there is an additional build stage below that should match
-FROM node:24.18-alpine3.23 AS build
+FROM node:24.19-alpine3.23 AS build
 
 RUN corepack enable
 
@@ -17,7 +17,7 @@ RUN corepack prepare --activate
 RUN pnpm install --production --frozen-lockfile > /dev/null
 
 # Uses assets from build stage to reduce build size
-FROM node:24.18-alpine3.23
+FROM node:24.19-alpine3.23
 
 RUN apk add --update dumb-init
 
