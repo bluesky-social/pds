@@ -17,10 +17,11 @@ updates:
         patterns:
           - "*"
     ignore:
-      # Node 26 reaches LTS on 2026-10-28. Remove via bluesky-social/.github#18.
+      # Stay on LTS Node 24. Node 25 is EOL; Node 26 reaches LTS on 2026-10-28.
+      # Remove via bluesky-social/.github#18.
       - dependency-name: node
         versions:
-          - ">= 26"
+          - ">= 25"
 
   - package-ecosystem: docker-compose
     directories:
