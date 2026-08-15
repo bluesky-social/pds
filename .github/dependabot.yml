@@ -1,0 +1,44 @@
+version: 2
+
+updates:
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/Los_Angeles
+    cooldown:
+      default-days: 3
+    open-pull-requests-limit: 5
+    groups:
+      docker-base-images:
+        group-by: dependency-name
+        patterns:
+          - "*"
+    ignore:
+      # Node 26 reaches LTS on 2026-10-28. Remove via bluesky-social/.github#18.
+      - dependency-name: node
+        versions:
+          - ">= 26"
+
+  - package-ecosystem: docker-compose
+    directories:
+      - "/"
+      - "/monitoring"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/Los_Angeles
+    cooldown:
+      default-days: 3
+    open-pull-requests-limit: 5
+    groups:
+      compose-images:
+        group-by: dependency-name
+        patterns:
+          - "*"
+    ignore:
+      # The application image is released by this repository.
+      - dependency-name: ghcr.io/bluesky-social/pds
