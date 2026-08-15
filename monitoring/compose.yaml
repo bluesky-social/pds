@@ -54,7 +54,7 @@ services:
     container_name: pds-grafana
     # Grafana publishes no floating major tag, so this is pinned to an exact
     # version and needs a manual bump to upgrade.
-    image: grafana/grafana:13.1.1
+    image: grafana/grafana:13.1.3
     network_mode: host
     depends_on:
       - prometheus
