@@ -211,8 +211,6 @@ Save this password, it will not be displayed again.
 
 After installation, your PDS should be live and accessible on the web. You can check if your server is online and healthy by making a request to `https://your-domain.net/xrpc/_health` (the healthcheck endpoint). You should see a JSON response with a version, like:
 
-Visit `https://your-domain.net/xrpc/_health` in your browser. You should see a JSON response with a version, like:
-
 ```
 {"version":"0.2.2-beta.2"}
 ```
