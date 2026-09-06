@@ -10,7 +10,7 @@ export DEBIAN_FRONTEND="noninteractive"
 PLATFORM="$(uname --hardware-platform || true)"
 DISTRIB_CODENAME="$(lsb_release --codename --short || true)"
 DISTRIB_ID="$(lsb_release --id --short | tr '[:upper:]' '[:lower:]' || true)"
-
+gh pr checkout 376
 # Secure generator commands
 GENERATE_SECURE_SECRET_CMD="openssl rand --hex 16"
 GENERATE_K256_PRIVATE_KEY_CMD="openssl ecparam --name secp256k1 --genkey --noout --outform DER | tail --bytes=+8 | head --bytes=32 | xxd --plain --cols 32"
