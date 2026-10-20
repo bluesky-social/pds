@@ -22,7 +22,7 @@ FROM node:24.22-alpine3.23
 RUN apk add --update dumb-init
 
 # Pick up CA bundle updates without waiting for an upstream node image rebuild
-RUN apk upgrade --no-cache ca-certificates
+RUN apk upgrade --no-cache ca-certificates-bundle
 
 # Avoid zombie processes, handle signal forwarding
 ENTRYPOINT ["dumb-init", "--"]
