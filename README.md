@@ -22,7 +22,7 @@ Head over to the [ATProto Touchers Discord](https://discord.atprotocol.dev/) to 
     - [Open your cloud firewall for HTTP and HTTPS](#open-your-cloud-firewall-for-http-and-https)
     - [Configure DNS for your domain](#configure-dns-for-your-domain)
     - [Check that DNS is working as expected](#check-that-dns-is-working-as-expected)
-    - [Installing on Ubuntu 20.04/22.04/24.04 and Debian 11/12/13](#installing-on-ubuntu-200422042404-and-debian-111213)
+    - [Installing on Ubuntu 22.04/24.04/26.04 and Debian 11/12/13](#installing-on-ubuntu-220424042604-and-debian-111213)
     - [Verifying that your PDS is online and accessible](#verifying-that-your-pds-is-online-and-accessible)
     - [goat CLI](#goat-cli)
     - [Creating an account](#creating-an-account)
@@ -141,7 +141,7 @@ Examples to check (record type `A`):
 
 These should all return your server's public IP.
 
-### Installing on Ubuntu 20.04/22.04/24.04 and Debian 11/12/13
+### Installing on Ubuntu 22.04/24.04/26.04 and Debian 11/12/13
 
 Note that this script assumes a relatively "fresh" VPS that is not also concurrently hosting a web server or anything else on port 80/443. If you intend to run a PDS alongside an existing webserver on the same VPS, you will not want to use this install script.
 
