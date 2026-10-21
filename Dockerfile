@@ -1,14 +1,17 @@
+# Build goat with the toolchain required by its pinned release.
+FROM golang:1.27.3-alpine3.23 AS goat-build
+
+ENV CGO_ENABLED=0
+ENV GODEBUG="netdns=go"
+ENV GOTOOLCHAIN=local
+WORKDIR /tmp
+RUN apk add --no-cache git
+RUN git clone https://github.com/bluesky-social/goat.git && cd goat && git checkout v0.2.7 && go build -o /tmp/goat-build .
+
 # NOTE there is an additional build stage below that should match
 FROM node:24.22-alpine3.23 AS build
 
 RUN corepack enable
-
-# Build goat binary
-ENV CGO_ENABLED=0
-ENV GODEBUG="netdns=go"
-WORKDIR /tmp
-RUN apk add --no-cache git go
-RUN git clone https://github.com/bluesky-social/goat.git && cd goat && git checkout v0.2.2 && go build -o /tmp/goat-build .
 
 # Move files into the image and install
 WORKDIR /app
@@ -39,7 +42,7 @@ ENTRYPOINT ["dumb-init", "--", "pds-entrypoint"]
 
 WORKDIR /app
 COPY --from=build /app /app
-COPY --from=build /tmp/goat-build /usr/local/bin/goat
+COPY --from=goat-build /tmp/goat-build /usr/local/bin/goat
 
 EXPOSE 3000
 ENV PDS_PORT=3000
