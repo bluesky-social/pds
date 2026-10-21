@@ -16,6 +16,15 @@ COPY ./service ./
 RUN corepack prepare --activate
 RUN pnpm install --production --frozen-lockfile > /dev/null
 
+# Resolve through the PDS so this works with pnpm's isolated dependencies. Copy
+# the standalone preload to a stable path and fail the build if it is missing.
+RUN node -e "\
+  const { copyFileSync } = require('node:fs'); \
+  const { createRequire } = require('node:module'); \
+  const pdsRequire = createRequire(require.resolve('@atproto/pds/package.json')); \
+  copyFileSync(pdsRequire.resolve('@atproto-labs/fetch-node/emudhra-preload'), '/app/emudhra-preload.mjs'); \
+"
+
 # Uses assets from build stage to reduce build size
 FROM node:24.22-alpine3.23
 
@@ -25,7 +34,8 @@ RUN apk add --update dumb-init
 RUN apk upgrade --no-cache ca-certificates-bundle
 
 # Avoid zombie processes, handle signal forwarding
-ENTRYPOINT ["dumb-init", "--"]
+COPY --chmod=755 ./docker-entrypoint.sh /usr/local/bin/pds-entrypoint
+ENTRYPOINT ["dumb-init", "--", "pds-entrypoint"]
 
 WORKDIR /app
 COPY --from=build /app /app

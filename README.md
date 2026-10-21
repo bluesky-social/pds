@@ -341,6 +341,12 @@ It is recommended that you keep your PDS up to date with new versions. This repo
 sudo pdsadmin update
 ```
 
+The image automatically loads the temporary [eMudhra TLS mitigation](https://github.com/bluesky-social/atproto/pull/5694)
+from the PDS's `@atproto-labs/fetch-node` dependency. Updating and recreating the
+container enables it without changes to `pds.env` or Compose. The entrypoint
+prepends the preload to `NODE_OPTIONS`, preserving existing options and loading
+it before telemetry, including when the container's command is overridden.
+
 ### Environment Variables
 
 | Environment Variable                        | Default                            |
