@@ -4,7 +4,6 @@ on:
     paths:
       - .dockerignore
       - Dockerfile
-      - docker-entrypoint.sh
       - service/**
       - .github/workflows/build-and-push-ghcr.yaml
   push:

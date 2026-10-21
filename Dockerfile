@@ -9,7 +9,7 @@ RUN apk add --no-cache git
 RUN git clone https://github.com/bluesky-social/goat.git && cd goat && git checkout v0.2.7 && go build -o /tmp/goat-build .
 
 # NOTE there is an additional build stage below that should match
-FROM node:24.22-alpine3.23 AS build
+FROM node:24.22.1-alpine3.23 AS build
 
 RUN corepack enable
 
@@ -19,17 +19,8 @@ COPY ./service ./
 RUN corepack prepare --activate
 RUN pnpm install --production --frozen-lockfile > /dev/null
 
-# Resolve through the PDS so this works with pnpm's isolated dependencies. Copy
-# the standalone preload to a stable path and fail the build if it is missing.
-RUN node -e "\
-  const { copyFileSync } = require('node:fs'); \
-  const { createRequire } = require('node:module'); \
-  const pdsRequire = createRequire(require.resolve('@atproto/pds/package.json')); \
-  copyFileSync(pdsRequire.resolve('@atproto-labs/fetch-node/emudhra-preload'), '/app/emudhra-preload.mjs'); \
-"
-
 # Uses assets from build stage to reduce build size
-FROM node:24.22-alpine3.23
+FROM node:24.22.1-alpine3.23
 
 RUN apk add --update dumb-init
 
@@ -37,8 +28,7 @@ RUN apk add --update dumb-init
 RUN apk upgrade --no-cache ca-certificates-bundle
 
 # Avoid zombie processes, handle signal forwarding
-COPY --chmod=755 ./docker-entrypoint.sh /usr/local/bin/pds-entrypoint
-ENTRYPOINT ["dumb-init", "--", "pds-entrypoint"]
+ENTRYPOINT ["dumb-init", "--"]
 
 WORKDIR /app
 COPY --from=build /app /app
