@@ -275,6 +275,10 @@ PDS_EMAIL_SMTP_URL=smtps://resend:<your api key here>@smtp.resend.com:465/
 PDS_EMAIL_FROM_ADDRESS=admin@your.domain
 ```
 
+> [!TIP]
+> If you have problems receiving verifcation emails, or the verify email dialog in the Bluesky interface "hangs" ... try use port 2465 instead of 465 in the above example (tested/works with Digital Ocean and Resend).
+
+
 If you prefer to use a standard SMTP server (a local one or from your email provider), put your account's username and password in the URL:
 
 ```
