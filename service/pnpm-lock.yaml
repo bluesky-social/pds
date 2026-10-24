@@ -12,8 +12,8 @@ importers:
         specifier: ^0.3.13
         version: 0.3.13
       '@atproto/pds':
-        specifier: 0.5.46
-        version: 0.5.46
+        specifier: 0.5.49
+        version: 0.5.49
     devDependencies:
       '@types/express':
         specifier: ^4.17.25
@@ -71,8 +71,8 @@ packages:
     resolution: {integrity: sha512-vfvoDhu6ds6BT3Pqe+d2/LBU1WpDRtt69y6zltlfMCoucPm82m1j50/Wb6xTvv+oZ+2j0JyZVXsmXQ12SWYQJg==}
     engines: {node: '>=22'}
 
-  '@atproto-labs/xrpc-utils@0.1.26':
-    resolution: {integrity: sha512-AWP4KgVrfd+tdzfimDFeW4WZEROJ+jm8+C+0YsKDe5fWCXlQDfgRvXEoAKng6UZEQdGjXefRPuDB4wLaJX3nTQ==}
+  '@atproto-labs/xrpc-utils@0.1.27':
+    resolution: {integrity: sha512-Oa770A2KbNDgjRGgz/ikg2u/oZrpRVYjTEnl/LDvgy+rv/Nx9xk4h0l4lS/nP+W5xaVvlhNjMcAXvuvI4eajWQ==}
     engines: {node: '>=22'}
 
   '@atproto/aws@0.3.20':
@@ -217,8 +217,8 @@ packages:
     resolution: {integrity: sha512-HhY0n6BJtFlxHJTOwT34uf7BiMaEluuwiZqHkamWoFvl+Gk7bPgWhPslr4kX2J/7ryFxhdsKVj1tjWjy0AhjTw==}
     engines: {node: '>=22'}
 
-  '@atproto/pds@0.5.46':
-    resolution: {integrity: sha512-WwDB00XDKLHREAbCNoBX0wtV9I/LRQ6sDXSksksT6Ql20f+4EZoNA1y4kk3ZieO6R/Aof0pdZQ6HPERvVpvoDw==}
+  '@atproto/pds@0.5.49':
+    resolution: {integrity: sha512-Y+L0S3il62gyOO33prMhoBLYMLek37ymodlA5o9lri/Hzv88KL6YQFUb4BZdYL73De9W4sHErcFEulZBmPZv4Q==}
     engines: {node: '>=22'}
 
   '@atproto/repo@0.10.15':
@@ -237,8 +237,8 @@ packages:
     resolution: {integrity: sha512-HCGkqH/Ksxpgg/xCyIvH5hK6o8Lg2PxcEA790GCEV9MspCZB/xIesHZVgJN0cEvklGe+6pNCOZE1B5kj9q1ONA==}
     engines: {node: '>=22'}
 
-  '@atproto/xrpc-server@0.13.5':
-    resolution: {integrity: sha512-gHbBC1EkUJMwP/IMdppGh+Kjn9T69NG3Mk4cbUqCfc9O6A25UB1CoIwmgpvnrjFF6Q8FkuDwOOTQXwq2AY0YTQ==}
+  '@atproto/xrpc-server@0.13.6':
+    resolution: {integrity: sha512-hBcI14iZ7Js/4OycqIa3F1PO8E6fsR7pfJ8hIONhbSuNr8MEhxb0289umRF35Wi3q8BuUWHaed1mdSRUUTUEqw==}
     engines: {node: '>=22'}
 
   '@atproto/xrpc@0.8.16':
@@ -249,16 +249,16 @@ packages:
     resolution: {integrity: sha512-6erto9nK2OZO/woEgmFIaPh5gChgdNd7nL6jgAf8TAXz3/QHC8Pan2TFe9GYp3IxOIKCCGWPylSjtOHKfNzQlw==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-cloudfront@3.1155.0':
-    resolution: {integrity: sha512-kauQUdWMzbo/ToasRFWGl7U/ode5h2B9pNvGemOfhFTs4K7+XI64m9U7MGu7f5+hiT3teiG7cOL1sEjDjNM4tQ==}
+  '@aws-sdk/client-cloudfront@3.1156.0':
+    resolution: {integrity: sha512-z4V/ecv6b5uGwVVMaE8NbczaPVfM2HwbZAGUFp9XDjm+Q8WoFrF0vRlWaRWpW+rox4yPZc4tSo+cv8drud+r8A==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-kms@3.1155.0':
-    resolution: {integrity: sha512-8BvT5Dx7CJGmbumaVnGoLF/BzpEqpsTCgmbhh1LmVcvdLUoa6XK8XwklqX97xulH/PpTYGmspH41lpWQBbTHJg==}
+  '@aws-sdk/client-kms@3.1156.0':
+    resolution: {integrity: sha512-dXzmgG3FIZsLD5L+IVntcZW0BBuNBBqq9kImu2kjr4EX/x3yNT4JzNIFb3vUYq2i/URQKbP1vHnN2dksw3TqMw==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-s3@3.1155.0':
-    resolution: {integrity: sha512-l3uMeIlzWVgj/RTJTh5sKYKtQz1la3cvWLUPn1cwFH4UZpcqTH66SgJHCeB2FOE9bEAjOdbmCyPKt9aw867Fng==}
+  '@aws-sdk/client-s3@3.1156.0':
+    resolution: {integrity: sha512-Z2PqQqKMDVX56tNZ6ggmjoI5o/8+4+8ArmjLwE5ktYsEzs1BrvklBT1ZzI+s0Vcf3wfPguoEMD7EkMswmEta/A==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.978.5':
@@ -1106,8 +1106,8 @@ packages:
   bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
 
-  body-parser@1.20.8:
-    resolution: {integrity: sha512-JNcyFQ64OiijEkPzUBTCe+hyPXUD/3LEldGQ6iF5LR1w00mx9o7xtDWHXBY2iItjdCFGoilOLNQbH943ut7pHA==}
+  body-parser@1.20.9:
+    resolution: {integrity: sha512-FISIQxV5u91Y9gvuFq3q/tA/qTqLJn3AhRcEvyozyhJTh5OBFFtv827AdHU7Rbyct4r+Ba1/99oFa1Y3yuFsdw==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
 
   bowser@2.14.1:
@@ -1680,8 +1680,8 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  node-abi@3.100.0:
-    resolution: {integrity: sha512-KNU/E0VW9T1ndOAEWNlWtxhoBSF7hqe+dMSrRPK6+PfyL2s2AcfwnXCAOke4DNXOsweivNT6/7eFHwkxWblZew==}
+  node-abi@3.101.0:
+    resolution: {integrity: sha512-bkb/RkuWCE64eWu1PCh3Fu2pGc9mKRs+kOE+FU2bGHRYlQa86/D321DSATV54AsCQMKz3/xSt9sRgraZTpqdhQ==}
     engines: {node: '>=10'}
 
   node-domexception@1.0.0:
@@ -1713,8 +1713,8 @@ packages:
     resolution: {integrity: sha512-0eJJY6hXLGf1udHwfNftBqH+g73EU4B504nZeKpz1sYRKafAghwxEJunB2O7rDZkL4PGfsMVnTXZ2EjibbqcsA==}
     engines: {node: '>=14.0.0'}
 
-  on-finished@2.4.1:
-    resolution: {integrity: sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==}
+  on-finished@2.4.2:
+    resolution: {integrity: sha512-ATWUv387i+nLD49EiDoOft5scf32Vsdz3ktrQJG9bi7jRFmaXTssvyvj1EmeKVVgvesbqUtvQQvaS2TpTukAZQ==}
     engines: {node: '>= 0.8'}
 
   on-headers@1.1.0:
@@ -1845,9 +1845,6 @@ packages:
 
   process-warning@3.0.0:
     resolution: {integrity: sha512-mqn0kFRl0EoqhnL0GQ0veqFHyIN1yig9RHh/InzORTUiZHFRAur+aMtRkELNwGs9aNwKS6tg/An4NYBPGwvtzQ==}
-
-  process-warning@5.1.0:
-    resolution: {integrity: sha512-jQSaVHsPgtyw60e1rQ/A+/ArPEj/S8pS/vFnyGa/gYFXrKk/6RuDkoqVDQ5NI5MmS01698ltlAk0NoDBNLujRw==}
 
   process-warning@5.1.1:
     resolution: {integrity: sha512-oCkNVj4OKnKEcocVBcDfiIugN1/cE6rgfT3nCtzeqZPA8+rIxMaQ0xXzIkGP8Gj2qUaP1UR7uhJ1VD8lUCpzCg==}
@@ -2310,10 +2307,10 @@ snapshots:
 
   '@atproto-labs/simple-store@0.5.1': {}
 
-  '@atproto-labs/xrpc-utils@0.1.26':
+  '@atproto-labs/xrpc-utils@0.1.27':
     dependencies:
       '@atproto/xrpc': 0.8.16
-      '@atproto/xrpc-server': 0.13.5
+      '@atproto/xrpc-server': 0.13.6
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -2325,10 +2322,10 @@ snapshots:
       '@atproto/common-web': 0.5.15
       '@atproto/crypto': 0.5.7
       '@atproto/repo': 0.11.1
-      '@aws-sdk/client-cloudfront': 3.1155.0
-      '@aws-sdk/client-kms': 3.1155.0
-      '@aws-sdk/client-s3': 3.1155.0
-      '@aws-sdk/lib-storage': 3.879.0(@aws-sdk/client-s3@3.1155.0)
+      '@aws-sdk/client-cloudfront': 3.1156.0
+      '@aws-sdk/client-kms': 3.1156.0
+      '@aws-sdk/client-s3': 3.1156.0
+      '@aws-sdk/lib-storage': 3.879.0(@aws-sdk/client-s3@3.1156.0)
       '@noble/curves': 1.9.7
       multiformats: 13.4.2
       uint8arrays: 5.1.1
@@ -2610,14 +2607,14 @@ snapshots:
       '@atproto/jwk': 0.7.4
       zod: 3.25.76
 
-  '@atproto/pds@0.5.46':
+  '@atproto/pds@0.5.49':
     dependencies:
       '@atproto-labs/fetch-node': 0.4.3
       '@atproto-labs/opentelemetry-node': 0.3.1
       '@atproto-labs/simple-store': 0.5.1
       '@atproto-labs/simple-store-memory': 0.2.6
       '@atproto-labs/simple-store-redis': 0.1.6(ioredis@5.11.1)
-      '@atproto-labs/xrpc-utils': 0.1.26
+      '@atproto-labs/xrpc-utils': 0.1.27
       '@atproto/aws': 0.3.20
       '@atproto/common': 0.8.6
       '@atproto/crypto': 0.5.7
@@ -2632,7 +2629,7 @@ snapshots:
       '@atproto/oauth-scopes': 0.5.14
       '@atproto/repo': 0.11.1
       '@atproto/syntax': 0.7.7
-      '@atproto/xrpc-server': 0.13.5
+      '@atproto/xrpc-server': 0.13.6
       '@did-plc/lib': 0.0.4
       '@hapi/address': 5.1.1
       '@noble/curves': 1.9.7
@@ -2702,7 +2699,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@atproto/xrpc-server@0.13.5':
+  '@atproto/xrpc-server@0.13.6':
     dependencies:
       '@atproto/common': 0.8.6
       '@atproto/crypto': 0.5.7
@@ -2714,6 +2711,7 @@ snapshots:
       '@atproto/lexicon': 0.7.17
       '@atproto/ws-client': 0.2.1
       '@atproto/xrpc': 0.8.16
+      body-parser: 1.20.9
       express: 4.22.3
       http-errors: 2.0.1
       mime-types: 3.0.2
@@ -2737,7 +2735,7 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-cloudfront@3.1155.0':
+  '@aws-sdk/client-cloudfront@3.1156.0':
     dependencies:
       '@aws-sdk/core': 3.978.5
       '@aws-sdk/credential-provider-node': 3.972.88
@@ -2748,7 +2746,7 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-kms@3.1155.0':
+  '@aws-sdk/client-kms@3.1156.0':
     dependencies:
       '@aws-sdk/core': 3.978.5
       '@aws-sdk/credential-provider-node': 3.972.88
@@ -2759,7 +2757,7 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-s3@3.1155.0':
+  '@aws-sdk/client-s3@3.1156.0':
     dependencies:
       '@aws-sdk/checksums': 3.1001.5
       '@aws-sdk/core': 3.978.5
@@ -2868,9 +2866,9 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
-  '@aws-sdk/lib-storage@3.879.0(@aws-sdk/client-s3@3.1155.0)':
+  '@aws-sdk/lib-storage@3.879.0(@aws-sdk/client-s3@3.1156.0)':
     dependencies:
-      '@aws-sdk/client-s3': 3.1155.0
+      '@aws-sdk/client-s3': 3.1156.0
       '@smithy/abort-controller': 4.4.2
       '@smithy/middleware-endpoint': 4.7.2
       '@smithy/smithy-client': 4.15.2
@@ -3967,7 +3965,7 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
-  body-parser@1.20.8:
+  body-parser@1.20.9:
     dependencies:
       bytes: 3.1.2
       content-type: 1.0.5
@@ -3976,7 +3974,7 @@ snapshots:
       destroy: 1.2.0
       http-errors: 2.0.1
       iconv-lite: 0.4.24
-      on-finished: 2.4.1
+      on-finished: 2.4.2
       qs: 6.16.1
       raw-body: 2.5.3
       type-is: 1.6.18
@@ -4208,7 +4206,7 @@ snapshots:
     dependencies:
       accepts: 1.3.8
       array-flatten: 1.1.1
-      body-parser: 1.20.8
+      body-parser: 1.20.9
       content-disposition: 0.5.4
       content-type: 1.0.5
       cookie: 0.7.2
@@ -4223,7 +4221,7 @@ snapshots:
       http-errors: 2.0.1
       merge-descriptors: 1.0.3
       methods: 1.1.2
-      on-finished: 2.4.1
+      on-finished: 2.4.2
       parseurl: 1.3.3
       path-to-regexp: 0.1.13
       proxy-addr: 2.0.8
@@ -4271,7 +4269,7 @@ snapshots:
       debug: 2.6.9
       encodeurl: 2.0.0
       escape-html: 1.0.3
-      on-finished: 2.4.1
+      on-finished: 2.4.2
       parseurl: 1.3.3
       statuses: 2.0.2
       unpipe: 1.0.0
@@ -4546,7 +4544,7 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  node-abi@3.100.0:
+  node-abi@3.101.0:
     dependencies:
       semver: 7.8.5
 
@@ -4570,7 +4568,7 @@ snapshots:
 
   on-exit-leak-free@2.1.2: {}
 
-  on-finished@2.4.1:
+  on-finished@2.4.2:
     dependencies:
       ee-first: 1.1.1
 
@@ -4665,7 +4663,7 @@ snapshots:
       on-exit-leak-free: 2.1.2
       pino-abstract-transport: 3.0.0
       pino-std-serializers: 7.1.0
-      process-warning: 5.1.0
+      process-warning: 5.1.1
       quick-format-unescaped: 4.0.4
       real-require: 1.0.0
       safe-stable-stringify: 2.5.0
@@ -4704,7 +4702,7 @@ snapshots:
       minimist: 1.2.8
       mkdirp-classic: 0.5.3
       napi-build-utils: 2.0.0
-      node-abi: 3.100.0
+      node-abi: 3.101.0
       pump: 3.0.4
       rc: 1.2.8
       simple-get: 4.0.1
@@ -4716,8 +4714,6 @@ snapshots:
   prettier@3.9.9: {}
 
   process-warning@3.0.0: {}
-
-  process-warning@5.1.0: {}
 
   process-warning@5.1.1: {}
 
@@ -4839,7 +4835,7 @@ snapshots:
       http-errors: 2.0.1
       mime: 1.6.0
       ms: 2.1.3
-      on-finished: 2.4.1
+      on-finished: 2.4.2
       range-parser: 1.2.1
       statuses: 2.0.2
     transitivePeerDependencies:
