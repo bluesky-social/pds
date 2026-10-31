@@ -7,6 +7,10 @@ services:
     depends_on:
       - pds
     restart: unless-stopped
+    environment:
+      # Go 1.24+ listens with Multipath TCP by default, which is the remotely
+      # exploitable path for CVE-2026-98432 on unpatched kernels.
+      GODEBUG: multipathtcp=0
     volumes:
       - type: bind
         source: /pds/caddy/data
