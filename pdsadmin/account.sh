@@ -40,7 +40,7 @@ if [[ "${SUBCOMMAND}" == "list" ]]; then
     OUTPUT="${OUTPUT},${ITEM}"
   done
   OUTPUT="${OUTPUT}]"
-  echo "${OUTPUT}" | jq --raw-output '.[] | [.handle, .email, .did] | @tsv' | column --table
+  echo "${OUTPUT}" | jq --raw-output '.[] | [.handle, .email, .did] | @tsv' | column -t
 
 #
 # account create
