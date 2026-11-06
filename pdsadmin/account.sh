@@ -228,6 +228,41 @@ elif [[ "${SUBCOMMAND}" == "reset-password" ]]; then
   echo "New password: ${PASSWORD}"
   echo
 
+#
+# account change-handle
+#
+elif [[ "${SUBCOMMAND}" == "change-handle" ]]; then
+  DID="${2:-}"
+  HANDLE="${3:-}"
+
+  if [[ "${DID}" == "" ]]; then
+    echo "ERROR: missing DID parameter." >/dev/stderr
+    echo "Usage: $0 ${SUBCOMMAND} <DID> <HANDLE>" >/dev/stderr
+    exit 1
+  fi
+
+  if [[ "${HANDLE}" == "" ]]; then
+    echo "ERROR: missing handle parameter" >/dev/stderr
+    echo "Usage: $0 ${SUBCOMMAND} <DID> <HANDLE>"
+    exit 1
+  fi
+
+  if [[ "${DID}" != did:* ]]; then
+    echo "ERROR: DID parameter must start with \"did:\"." >/dev/stderr
+    echo "Usage: $0 ${SUBCOMMAND} <DID> <HANDLE>" >/dev/stderr
+    exit 1
+  fi
+
+  RESULT="$(curl_cmd_post_nofail \
+    --user "admin:${PDS_ADMIN_PASSWORD}" \
+    --data "{\"did\":\"${DID}\",\"handle\":\"${HANDLE}\"}" \
+    "https://${PDS_HOSTNAME}/xrpc/com.atproto.admin.updateAccountHandle")"
+
+  if [[ -n "$(echo "$RESULT" | jq --raw-output '.error')" ]]; then
+    echo "ERROR: $(echo "$RESULT" | jq --raw-output '.message')" >/dev/stderr
+    exit 1
+  fi
+
 else
   echo "Unknown subcommand: ${SUBCOMMAND}" >/dev/stderr
   exit 1
