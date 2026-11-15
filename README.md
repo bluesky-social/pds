@@ -215,6 +215,12 @@ After installation, your PDS should be live and accessible on the web. You can c
 {"version":"0.2.2-beta.2"}
 ```
 
+The PDS container image also polls this endpoint with a Docker `HEALTHCHECK` every 30 seconds, so `docker ps` will show the `pds` container as `healthy` or `unhealthy`. You can see the results of recent checks with:
+
+```bash
+docker inspect --format '{{json .State.Health}}' pds
+```
+
 You'll also need to check that WebSockets are working, for the rest of the network to pick up content from your PDS. You can test by installing a tool like `wsdump` and running a command like:
 
 ```bash
