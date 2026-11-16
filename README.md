@@ -37,6 +37,7 @@ Head over to the [ATProto Touchers Discord](https://discord.atprotocol.dev/) to 
     - [Customizing the appearance](#customizing-the-appearance)
     - [Migrating your PDS](#migrating-your-pds)
     - [Fixing a Relay desync](#fixing-a-relay-desync)
+  - [One-Click Deploy](#one-click-deploy)
   - [License](#license)
 
 <!-- tocstop -->
@@ -453,6 +454,10 @@ systemctl start pds
 ```
 
 New records should now be indexed as normal.
+
+## One-Click Deploy
+
+[![Deploy on RepoCloud](https://d16t0pc4846x52.cloudfront.net/deploylobe.svg)](https://repocloud.io/details/Bluesky%20PDS/)
 
 ## License
 
