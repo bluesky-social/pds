@@ -9,7 +9,7 @@ RUN apk add --no-cache git
 RUN git clone https://github.com/bluesky-social/goat.git && cd goat && git checkout v0.2.7 && go build -o /tmp/goat-build .
 
 # NOTE there is an additional build stage below that should match
-FROM node:24.22.1-alpine3.23 AS build
+FROM node:24.22.2-alpine3.23 AS build
 
 RUN corepack enable
 
@@ -20,7 +20,7 @@ RUN corepack prepare --activate
 RUN pnpm install --production --frozen-lockfile > /dev/null
 
 # Uses assets from build stage to reduce build size
-FROM node:24.22.1-alpine3.23
+FROM node:24.22.2-alpine3.23
 
 RUN apk add --update dumb-init
 
