@@ -1,5 +1,5 @@
 # Build goat with the toolchain required by its pinned release.
-FROM golang:1.27.3-alpine3.23 AS goat-build
+FROM golang:1.27.4-alpine3.23 AS goat-build
 
 ENV CGO_ENABLED=0
 ENV GODEBUG="netdns=go"
