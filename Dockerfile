@@ -42,6 +42,13 @@ ENV UV_USE_IO_URING=0
 
 CMD ["node", "--enable-source-maps", "index.ts"]
 
+# Marks the container unhealthy when /xrpc/_health stops responding. Uses
+# node's built-in fetch, so no extra packages are needed in the image.
+# NODE_OPTIONS is dropped so options meant for the PDS process (e.g. loading
+# @atproto/pds/telemetry) are not applied to every healthcheck run.
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+  CMD ["env", "-u", "NODE_OPTIONS", "node", "healthcheck.js"]
+
 LABEL org.opencontainers.image.source=https://github.com/bluesky-social/pds
 LABEL org.opencontainers.image.description="AT Protocol PDS"
 LABEL org.opencontainers.image.licenses=MIT
